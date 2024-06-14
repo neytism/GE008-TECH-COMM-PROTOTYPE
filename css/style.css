@@ -1,0 +1,286 @@
+:root {
+    --navbar-hor-padding: 15px;
+    --navbar-vert-padding: 10px;
+    --navbar-height: 53px;
+    --product-card-height: 300px;
+    --panel-spacing: 15px;
+
+    --background-color: #b2e0e4;
+    --primary-color: #00364D;
+    --secondary-color: #42c8f4;
+}
+
+@font-face {
+    font-family: Loew-Bold;
+    src: url("../assets/fonts/Loew-Bold.otf") format(opentype);
+}
+
+@font-face {
+    font-family: Loew-ExtraBold;
+    src: url("../assets/fonts/Loew-ExtraBold.otf") format(opentype);
+}
+
+@font-face {
+    font-family: Loew-Medium;
+    src: url("../assets/fonts/Loew-Medium.otf") format(opentype);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+
+}
+
+.invisible {
+    visibility: hidden;
+}
+
+.hide {
+    display: none !important;
+}
+
+.shadow{
+    box-shadow: 0px 0px 18px rgba(0, 0, 0, 0.082);
+}
+
+html {
+    scroll-behavior: smooth;
+  }
+
+body {
+    font-family: Loew-Bold ;
+    background-color: var(--background-color);
+}
+
+a {
+    text-decoration: none !important;
+}
+
+
+a:visited,
+a:link {
+    color: inherit;
+}
+
+li {
+    list-style: none;
+}
+
+/* NAVBAR STYLING STARTS */
+.navbar {
+    letter-spacing: 2px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between ;
+    height: var(--navbar-height);
+    padding: var(--navbar-vert-padding) var(--navbar-hor-padding);
+    background: linear-gradient(to right, var(--primary-color) , var(--secondary-color));
+    color: #fff;
+    position: fixed ;
+    top: 0;
+    z-index: 3;
+    width: 100%;
+}
+
+.nav-right, .nav-left {
+    flex-direction: column;
+}
+
+.nav-right > .menu{
+    text-align: right;
+    justify-content: flex-end;
+}
+
+.nav-left > .menu{
+    display: flex;
+    text-align: left;
+    justify-content: flex-start;
+}
+
+.search-bar {
+    width: 35vw;
+    background-color:  rgba(206, 206, 206, 0.2);
+    border: none;
+    border-radius: 10px;
+    height: 35px;
+    font-family: Loew-Medium !important;
+    letter-spacing: 0.3px;
+    padding: 0 40px 0 15px;
+    color: white;
+    background-image: url("../assets/images/search_icon_fade.png");
+    background-repeat: no-repeat;
+    background-position: right center;
+}
+.search-bar::placeholder {
+    color: rgba(206, 206, 206, 0.5);
+}
+
+.menu {
+    display: flex;
+    gap: 1em;
+    font-size: 18px;
+}
+
+.menu li:hover {
+    background-color: rgb(0, 0, 0, 0.1);
+    border-radius: 5px;
+    transition: 0.3s ease;
+}
+
+.menu li {
+    padding: 5px 14px;
+    transition: 0.3s ease;
+}
+
+.seller{
+    font-family: Loew-Medium ;
+}
+
+.main-interface{
+    display: flex; 
+    flex-direction: row; 
+    padding-top: var(--navbar-height);
+    height: 100vh;
+}
+
+.left-panel{
+    width: 175px; 
+    padding: calc(var(--panel-spacing)*2) var(--panel-spacing) calc(var(--panel-spacing)*2) calc(var(--panel-spacing)*2);
+    justify-content: flex-start;
+}
+
+.left-panel-content{
+    background-color: white  ; 
+    border-radius: 10px;
+    height: 100%;
+}
+
+.center-panel{
+    width: 70%; 
+    justify-content: center;
+    padding: calc(var(--panel-spacing)*2) var(--panel-spacing) 0px var(--panel-spacing);
+}
+
+.center-panel-content{
+    display: flex;
+    flex-direction: column; 
+    height: 100%;
+}
+
+.category-panel{
+    background-color: white  ; 
+    margin-bottom: calc(var(--panel-spacing)*2);
+    height: 65px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 30px;
+    padding-left: 15px;
+}
+
+.category-button{
+    height: 50%;
+    padding: 3px 15px;
+    border-radius: 7.5px;
+}
+
+.selected{
+    background-color: rgba(68, 199, 243, 0.5) ; 
+}
+
+.products-panel{
+    overflow-y: auto;
+    height: 100%;
+    display: flex;
+    gap: calc(var(--panel-spacing)*2);
+    flex-wrap: wrap;
+    flex-direction: row;
+    align-content: flex-start;
+    justify-content: flex-start;
+}
+
+.products-panel::-webkit-scrollbar {
+    display: none;
+
+}
+
+.product-card{
+    height: var(--product-card-height);
+    width: calc(var(--product-card-height) * 0.65);
+    background-color: white;
+    border-radius: 10px;
+    flex-grow: 1;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    
+}
+
+.product-card .product-icon {
+    height: 75%;
+    border-radius: 10px 10px 0 0;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.product-icon img{
+    width: 100%;
+    object-fit: contain;
+    height: 100%;
+}
+
+.product-card .product-name {
+    font-family: Loew-Medium !important;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height:  1.1em;
+    
+}
+
+.product-card-desc{
+     flex-grow: 1;
+    justify-content: flex-end;
+}
+
+.product-card .product-price {
+    font-family: Loew-ExtraBold !important;
+    margin-top: 7px;
+    font-size: 1.1em;
+}
+
+
+.right-panel{
+    padding: 0px calc(var(--panel-spacing)*2) 0px var(--panel-spacing);
+    width: 30%; 
+    justify-content: flex-end;
+}
+
+
+.right-panel-content{
+    display: flex;
+    flex-direction: column; 
+    height: 100%;
+}
+
+.cart-panel{
+    background-color: white  ; 
+    margin-bottom: 15px;
+    height: 100%;
+    border-radius: 0px 0px 20px 20px;
+}
+
+.details-panel{
+    background-color: white  ; 
+    margin-top: 15px;
+    height: 300px;
+    border-radius: 20px 20px 0px 0px;
+}
+
+
+
