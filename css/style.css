@@ -206,6 +206,7 @@ li {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    cursor: pointer;
 }
 
 .left-nav-icon i{
@@ -238,6 +239,7 @@ li {
     gap: 30px;
     padding-left: 15px;
    
+   
 }
 
 .category-button:hover{
@@ -251,6 +253,7 @@ li {
     border-radius: 7.5px;
     white-space: nowrap;
     transition: 0.3s ease;
+    cursor: pointer;
 }
 
 .selected{
@@ -354,8 +357,26 @@ li {
     margin-bottom: 15px;
     height: 100%;
     border-radius: 0px 0px 20px 20px;
+    height: 100%;
+    display: flex;
+    flex-direction: column; 
+    align-items: center;
+    justify-content: flex-start;
+    gap: 15px;
 }
 
+.cart-header{
+    background-color: red;
+    height: 100px;
+    width: 100%;
+}
+
+.cart-items{
+    width: 100%;
+    height: 100%;
+    background-color: blue;
+    border-radius: 0px 0px 20px 20px;
+}
 .details-panel{
     background-color: white  ; 
     margin-top: 15px;
