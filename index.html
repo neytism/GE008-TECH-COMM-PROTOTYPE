@@ -3,21 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="assets/images/qiqi.png">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
     <title>Prototype</title>
 </head>
 <body>
     
+    <button class="test-button"> TEST </button>
+
     <nav class="navbar">
         <!-- LOGO -->
         
         <div class="nav-left"> 
             <div class="menu">
-                <a href="#" style="margin-top: 3px;">CIIT ORG</a>
+                <a href="#" style="text-align: center; display: flex; align-items: center; justify-content: center; margin-bottom: 2px;">CIIT ORG</a>
 
-                <form>
-                    <input class="search-bar" id="search" type="text" autocomplete="off" placeholder="Search Products...">
+                <form class="search-bar ">
+                    <input id="search" type="text" autocomplete="off" placeholder="Search Products...">
+                    <i class="bi bi-x-lg search-meron hide" style="cursor: pointer;"></i>
+                    <i class="bi bi-search search-empty"></i>
                 </form>
             
             </div>
@@ -40,7 +45,7 @@
         <div class="left-panel" >
             <div class="left-panel-content shadow" >
                 <div class="left-nav-upper">
-                    <div class="left-nav-icon button selected "><i class="bi bi-house"></i>HOME</div>
+                    <div class="left-nav-icon button selected"><i class="bi bi-house"></i>HOME</div>
                     <div class="left-nav-icon button"><i class="bi bi-boxes"></i>INVENTORY</div>
                     <div class="left-nav-icon button"><i class="bi bi-journal-text"></i>LOGS</div>
                     <div class="left-nav-icon button"><i class="bi bi-bar-chart-line"></i>REPORTS</div>
@@ -56,8 +61,9 @@
 
         <div class="center-panel">
             <div class="center-panel-content" >
-                <div class="category-panel shadow">
-                    <div class="category-button selected">Stickers</div>
+                <div class="category-panel shadow unselectable">
+                    <div class="category-button selected">All</div>
+                    <div class="category-button">Stickers</div>
                     <div class="category-button">Pins</div>
                     <div class="category-button">Shirts</div>
                     <div class="category-button">Food</div>
@@ -71,7 +77,7 @@
                     
                     <div class="product-card shadow">
                         <div class="product-icon"><img src="assets/images/ciit.png" alt="Product Image"></div>
-                        <div class="product-card-desc" >
+                        <div class="product-card-desc" category="Stickers">
                             <div class="product-name"><span>CIIT sticker with FREE Tuition Fee</span></div>
                             <div class="product-price">P 45,000.00</div>
                         </div>
@@ -79,39 +85,63 @@
                     
                     <div class="product-card shadow">
                         <div class="product-icon"><img src="assets/images/qiqi.png" alt="Product Image"></div>
-                        <div class="product-card-desc" >
-                            <div class="product-name"><span>CIIT sticker with FREE Tuition Fee</span></div>
+                        <div class="product-card-desc" category="Stickers">
+                            <div class="product-name"><span>QIQI NA MALUNGKOT STICKER</span></div>
                             <div class="product-price">P 45,000.00</div>
                         </div>
                     </div>
                     
                     <div class="product-card shadow">
-                        <div class="product-icon"><img src="assets/images/slf.png" alt="Product Image"></div>
-                        <div class="product-card-desc" >
-                            <div class="product-name"><span>CIIT sticker with FREE Tuition Fee</span></div>
+                        <div class="product-icon"><img src="assets/images/gato.png" alt="Product Image"></div>
+                        <div class="product-card-desc" category="Stickers">
+                            <div class="product-name"><span>Banana Cat Sticker</span></div>
                             <div class="product-price">P 45,000.00</div>
                         </div>
                     </div>
                     
                     <div class="product-card shadow ">
-                        <div class="product-icon"><img src="assets/images/ciit.png" alt="Product Image"></div>
-                        <div class="product-card-desc" >
-                            <div class="product-name"><span>CIIT sticker with FREE Tuition Fee</span></div>
+                        <div class="product-icon"><img src="assets/images/navia.png" alt="Product Image"></div>
+                        <div class="product-card-desc" category="Stickers">
+                            <div class="product-name"><span>Navia Sticker</span></div>
+                            <div class="product-price">P 45,000.00</div>
+                        </div>
+                    </div>
+
+                    <div class="product-card shadow">
+                        <div class="product-icon"><img src="assets/images/huh.png" alt="Product Image"></div>
+                        <div class="product-card-desc" category="Stickers">
+                            <div class="product-name"><span>Miles Morales Sticker</span></div>
+                            <div class="product-price">P 45,000.00</div>
+                        </div>
+                    </div>
+
+                    <div class="product-card shadow">
+                        <div class="product-icon"><img src="assets/images/ciit-pin.png" alt="Product Image"></div>
+                        <div class="product-card-desc" category="Pins">
+                            <div class="product-name"><span>Interweave Pin</span></div>
+                            <div class="product-price">P 45,000.00</div>
+                        </div>
+                    </div>
+
+                    <div class="product-card shadow">
+                        <div class="product-icon"><img src="assets/images/war-cat.png" alt="Product Image"></div>
+                        <div class="product-card-desc" category="Pins">
+                            <div class="product-name"><span>War Cat Pin</span></div>
+                            <div class="product-price">P 45,000.00</div>
+                        </div>
+                    </div>
+
+                    <div class="product-card shadow">
+                        <div class="product-icon"><img src="assets/images/side-eye-cat.png" alt="Product Image"></div>
+                        <div class="product-card-desc" category="Pins">
+                            <div class="product-name"><span>Side Eye Cat Pin</span></div>
                             <div class="product-price">P 45,000.00</div>
                         </div>
                     </div>
 
                     <div class="product-card shadow">
                         <div class="product-icon"><img src="assets/images/ciit.png" alt="Product Image"></div>
-                        <div class="product-card-desc" >
-                            <div class="product-name"><span>CIIT sticker with FREE Tuition Fee</span></div>
-                            <div class="product-price">P 45,000.00</div>
-                        </div>
-                    </div>
-
-                    <div class="product-card shadow">
-                        <div class="product-icon"><img src="assets/images/ciit.png" alt="Product Image"></div>
-                        <div class="product-card-desc" >
+                        <div class="product-card-desc" category="Stickers">
                             <div class="product-name"><span>CIIT sticker with FREE Tuition Fee</span></div>
                             <div class="product-price">P 45,000.00</div>
                         </div>
@@ -119,7 +149,7 @@
                     
                     <div class="product-card shadow">
                         <div class="product-icon"><img src="assets/images/ciit.png" alt="Product Image"></div>
-                        <div class="product-card-desc" >
+                        <div class="product-card-desc" category="Stickers">
                             <div class="product-name"><span>CIIT sticker with FREE Tuition Fee</span></div>
                             <div class="product-price">P 45,000.00</div>
                         </div>
@@ -127,7 +157,7 @@
                     
                     <div class="product-card shadow">
                         <div class="product-icon"><img src="assets/images/ciit.png" alt="Product Image"></div>
-                        <div class="product-card-desc" >
+                        <div class="product-card-desc" category="Stickers">
                             <div class="product-name"><span>CIIT sticker with FREE Tuition Fee</span></div>
                             <div class="product-price">P 45,000.00</div>
                         </div>
@@ -135,7 +165,7 @@
                     
                     <div class="product-card shadow">
                         <div class="product-icon"><img src="assets/images/ciit.png" alt="Product Image"></div>
-                        <div class="product-card-desc" >
+                        <div class="product-card-desc" category="Stickers">
                             <div class="product-name"><span>CIIT sticker with FREE Tuition Fee</span></div>
                             <div class="product-price">P 45,000.00</div>
                         </div>
@@ -143,7 +173,7 @@
 
                     <div class="product-card shadow">
                         <div class="product-icon"><img src="assets/images/ciit.png" alt="Product Image"></div>
-                        <div class="product-card-desc" >
+                        <div class="product-card-desc" category="Stickers">
                             <div class="product-name"><span>CIIT sticker with FREE Tuition Fee</span></div>
                             <div class="product-price">P 45,000.00</div>
                         </div>
@@ -151,7 +181,7 @@
 
                     <div class="product-card shadow">
                         <div class="product-icon"><img src="assets/images/ciit.png" alt="Product Image"></div>
-                        <div class="product-card-desc" >
+                        <div class="product-card-desc" category="Stickers">
                             <div class="product-name"><span>CIIT sticker with FREE Tuition Fee</span></div>
                             <div class="product-price">P 45,000.00</div>
                         </div>
@@ -159,33 +189,158 @@
                     
                     
                     <!-- to avoid stretching-->
-                    <div class="product-card invisible" ></div>
-                    <div class="product-card invisible" ></div>
-                    <div class="product-card invisible" ></div>
-                    <div class="product-card invisible" ></div>
-                    <div class="product-card invisible" ></div>
+                    <div class="product-card shadow invisible" ></div>
+                    <div class="product-card shadow invisible" ></div>
+                    <div class="product-card shadow invisible" ></div>
+                    <div class="product-card shadow invisible" ></div>
+                    <div class="product-card shadow invisible" ></div>
+                    <div class="product-card shadow invisible" ></div>
+                    <div class="product-card shadow invisible" ></div>
+                    <div class="product-card shadow invisible" ></div>
+                    <div class="product-card shadow invisible" ></div>
+                    <div class="product-card shadow invisible" ></div>
+                    <div class="product-card shadow invisible" ></div>
+                    <div class="product-card shadow invisible" ></div>
                 </div>
             </div>
         </div>
+        
         <div class="right-panel" >
             <div class="right-panel-content" >
                 <div class="cart-panel shadow">
                     <div class="cart-header">
-                        header
+                        <input class="customer-name-input" id="" type="text" autocomplete="off" placeholder="Customer Name...">
+                        <div class="scan-id confirm">SCAN ID</div>
                     </div>
+                    
+                    <div style="height:1.5px; background-color: rgba(0, 0, 0, 0.082); width: 100%; "></div>
 
                     <div class="cart-items">
-                        items
+
+                        <div class="cart-item-banner">
+                            <div class="cart-item-banner-base">
+                                <div class="cart-item-banner-base-left">
+                                    <i class="bi bi-caret-right" style="color: rgba(0, 0, 0, 0.39);"></i>
+                                    <div>1x</div>
+                                    <div class="cart-item-name">NAVIA STICKER</div>
+                                </div>
+                               
+                                <div class="cart-item-banner-base-right">
+                                    <div>P 69.00</div>
+                                    <i class="bi bi-x-circle-fill" style="color: rgba(0, 0, 0, 0.39);"></i>
+                                </div>
+                               
+                            </div>
+
+                            <div class="cart-item-banner-drop hide">
+                            asdasd
+                            </div>
+                            
+                        </div>
+                        
+                        <div class="cart-item-banner">
+                            <div class="cart-item-banner-base">
+                                <div class="cart-item-banner-base-left">
+                                    <i class="bi bi-caret-right" style="color: rgba(0, 0, 0, 0.39);"></i>
+                                    <div>1x</div>
+                                    <div class="cart-item-name">CAT MEME STICKER</div>
+                                </div>
+                               
+                                <div class="cart-item-banner-base-right">
+                                    <div>P 69.00</div>
+                                    <i class="bi bi-x-circle-fill" style="color: rgba(0, 0, 0, 0.39);"></i>
+                                </div>
+                               
+                            </div>
+
+                            <div class="cart-item-banner-drop hide">
+                            asdasd
+                            </div>
+                            
+                        </div>
+
+                        <div class="cart-item-banner">
+                            <div class="cart-item-banner-base">
+                                <div class="cart-item-banner-base-left">
+                                    <i class="bi bi-caret-right" style="color: rgba(0, 0, 0, 0.39);"></i>
+                                    <div>1x</div>
+                                    <div class="cart-item-name">QIQI NA MALUNGKOT STICKER</div>
+                                </div>
+                               
+                                <div class="cart-item-banner-base-right">
+                                    <div>P 160.00</div>
+                                    <i class="bi bi-x-circle-fill" style="color: rgba(0, 0, 0, 0.39);"></i>
+                                </div>
+                               
+                            </div>
+
+                            <div class="cart-item-banner-drop hide">
+                            asdasd
+                            </div>
+                            
+                        </div>
+
                     </div>
                 </div>
 
-                <div class="details-panel shadow">details</div>
+                <div class="details-panel shadow">
+                    <div class="details-panel-upper">
+
+                        <div class="transaction-details-banner">
+                            <div class="transaction-details-banner-base">
+                                <div class="transaction-details-banner-base-left">
+                                    EMAIL:
+                                </div>
+                               
+                                <div class="transaction-details-banner-base-right">
+                                    <div>email.ciit@gmail.yahoo.edu</div>
+                                </div>
+                            </div>
+                        </div>
+                    
+                        <div class="transaction-details-banner">
+                            <div class="transaction-details-banner-base">
+                                <div class="transaction-details-banner-base-left">
+                                    PAYMENT METHOD
+                                </div>
+                               
+                                <div class="transaction-details-banner-base-right">
+                                    <div>CASH</div>
+                                    <i class="bi bi-caret-down" style="color: rgba(0, 0, 0, 0.39);"></i>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="transaction-details-banner" style="font-size: larger;">
+                            <div class="transaction-details-banner-base">
+                                <div class="transaction-details-banner-base-left">
+                                    TOTAL AMOUNT:
+                                </div>
+                               
+                                <div class="transaction-details-banner-base-right">
+                                    <div>P 420.00</div>
+                                </div>
+                            </div>
+                        </div>
+                    
+                        
+                    
+    
+                    <div class="details-panel-lower">
+                        <div class="confirm-group">
+                            <div class="confirm-button cancel">CANCEL</div>
+                            <div class="confirm-button confirm">CONFIRM</div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         
     </div>
-
     
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script type="text/javascript" src="js/search.js" id="rendered-js"></script>
+    <script type="text/javascript" src="js/customize.js" id="rendered-js"></script>
     
 </body>
 </html>
