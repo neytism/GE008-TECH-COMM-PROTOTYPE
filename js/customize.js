@@ -10,7 +10,24 @@ $(document).ready(function() {
         r.style.setProperty('--secondary-color', '#d6639c');
         r.style.setProperty('--confirm-color', '#d6639c');
         r.style.setProperty('--cancel-color', '#c9a3b6');
+               
     });
 });
 
+loadDetails();
 
+function loadDetails() {
+    $.get('test.txt', function(data) {
+        var r = document.querySelector(':root');
+        var cssVars = data.split('\n');
+        
+        for (var i = 0; i < cssVars.length; i++) {
+            if (cssVars[i].trim() !== '') {
+                var parts = cssVars[i].trim().split(',');
+                var varName = parts[0].trim().replace("r.style.setProperty('", "").trim().replace("'", "");
+                var varValue = parts[1].trim().replace("'", "").trim().replace("');", "");
+                r.style.setProperty(varName, varValue);
+            }
+        }
+    });
+}
