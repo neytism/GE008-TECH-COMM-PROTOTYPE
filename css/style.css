@@ -23,6 +23,10 @@
     
     --cancel-color: rgb(110, 110, 110);
     --confirm-color: rgb(38, 185, 38);
+    
+    --right-panel-display: flex;
+    --center-panel-display: inline;
+    --search-bar-display: inline;
 }
 
 @import url('https://unpkg.com/css.gg@2.0.0/icons/css/home.css');
@@ -48,6 +52,8 @@
     box-sizing: border-box;
 
 }
+
+
 
 .invisible {
     visibility: hidden;
@@ -122,8 +128,23 @@ li {
     width: 100%;
 }
 
-.nav-right, .nav-left {
+.nav-right{
+    display: flex;
     flex-direction: column;
+    width: 50%;
+}
+
+.nav-left{
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    justify-content: space-between;
+}
+
+.nav-left > .menu{
+    display: flex;
+    justify-content: flex-start;
+
 }
 
 .nav-right > .menu{
@@ -131,14 +152,22 @@ li {
     justify-content: flex-end;
 }
 
-.nav-left > .menu{
-    display: flex;
-    text-align: left;
-    justify-content: flex-start;
+.logo{
+    display: flex; 
+    align-items: center; 
+    margin-bottom: 2px; 
+    width: fit-content;
+    white-space: nowrap;
+    max-width: 50%;
+}
+
+
+.search-bar{
+    width: 60%;
 }
 
 .search-bar input{
-    width: 35vw;
+    width: 100%;
     background-color:  rgba(206, 206, 206, 0.2);
     border: none;
     border-radius: 10px;
@@ -256,6 +285,32 @@ li {
     font-size: 40px;
 }
 
+.mobile-nav{
+    position: fixed;
+    overflow-x: auto;
+    width: 90%;
+    background-color: var(--card-color)  ; 
+    margin-top: var(--panel-spacing);
+    margin-bottom: var(--panel-spacing);
+    height: 100px;
+    border-radius: 10px;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 15px;
+    padding-left: 15px;
+    padding-right: 15px;
+    bottom: 0;
+    z-index: 10;
+    left: 50%;
+    transform: translateX(-50%); 
+}
+
+
+.cart-icon{
+    display: none;
+}
+
 .center-panel{
     min-width: 10%;
     justify-content: center;
@@ -326,13 +381,13 @@ li {
     justify-content: flex-start;
 }
 
-.products-panel::-webkit-scrollbar ,.category-panel::-webkit-scrollbar {
+.products-panel::-webkit-scrollbar ,.category-panel::-webkit-scrollbar, .mobile-nav::-webkit-scrollbar {
     display: none;
 
 }
 
 .product-card{
-    z-index: 0;
+    position: relative; 
     height: var(--product-card-height);
     width: calc(var(--product-card-height) * 0.65);
     background-color: var(--card-color);
@@ -343,10 +398,11 @@ li {
     flex-direction: column;
     transition: 0.3s ease;
     color: var(--card-text-color);
+    box-shadow: 0 0 0 0 var(--secondary-color) inset;
 }
 
 .product-card:hover{
-    background-color: color-mix(in srgb, var(--card-color), black 7.5%);
+    box-shadow: 0 0 0 2px var(--secondary-color) inset;
     transition: 0.3s ease;
 }
 
@@ -388,12 +444,38 @@ li {
     font-size: 1.1em;
 }
 
+.card-add-to-cart{
+    position: absolute; 
+    color: var(--secondary-color);
+    font-size: 1.5em;
+    top: 5px; 
+    left: 10px; 
+    cursor: pointer;
+    opacity: 0.5;
+}
+
+.settings-panel{
+    overflow-x: auto;
+    width: 100%;
+    background-color: var(--card-color)  ; 
+    margin-bottom: calc(var(--panel-spacing)*2);
+    height: 100%;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 30px;
+    padding-left: 15px;
+   
+}
 
 .right-panel{
     padding: 0px calc(var(--panel-spacing)*2) 0px var(--panel-spacing);
     width: 30%; 
     max-width: 30%;
     min-width: 500px;
+    display: flex;
     justify-content: flex-end;
     align-items: flex-end;
 }
@@ -403,6 +485,7 @@ li {
     display: flex;
     flex-direction: column; 
     height: 100%;
+    width: 100%;
 }
 
 .cart-panel{
@@ -618,6 +701,154 @@ li {
     gap: 15px;
 }
 
+.notification{
+    background-color: var(--confirm-color); 
+    border-radius: 10px;
+    color: white; 
+    position: fixed; 
+    bottom: 3%; 
+    left: 50%; 
+    transform: translateX(-50%); 
+    z-index: 100; 
+    opacity: 0;
+    pointer-events: none;
+}
 
+.fadeInOut{
+    animation-name: notification;
+    animation-duration: 1s;
+    animation-timing-function: ease-in-out;
+}
+
+@keyframes notification {
+    0%{
+        opacity: 0;
+    }
+
+    10% {
+        opacity: 1;
+    }
+
+    90% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+    }
+}
+
+
+@media (min-width: 825px) {
+
+    .center-panel{
+        display: inline !important;
+    }
+    
+    .search-bar{
+        display: inline !important;
+    }
+
+    .right-panel {
+        display: flex !important;
+    }
+    
+    .mobile-nav{
+        display: none;
+    }
+}
+
+
+/* MEDIA QUERIES */
+@media (max-width: 824px) {
+    
+    .right-panel {
+        display: none;
+        width: 100% ; 
+        max-width: 100%;
+        min-width: 0%;
+        padding: 0px calc(var(--panel-spacing)*2) 115px calc(var(--panel-spacing)*2);
+    }
+    
+    .center-panel{
+        padding: calc(var(--panel-spacing)*2) calc(var(--panel-spacing)*2) 0px calc(var(--panel-spacing)*2);
+    }
+
+    .details-panel{
+        padding-bottom: 150px;
+    }
+    
+    .seller {
+        display: none;
+    }
+
+    .search-bar input {
+        width: 100%;
+    }
+    
+    .nav-right{
+        flex-direction: column;
+        width: 0%;
+    }
+    
+    .nav-left{
+        flex-direction: column;
+        width: 100%;
+    }
+    
+    .cart-panel{
+        height: 70%;
+        max-height: 70%;
+    }
+
+    .details-panel-upper{
+        gap: 0px;
+    }
+    
+    
+    
+    .search-bar{
+        width: 100%;
+    }
+    
+    .left-panel{
+       display: none;
+    }
+    
+    .mobile-nav{
+        display: flex;
+    }
+
+    .left-nav-icon{
+        font-family: Loew-Medium !important;
+        font-size: 10px;
+        width: 60px;
+        height: 60px;
+        min-width: 60px;
+        min-height: 60px;
+        font-size: 0px;
+    }
+
+    .left-nav-upper:first-child{
+        margin-top: 15px;
+    }
+    
+    .left-nav-lower:last-child{
+        margin-bottom: 15px;
+    }
+    
+    .left-nav-icon i{
+        font-size: 30px;
+    }
+    
+    .cart-icon{
+        display: flex;
+    }
+
+    .cart-item-banner, .details-panel{
+        font-size: smaller;
+    }
+    
+}
 
 

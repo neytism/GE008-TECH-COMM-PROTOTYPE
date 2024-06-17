@@ -7,7 +7,7 @@ function searchCards(value , category) {
             var productCategory = card.find(".product-card-desc").attr("category").toLowerCase();
             
             var productDetails = productName;
-
+            
             var isSearchMatch;
             
             if (category === 'all') {
@@ -15,7 +15,7 @@ function searchCards(value , category) {
             } else {
                 isSearchMatch = productDetails.indexOf(value) > -1 && productCategory === category;
             }
-
+            
             card.toggle(isSearchMatch);
             
         }
@@ -57,7 +57,7 @@ $(document).ready(function() {
     $(".search-meron").on("click", function() {
         document.getElementById('search').value = '';
         var search = $("#search").val().toLowerCase();
-        var category = $(".selected").text().toLowerCase();
+        var category = $(".category-button.selected").text().toLowerCase();
         searchCards(search, category);
         
         $(".search-empty").removeClass("hide");
