@@ -14,7 +14,7 @@ $(document).ready(function() {
     });
 });
 
-loadDetails();
+//loadDetails();
 
 function loadDetails() {
     $.get('test.txt', function(data) {

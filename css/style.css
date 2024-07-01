@@ -217,8 +217,11 @@ li {
 .main-interface{
     display: flex; 
     flex-direction: row; 
-    padding-top: var(--navbar-height);
     height: 100vh;
+}
+
+.with-navbar{
+    padding-top: var(--navbar-height);
 }
 
 .left-panel{
@@ -381,7 +384,7 @@ li {
     justify-content: flex-start;
 }
 
-.products-panel::-webkit-scrollbar ,.category-panel::-webkit-scrollbar, .mobile-nav::-webkit-scrollbar {
+.products-panel::-webkit-scrollbar ,.category-panel::-webkit-scrollbar, .mobile-nav::-webkit-scrollbar, .login-panel::-webkit-scrollbar {
     display: none;
 
 }
@@ -641,12 +644,13 @@ li {
 .confirm-button{
     font-family: Loew-Medium !important;
     font-size: 13px;
-    height: 45px;
+    padding: 11.5px 0;
     border-radius: 10px;
     color: white;
     text-align: center;
     line-height:  2em;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     flex-grow: 1;
@@ -700,6 +704,27 @@ li {
     justify-content: flex-end;
     gap: 15px;
 }
+
+
+.login-panel{
+    overflow-x: auto;
+    width: 100%;
+    max-width: 30%;
+    background-color: var(--card-color); 
+    max-height: 95vh;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 15px;
+    
+    
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
 
 .notification{
     background-color: var(--confirm-color); 
@@ -847,6 +872,11 @@ li {
 
     .cart-item-banner, .details-panel{
         font-size: smaller;
+    }
+
+    .login-panel{
+        max-width: 90%;
+       
     }
     
 }
