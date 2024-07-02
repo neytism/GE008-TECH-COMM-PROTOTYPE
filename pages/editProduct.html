@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="../assets/images/qiqi.png">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
+    <title>Login</title>
+    <style>
+        select{
+            -webkit-appearance: none !important;
+            appearance: none !important;
+        }
+        
+    </style>
+</head>
+<body>
+    
+    <div class="notification" id="notification">
+        <p style="padding: 10px 20px; margin:0;">Item Added to Cart</p>
+    </div>
+    
+    
+    <div class="main-interface">
+        
+        <form id="loginForm">
+
+            <div class="login-panel shadow">
+                <div style="margin-bottom: 10px; margin-top: 10px; text-align: center; font-size: 1.5rem; font-family: Loew-ExtraBold !important;">EDIT PRODUCT AXS-003</div>
+                <div style="height: 250px;"><img src="../assets/images/gato.png" style="object-fit: contain; height: 100%; width: 100%; vertical-align: middle; cursor: pointer;" alt="hehe" title="Click to change image"></div>
+                <input style="margin: 15px 25px; background-color: rgba(0, 0, 0, 0.075); border: none; height: 3rem; border-radius: 1rem; padding: 0 20px;" type="text" id="" placeholder="Product Name" value="CIIT Sticker" required>
+                <select class="category-dropdown" style="margin: 15px 25px; background-color: rgba(0, 0, 0, 0.075); border: none; height: 3rem; border-radius: 1rem; padding: 0 20px; cursor: pointer;" name="" id="" title="Select Category">     
+                    <option value="">Sticker</option>
+                    <option value="">Pins</option>
+                    <option value="">Shirts</option>
+                    <option value="">Food</option>
+                    <option value="">Drinks</option>
+                    <option value="">Lanyard</option>
+                    <option value="">Keycaps</option>
+                    <option value="">Keychain</option>
+                    <option value="">Others</option>
+                </select>
+                <input style="margin: 15px 25px; background-color: rgba(0, 0, 0, 0.075); border: none; height: 3rem; border-radius: 1rem; padding: 0 20px;" type="text" id="" placeholder="Stock" value="69" required>
+                <input style="margin: 15px 25px; background-color: rgba(0, 0, 0, 0.075); border: none; height: 3rem; border-radius: 1rem; padding: 0 20px;" type="" id="" placeholder="Price" value="P 69.99"  required>
+                <div style="margin: 15px 25px; display: flex; gap: 15px;" >
+                    <div style="width: 50%;" class="confirm-button cancel">CANCEL</div>
+                    <button type="submit" style="width: 50%; border: none;" class="confirm-button confirm">SAVE</button>
+                </div>
+                <div style="margin: 15px 25px; border-radius: 1rem; background-color: rgba(0, 0, 0, 0.466);" class="confirm-button confirm hide">
+                    <div>hello<br>world</div>
+                </div>
+        
+            </input>
+        
+        </form>
+        
+       
+    </div>
+    
+   
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    
+</body>
+</html>
