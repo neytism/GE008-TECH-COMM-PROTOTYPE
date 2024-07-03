@@ -1,3 +1,12 @@
+<?php 
+	session_start(); 
+
+	if (isset($_SESSION['user_id'])) {
+		header('location: ../index.php');
+	}
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -24,9 +33,9 @@
                 <input style="margin: 15px 25px; background-color: rgba(0, 0, 0, 0.075); border: none; height: 3rem; border-radius: 1rem; padding: 0 20px;" type="text" id="inputUserName" placeholder="Username" required>
                 
                 <input style="margin: 15px 25px; background-color: rgba(0, 0, 0, 0.075); border: none; height: 3rem; border-radius: 1rem; padding: 0 20px;"type="password" id="inputPassword" placeholder="Password" required>
-                <button type="submit" style="margin: 15px 25px; border-radius: 1rem; border: none;" class="confirm-button confirm">CONFIRM</button>
-                <div style="margin: 15px 25px; border-radius: 1rem; background-color: rgba(0, 0, 0, 0.466);" class="confirm-button confirm hide">
-                    <div>hello<br>world</div>
+                <button type="submit" style="margin: 15px 25px; border-radius: 1rem; border: none;" class="confirm-button confirm" onclick="checkLogin(event)">CONFIRM</button>
+                <div style="margin: 15px 25px; border-radius: 1rem; background-color: rgba(0, 0, 0, 0.466); display: none;" class="confirm-button confirm" id="warningTextLogIn">
+                    
                 </div>
         
             </div>
@@ -40,6 +49,8 @@
    
     
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script type="text/javascript" src="../js/login.js" id="rendered-js"></script>
+
     
 </body>
 </html>

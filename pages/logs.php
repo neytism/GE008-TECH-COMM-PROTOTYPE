@@ -1,3 +1,36 @@
+<?php
+session_start();
+
+if (!isset($_SESSION['user_id'])) {
+    header('location: pages/login.php');
+}
+
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "techcommprototype";
+
+$name = '';
+$organization = '';
+
+// Create connection
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+// Check connection
+if ($conn->connect_error) {
+  die("Connection failed: " . $conn->connect_error);
+}
+
+
+$sql = "SELECT * FROM logs ORDER BY timestamp DESC";
+
+$result = mysqli_query($conn, $sql);
+
+$logs = mysqli_fetch_all($result, MYSQLI_ASSOC);
+
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,7 +39,7 @@
     <link rel="icon" type="image/x-icon" href="../assets/images/qiqi.png">
     <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
-    <title>Inventory</title>
+    <title>Logs</title>
 </head>
 <body>
     
@@ -24,7 +57,7 @@
                 <a href="#" class="logo">CIIT ORG</a>
     
                 <form class="search-bar ">
-                    <input id="search" type="text" autocomplete="off" placeholder="Search Inventory...">
+                    <input id="search" type="text" autocomplete="off" placeholder="Search Logs...">
                     <i class="bi bi-x-lg search-meron hide" style="cursor: pointer;"></i>
                     <i class="bi bi-search search-empty"></i>
                 </form>
@@ -46,22 +79,21 @@
     <div class="mobile-nav shadow">
         <div class="left-nav-icon button" title="HOME" onclick="homeButton()"><i class="bi bi-house"></i>HOME</div>
         <div class="left-nav-icon button cart-icon" title="CART" onclick="cartButton()"><i class="bi bi-cart"></i>CART</div>
-        <div class="left-nav-icon button selected" title="INVENTORY" ><i class="bi bi-boxes"></i>INVENTORY</div>
-        <div class="left-nav-icon button" title="LOGS" ><i class="bi bi-journal-text"></i>LOGS</div>
+        <div class="left-nav-icon button" title="INVENTORY" ><i class="bi bi-boxes"></i>INVENTORY</div>
+        <div class="left-nav-icon button selected" title="LOGS" ><i class="bi bi-journal-text"></i>LOGS</div>
         <div class="left-nav-icon button" title="REPORTS" ><i class="bi bi-bar-chart-line"></i>REPORTS</div>
         <div class="left-nav-icon button" title="SETTINGS" ><i class="bi bi-gear"></i>SETTINGS</div>
         <div class="left-nav-icon button" title="LOGOUT" ><i class="bi bi-box-arrow-left"></i>LOGOUT</div>
     </div>
     
     <div class="main-interface with-navbar" >
-        <div style=" margin: 25px; border-radius: 35px; text-align: center; position: fixed; bottom: 0; right: 0; font-size: 2rem; color: white; background-color: var(--confirm-color); height: 70px; width: 70px; cursor: pointer;" class="shadow" title="Add new product"><i style="height: 100%; display: flex; align-items: center; justify-content: center;" class="bi bi-plus-lg"></i></div>
         <div class="left-panel" >
             <div class="left-panel-content shadow unselectable" >
                 <div class="left-nav-upper">
                     <div class="left-nav-icon button" onclick="homeButton()"><i class="bi bi-house"></i>HOME</div>
                     <div class="left-nav-icon button cart-icon" onclick="cartButton()"><i class="bi bi-cart"></i>CART</div>
-                    <div class="left-nav-icon button selected"><i class="bi bi-boxes"></i>INVENTORY</div>
-                    <div class="left-nav-icon button"><i class="bi bi-journal-text"></i>LOGS</div>
+                    <div class="left-nav-icon button"><i class="bi bi-boxes"></i>INVENTORY</div>
+                    <div class="left-nav-icon button selected"><i class="bi bi-journal-text"></i>LOGS</div>
                     <div class="left-nav-icon button"><i class="bi bi-bar-chart-line"></i>REPORTS</div>
                     <div class="left-nav-icon button"><i class="bi bi-gear"></i>SETTINGS</div>
                 </div>
@@ -78,14 +110,11 @@
                 
                 <div class="category-panel shadow unselectable">
                     <div class="category-button selected">All</div>
-                    <div class="category-button">Stickers</div>
-                    <div class="category-button">Pins</div>
-                    <div class="category-button">Shirts</div>
-                    <div class="category-button">Food</div>
-                    <div class="category-button">Drinks</div>
-                    <div class="category-button">Lanyard</div>
-                    <div class="category-button">Keycaps</div>
-                    <div class="category-button">Keychain</div>
+                    <div class="category-button">Sales</div>
+                    <div class="category-button">Inventory</div>
+                    <div class="category-button">User</div>
+                    <div class="category-button">System</div>
+                    <div class="category-button">Payment</div>
                 </div>
                 
                 <div class="products-panel unselectable">
@@ -102,52 +131,43 @@
 
                         <thead >
                             <tr >
-                                <th scope="col" >ID</th>
-                                <th scope="col">Image</th>
-                                <th scope="col">Item Name</th>
-                                <th scope="col">Category</th>
-                                <th scope="col">Stock</th>
-                                <th scope="col">Price</th>
-                                <th scope="col"></th>
+                                <th scope="col">ID</th>
+                                <th scope="col">Type</th>
+                                <th scope="col">UserID</th>
+                                <th scope="col">Details</th>
+                                <th scope="col">Timestamp</th>
                             </tr>
                         </thead>
                         
                         <tbody >
                             <tr><td colspan="7"><br><hr style="border-top: 1px solid rgba(0, 0, 0, 0.151);"></td></tr>
-                            <tr class="inventory-row" style="height: 50px;">
-                                <th class="inventory-id" style="width:100px ; min-width: 100px; max-width: 100px; word-wrap:break-word;">AXS-003</th>
-                                <td style="width:130px; min-width: 130px; max-width: 130px; height: 75px; padding: 0 15px;"><img src="../assets/images/gato.png" style="object-fit: contain; height: 100%; width: 100%; vertical-align: middle;" alt="hehe"></td>
-                                <th class="inventory-name" style="padding-right: 30px; padding-bottom: 10px;">CIIT sticker with FREE Tuition Fee</th>
-                                <th class="inventory-category" style="width: 120px ; min-width: 120px; max-width: 120px;">Stickers</th>
-                                <th style="width: 75px ; min-width: 75px; max-width: 75px;">69</th>
-                                <th style="width: 100px ; min-width: 100px; max-width: 100px;" >P 69.99</th>
-                                <th style="width: 50px ; min-width: 50px; max-width: 50px; font-size: 1.5rem; text-align: center; cursor: pointer;"><i title="Edit Item AXS-003" class="bi bi-pencil-square"></i></th>
-                            </tr>
                             
-                            <tr class="inventory-row" style="height: 50px;">
-                                <th class="inventory-id" style="width:100px ; min-width: 100px; max-width: 100px; word-wrap:break-word;">AXS-003</th>
-                                <td style="width:130px; min-width: 130px; max-width: 130px; height: 75px; padding: 0 15px;"><img src="../assets/images/huh.png" style="object-fit: contain; height: 100%; width: 100%; vertical-align: middle;" alt="hehe"></td>
-                                <th class="inventory-name" style="padding-right: 30px; padding-bottom: 10px;">Apple sauce</th>
-                                <th class="inventory-category" style="width: 120px ; min-width: 120px; max-width: 120px;">Stickers</th>
-                                <th style="width: 75px ; min-width: 75px; max-width: 75px;">69</th>
-                                <th style="width: 100px ; min-width: 100px; max-width: 100px;" >P 69.99</th>
-                                <th style="width: 50px ; min-width: 50px; max-width: 50px; font-size: 1.5rem; text-align: center; cursor: pointer;"><i title="Edit Item" class="bi bi-pencil-square"></i></th>
-                            </tr>
-                    
-                            <tr class="inventory-row" style="height: 50px;">
-                                <th class="inventory-id" style="width:100px ; min-width: 100px; max-width: 100px; word-wrap:break-word;">AXS-003</th>
-                                <td style="width:130px; min-width: 130px; max-width: 130px; height: 75px; padding: 0 15px;"><img src="../assets/images/slf.png" style="object-fit: contain; height: 100%; width: 100%; vertical-align: middle;" alt="hehe"></td>
-                                <th class="inventory-name" style="padding-right: 30px; padding-bottom: 10px;">I need sleep</th>
-                                <th class="inventory-category" style="width: 120px ; min-width: 120px; max-width: 120px;">Stickers</th>
-                                <th style="width: 75px ; min-width: 75px; max-width: 75px;">69</th>
-                                <th style="width: 100px ; min-width: 100px; max-width: 100px;" >P 69.99</th>
-                                <th style="width: 50px ; min-width: 50px; max-width: 50px; font-size: 1.5rem; text-align: center; cursor: pointer;"><i title="Edit Item" class="bi bi-pencil-square"></i></th>
+                            <?php
+                            foreach ($logs as $log) {
+                                ?>
+
+                                <tr class="log-row" style="height: 50px;">
+                                    <th class="log-id" style="width:100px ; min-width: 100px; max-width: 100px; word-wrap:break-word;"><?php echo htmlspecialchars($log['id']); ?></th>
+                                    <th class="log-category" style="width: 120px ; min-width: 120px; max-width: 120px;"><?php echo htmlspecialchars($log['type']); ?></th>
+                                    <th class="log-user" style="width: 120px ; min-width: 120px; max-width: 120px;"><?php echo htmlspecialchars($log['userID']); ?></th>
+                                    <th class="log-details" style="padding-right: 30px;"><?php echo htmlspecialchars($log['details']); ?></th>
+                                    <th class="log-datetime" style="width: 200px ; min-width: 200px; max-width: 200px;"><?php echo htmlspecialchars($log['timestamp']); ?></th>
+                                </tr>
+
+                            <?php } ?>
+
+                            <!-- <tr class="log-row" style="height: 50px;">
+                                <th class="log-id" style="width:100px ; min-width: 100px; max-width: 100px; word-wrap:break-word;">LOG-001</th>
+                                <th class="log-category" style="width: 120px ; min-width: 120px; max-width: 120px;">User</th>
+                                <th class="log-user" style="width: 120px ; min-width: 120px; max-width: 120px;">12345678</th>
+                                <th class="log-details" style="padding-right: 30px;">Logged In.</th>
+                                <th class="log-datetime" style="width: 200px ; min-width: 200px; max-width: 200px;">2024-07-01 06:15:00</th>
+                            </tr> -->
+                            
+                            <tr class="no-results hide" style="height: 50px;">
+                                <th colspan="5" class="log-id" style="width:100px ; min-width: 100px; max-width: 100px; text-align: center;">No Results.</th>
                             </tr>
 
-                            <tr class="no-results hide" style="height: 50px;">
-                                <th colspan="9" style="width:100px ; min-width: 100px; max-width: 100px; text-align: center;">No Results.</th>
-                            </tr>
-                        
                         </tbody>
 
                     </table>

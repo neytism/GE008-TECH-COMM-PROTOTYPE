@@ -1,3 +1,61 @@
+<?php
+session_start();
+
+if (!isset($_SESSION['user_id'])) {
+    header('location: pages/login.php');
+}
+
+if ($_SESSION['role'] == "student") {
+    header('location: pages/login.php');
+    unset($_SESSION['user_id']);
+    unset($_SESSION['role']);
+}
+
+if (isset($_GET['logout'])) {
+    session_destroy();
+    unset($_SESSION['user_id']);
+    unset($_SESSION['role']);
+    header("location: pages/login.php");
+}
+
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "techcommprototype";
+
+$name = '';
+$organization = '';
+
+// Create connection
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+// Check connection
+if ($conn->connect_error) {
+  die("Connection failed: " . $conn->connect_error);
+}
+
+
+
+$sql = "SELECT u.id, u.username, u.password, u.name, u.role, o.name AS organization_name FROM users AS u JOIN organizations AS o ON u.organization = o.id WHERE u.id = '$_SESSION[user_id]'";
+
+$result = $conn->query($sql);
+
+while ($row = $result->fetch_assoc()) {
+  
+  $name = $row["name"];
+  $organization = $row["organization_name"];
+
+}
+
+$sql = "SELECT * FROM item_category";
+
+$result = mysqli_query($conn, $sql);
+
+$categories = mysqli_fetch_all($result, MYSQLI_ASSOC);
+
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -21,7 +79,7 @@
     
         <div class="nav-left">
             <div class="menu">
-                <a href="#" class="logo">CIIT ORG</a>
+                <a href="#" class="logo"><?php if($organization == "Individual"){ echo htmlspecialchars(strtoupper($name)); } else {echo htmlspecialchars($organization);} ?></a>
     
                 <form class="search-bar ">
                     <input id="search" type="text" autocomplete="off" placeholder="Search Products...">
@@ -37,7 +95,7 @@
     
             <!-- NAVIGATION MENUS -->
             <div class="menu seller">
-                <li><a href="https://www.youtube.com/">SELLER NAME</a></li>
+                <li><a href="https://www.youtube.com/"><?php if($organization == "Individual"){ echo htmlspecialchars(strtoupper($name)); } else {echo htmlspecialchars($organization);} ?></a></li>
             </div>
         </div>
     
@@ -46,11 +104,11 @@
     <div class="mobile-nav shadow">
         <div class="left-nav-icon button selected" title="HOME" onclick="homeButton()"><i class="bi bi-house"></i>HOME</div>
         <div class="left-nav-icon button cart-icon" title="CART" onclick="cartButton()"><i class="bi bi-cart"></i>CART</div>
-        <div class="left-nav-icon button" title="INVENTORY" ><i class="bi bi-boxes"></i>INVENTORY</div>
-        <div class="left-nav-icon button" title="LOGS" ><i class="bi bi-journal-text"></i>LOGS</div>
-        <div class="left-nav-icon button" title="REPORTS" ><i class="bi bi-bar-chart-line"></i>REPORTS</div>
-        <div class="left-nav-icon button" title="SETTINGS" ><i class="bi bi-gear"></i>SETTINGS</div>
-        <div class="left-nav-icon button" title="LOGOUT" ><i class="bi bi-box-arrow-left"></i>LOGOUT</div>
+        <div class="left-nav-icon button" title="INVENTORY" onclick="window.location.href='pages/inventory.php'"><i class="bi bi-boxes"></i>INVENTORY</div>
+        <div class="left-nav-icon button" title="LOGS" onclick="window.location.href='pages/logs.php'"><i class="bi bi-journal-text"></i>LOGS</div>
+        <div class="left-nav-icon button" title="REPORTS" onclick="window.location.href='pages/reports.php'"><i class="bi bi-bar-chart-line"></i>REPORTS</div>
+        <div class="left-nav-icon button" title="SETTINGS" onclick="window.location.href='pages/settings.php'"><i class="bi bi-gear"></i>SETTINGS</div>
+        <div class="left-nav-icon button" title="LOGOUT" onclick="window.location.href='pages/inventory.php'"><i class="bi bi-box-arrow-left"></i>LOGOUT</div>
     </div>
     
     <div class="main-interface with-navbar">
@@ -59,14 +117,14 @@
                 <div class="left-nav-upper">
                     <div class="left-nav-icon button selected" onclick="homeButton()"><i class="bi bi-house"></i>HOME</div>
                     <div class="left-nav-icon button cart-icon" onclick="cartButton()"><i class="bi bi-cart"></i>CART</div>
-                    <div class="left-nav-icon button"><i class="bi bi-boxes"></i>INVENTORY</div>
-                    <div class="left-nav-icon button"><i class="bi bi-journal-text"></i>LOGS</div>
-                    <div class="left-nav-icon button"><i class="bi bi-bar-chart-line"></i>REPORTS</div>
-                    <div class="left-nav-icon button"><i class="bi bi-gear"></i>SETTINGS</div>
+                    <div class="left-nav-icon button" onclick="window.location.href='pages/inventory.php'"><i class="bi bi-boxes" href="../pages/inventory.php"></i>INVENTORY</div>
+                    <div class="left-nav-icon button" onclick="window.location.href='pages/logs.php'"><i class="bi bi-journal-text"></i>LOGS</div>
+                    <div class="left-nav-icon button" onclick="window.location.href='pages/reports.php'"><i class="bi bi-bar-chart-line"></i>REPORTS</div>
+                    <div class="left-nav-icon button" onclick="window.location.href='pages/settings.php'"><i class="bi bi-gear"></i>SETTINGS</div>
                 </div>
                 
                 <div class="left-nav-lower">
-                    <div class="left-nav-icon button"><i class="bi bi-box-arrow-left"></i>LOGOUT</div>
+                    <div class="left-nav-icon button" onclick="window.location.href='index.php?logout=1'"><i class="bi bi-box-arrow-left"></i>LOGOUT</div>
                 </div>
 
             </div>
@@ -77,14 +135,17 @@
                 
                 <div class="category-panel shadow unselectable">
                     <div class="category-button selected">All</div>
-                    <div class="category-button">Stickers</div>
-                    <div class="category-button">Pins</div>
-                    <div class="category-button">Shirts</div>
-                    <div class="category-button">Food</div>
-                    <div class="category-button">Drinks</div>
-                    <div class="category-button">Lanyard</div>
-                    <div class="category-button">Keycaps</div>
-                    <div class="category-button">Keychain</div>
+                    <?php
+                    $firstCategory = true;
+                    foreach ($categories as $category) {
+                        if ($firstCategory) {
+                            $firstCategory = false;
+                            continue;
+                        }
+                        ?>
+                        <div class="category-button"><?php echo htmlspecialchars($category['name']); ?></div>
+                    <?php } ?>
+                
                 </div>
                 
                 <div class="products-panel unselectable">

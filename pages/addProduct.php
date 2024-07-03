@@ -44,8 +44,8 @@
                 <input style="margin: 15px 25px; background-color: rgba(0, 0, 0, 0.075); border: none; height: 3rem; border-radius: 1rem; padding: 0 20px;" type="text" id="" placeholder="Stock" required>
                 <input style="margin: 15px 25px; background-color: rgba(0, 0, 0, 0.075); border: none; height: 3rem; border-radius: 1rem; padding: 0 20px;" type="" id="" placeholder="Price" required>
                 <div style="margin: 15px 25px; display: flex; gap: 15px;" >
-                    <div style="width: 50%;" class="confirm-button cancel">CANCEL</div>
-                    <button type="submit" style="width: 50%; border: none;" class="confirm-button confirm">SAVE</button>
+                    <div style="width: 50%; cursor: pointer;" class="confirm-button cancel" onclick="window.location.href='inventory.php'">CANCEL</div>
+                    <button type="submit" style="width: 50%; border: none; cursor: pointer;" class="confirm-button confirm">SAVE</button>
                 </div>
                 <div style="margin: 15px 25px; border-radius: 1rem; background-color: rgba(0, 0, 0, 0.466);" class="confirm-button confirm hide">
                     <div>hello<br>world</div>
