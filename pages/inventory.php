@@ -1,3 +1,48 @@
+<?php
+session_start();
+
+if (!isset($_SESSION['user_id'])) {
+    header('location: pages/login.php');
+}
+
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "techcommprototype";
+
+$name = '';
+$organization = '';
+
+// Create connection
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+// Check connection
+if ($conn->connect_error) {
+  die("Connection failed: " . $conn->connect_error);
+}
+
+
+$sql = "SELECT organization FROM users WHERE id = '$_SESSION[user_id]'";
+
+$result = $conn->query($sql);
+
+if ($row = $result->fetch_assoc()) {
+    $organization_id = $row["organization"];
+}
+
+if ($organization_id == '1'){
+    $sql = "SELECT items.*, item_category.name AS category_name FROM items JOIN item_category ON items.category_id = item_category.id WHERE organization_id = '$organization_id' AND user_id = '$_SESSION[user_id]'";
+} else{
+    $sql = "SELECT items.*, item_category.name AS category_name FROM items JOIN item_category ON items.category_id = item_category.id WHERE organization_id = '$organization_id'";
+}
+
+$result = mysqli_query($conn, $sql);
+
+$items = mysqli_fetch_all($result, MYSQLI_ASSOC);
+
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -89,14 +134,7 @@
                 </div>
                 
                 <div class="products-panel unselectable">
-                    
-                    <div class="inventory-card shadow hide" itemID='1'>
-                        <div class="inventory-icon"><img src="../assets/images/ciit.png" alt="Product Image"></div>
-                        <div class="inventory-card-desc" category="Stickers">
-                            <div class="inventory-name" title="CIIT sticker with FREE Tuition Fee"><span>CIIT sticker with FREE Tuition Fee</span></div>
-                            <div class="inventory-price">P 25.00</div>
-                        </div>
-                    </div>
+                
                     
                     <table style="background-color: white; border-radius: 10px; width: 100%; text-align: left; padding: 15px; ">
 
@@ -114,7 +152,24 @@
                         
                         <tbody >
                             <tr><td colspan="7"><br><hr style="border-top: 1px solid rgba(0, 0, 0, 0.151);"></td></tr>
-                            <tr class="inventory-row" style="height: 50px;">
+                            
+                            <?php
+                            foreach ($items as $item) {
+                                ?>
+
+                                 <tr class="inventory-row" style="height: 50px;">
+                                    <th class="inventory-id" style="width:100px ; min-width: 100px; max-width: 100px; word-wrap:break-word;"><?php echo htmlspecialchars($item['id']); ?></th>
+                                    <td style="width:130px; min-width: 130px; max-width: 130px; height: 75px; padding: 0 15px;"><img src="../assets/images/<?php echo htmlspecialchars($item['image_name']); ?>" style="object-fit: contain; height: 100%; width: 100%; vertical-align: middle;" alt="hehe"></td>
+                                    <th class="inventory-name" style="padding-right: 30px; padding-bottom: 10px;"><?php echo htmlspecialchars($item['name']); ?></th>
+                                    <th class="inventory-category" style="width: 120px ; min-width: 120px; max-width: 120px;"><?php echo htmlspecialchars($item['category_name']); ?></th>
+                                    <th style="width: 75px ; min-width: 75px; max-width: 75px;"><?php echo htmlspecialchars($item['stock']); ?></th>
+                                    <th style="width: 100px ; min-width: 100px; max-width: 100px;" >P <?php echo htmlspecialchars($item['price']); ?></th>
+                                    <th style="width: 50px ; min-width: 50px; max-width: 50px; font-size: 1.5rem; text-align: center; cursor: pointer;" onclick="window.location.href='editProduct.php?productID=<?php echo htmlspecialchars($item['id']); ?>'"><i title="Edit Item <?php echo htmlspecialchars($item['id']); ?>" class="bi bi-pencil-square"></i></th>
+                                </tr>
+
+                            <?php } ?>
+
+                            <!-- <tr class="inventory-row" style="height: 50px;">
                                 <th class="inventory-id" style="width:100px ; min-width: 100px; max-width: 100px; word-wrap:break-word;">AXS-003</th>
                                 <td style="width:130px; min-width: 130px; max-width: 130px; height: 75px; padding: 0 15px;"><img src="../assets/images/gato.png" style="object-fit: contain; height: 100%; width: 100%; vertical-align: middle;" alt="hehe"></td>
                                 <th class="inventory-name" style="padding-right: 30px; padding-bottom: 10px;">CIIT sticker with FREE Tuition Fee</th>
@@ -122,28 +177,8 @@
                                 <th style="width: 75px ; min-width: 75px; max-width: 75px;">69</th>
                                 <th style="width: 100px ; min-width: 100px; max-width: 100px;" >P 69.99</th>
                                 <th style="width: 50px ; min-width: 50px; max-width: 50px; font-size: 1.5rem; text-align: center; cursor: pointer;"><i title="Edit Item AXS-003" class="bi bi-pencil-square"></i></th>
-                            </tr>
+                            </tr> -->
                             
-                            <tr class="inventory-row" style="height: 50px;">
-                                <th class="inventory-id" style="width:100px ; min-width: 100px; max-width: 100px; word-wrap:break-word;">AXS-003</th>
-                                <td style="width:130px; min-width: 130px; max-width: 130px; height: 75px; padding: 0 15px;"><img src="../assets/images/huh.png" style="object-fit: contain; height: 100%; width: 100%; vertical-align: middle;" alt="hehe"></td>
-                                <th class="inventory-name" style="padding-right: 30px; padding-bottom: 10px;">Apple sauce</th>
-                                <th class="inventory-category" style="width: 120px ; min-width: 120px; max-width: 120px;">Stickers</th>
-                                <th style="width: 75px ; min-width: 75px; max-width: 75px;">69</th>
-                                <th style="width: 100px ; min-width: 100px; max-width: 100px;" >P 69.99</th>
-                                <th style="width: 50px ; min-width: 50px; max-width: 50px; font-size: 1.5rem; text-align: center; cursor: pointer;"><i title="Edit Item" class="bi bi-pencil-square"></i></th>
-                            </tr>
-                    
-                            <tr class="inventory-row" style="height: 50px;">
-                                <th class="inventory-id" style="width:100px ; min-width: 100px; max-width: 100px; word-wrap:break-word;">AXS-003</th>
-                                <td style="width:130px; min-width: 130px; max-width: 130px; height: 75px; padding: 0 15px;"><img src="../assets/images/slf.png" style="object-fit: contain; height: 100%; width: 100%; vertical-align: middle;" alt="hehe"></td>
-                                <th class="inventory-name" style="padding-right: 30px; padding-bottom: 10px;">I need sleep</th>
-                                <th class="inventory-category" style="width: 120px ; min-width: 120px; max-width: 120px;">Stickers</th>
-                                <th style="width: 75px ; min-width: 75px; max-width: 75px;">69</th>
-                                <th style="width: 100px ; min-width: 100px; max-width: 100px;" >P 69.99</th>
-                                <th style="width: 50px ; min-width: 50px; max-width: 50px; font-size: 1.5rem; text-align: center; cursor: pointer;"><i title="Edit Item" class="bi bi-pencil-square"></i></th>
-                            </tr>
-
                             <tr class="no-results hide" style="height: 50px;">
                                 <th colspan="9" style="width:100px ; min-width: 100px; max-width: 100px; text-align: center;">No Results.</th>
                             </tr>

@@ -3,7 +3,7 @@ function checkLogin(event) {
     event.preventDefault();
   
     let warningText = document.getElementById("warningTextLogIn");
-
+    
     let uname = document.getElementById("inputUserName").value;
     let pword = document.getElementById("inputPassword").value;
   
@@ -18,14 +18,14 @@ function checkLogin(event) {
             setTimeout(function(){
                 document.location.href = '../index.php';
            }, 1000); 
-
+        
         } else{
             ChangeText(warningText, this.responseText);
         }
     };
 
     xhr.send('uname=' + uname + '&pword=' + pword);
-
+  
   };
 
   function ChangeText(textHolder, textString) {

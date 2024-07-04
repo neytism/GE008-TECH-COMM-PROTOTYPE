@@ -36,7 +36,7 @@ if ($conn->connect_error) {
 
 
 
-$sql = "SELECT u.id, u.username, u.password, u.name, u.role, o.name AS organization_name FROM users AS u JOIN organizations AS o ON u.organization = o.id WHERE u.id = '$_SESSION[user_id]'";
+$sql = "SELECT u.id, u.username, u.password, u.name, u.role, u.organization, o.name AS organization_name FROM users AS u JOIN organizations AS o ON u.organization = o.id WHERE u.id = '$_SESSION[user_id]'";
 
 $result = $conn->query($sql);
 
@@ -44,8 +44,18 @@ while ($row = $result->fetch_assoc()) {
   
   $name = $row["name"];
   $organization = $row["organization_name"];
-
+  $organization_id = $row["organization"];
 }
+
+if ($organization_id == '1'){
+    $sql = "SELECT items.*, item_category.name AS category_name FROM items JOIN item_category ON items.category_id = item_category.id WHERE organization_id = '$organization_id' AND user_id = '$_SESSION[user_id]'";
+} else{
+    $sql = "SELECT items.*, item_category.name AS category_name FROM items JOIN item_category ON items.category_id = item_category.id WHERE organization_id = '$organization_id'";
+}
+
+$result = mysqli_query($conn, $sql);
+
+$items = mysqli_fetch_all($result, MYSQLI_ASSOC);
 
 $sql = "SELECT * FROM item_category";
 
@@ -79,7 +89,7 @@ $categories = mysqli_fetch_all($result, MYSQLI_ASSOC);
     
         <div class="nav-left">
             <div class="menu">
-                <a href="#" class="logo"><?php if($organization == "Individual"){ echo htmlspecialchars(strtoupper($name)); } else {echo htmlspecialchars($organization);} ?></a>
+                <a href="#" class="logo"><?php if($organization == "Individual"){ echo htmlspecialchars(strtoupper($name)); } else {echo htmlspecialchars(strtoupper($organization));} ?></a>
     
                 <form class="search-bar ">
                     <input id="search" type="text" autocomplete="off" placeholder="Search Products...">
@@ -95,7 +105,7 @@ $categories = mysqli_fetch_all($result, MYSQLI_ASSOC);
     
             <!-- NAVIGATION MENUS -->
             <div class="menu seller">
-                <li><a href="https://www.youtube.com/"><?php if($organization == "Individual"){ echo htmlspecialchars(strtoupper($name)); } else {echo htmlspecialchars($organization);} ?></a></li>
+                <li><a><?php echo htmlspecialchars(strtoupper($name)); ?></a></li>
             </div>
         </div>
     
@@ -149,131 +159,21 @@ $categories = mysqli_fetch_all($result, MYSQLI_ASSOC);
                 </div>
                 
                 <div class="products-panel unselectable">
-                    
-                    <div class="product-card shadow" itemID='1'>
-                        <div class="card-add-to-cart"><i class="bi bi-plus-circle-fill" title="Add to Cart"></i></div>
-                        <div class="product-icon"><img src="assets/images/ciit.png" alt="Product Image"></div>
-                        <div class="product-card-desc" category="Stickers">
-                            <div class="product-name" title="CIIT sticker with FREE Tuition Fee"><span>CIIT sticker with FREE Tuition Fee</span></div>
-                            <div class="product-price">P 25.00</div>
-                        </div>
-                    </div>
-                    
-                    <div class="product-card shadow" itemID='2'>
-                        <div class="card-add-to-cart"><i class="bi bi-plus-circle-fill"></i></div>
-                        <div class="product-icon"><img src="assets/images/qiqi.png" alt="Product Image"></div>
-                        <div class="product-card-desc" category="Stickers">
-                            <div class="product-name" title="QIQI NA MALUNGKOT STICKER"><span>QIQI NA MALUNGKOT STICKER</span></div>
-                            <div class="product-price">P 25.00</div>
-                        </div>
-                    </div>
-                    
-                    <div class="product-card shadow" itemID='3'>
-                        <div class="card-add-to-cart"><i class="bi bi-plus-circle-fill"></i></div>
-                        <div class="product-icon"><img src="assets/images/gato.png" alt="Product Image"></div>
-                        <div class="product-card-desc" category="Stickers">
-                            <div class="product-name"><span>Banana Cat Sticker</span></div>
-                            <div class="product-price">P 25.00</div>
-                        </div>
-                    </div>
-                    
-                    <div class="product-card shadow " itemID='4'>
-                        <div class="card-add-to-cart"><i class="bi bi-plus-circle-fill"></i></div>
-                        <div class="product-icon"><img src="assets/images/navia.png" alt="Product Image"></div>
-                        <div class="product-card-desc" category="Stickers">
-                            <div class="product-name"><span>Navia Sticker</span></div>
-                            <div class="product-price">P 25.00</div>
-                        </div>
-                    </div>
+                
+                    <?php
+                        foreach ($items as $item) {
+                            ?>
 
-                    <div class="product-card shadow" itemID='5'>
-                        <div class="card-add-to-cart"><i class="bi bi-plus-circle-fill"></i></div>
-                        <div class="product-icon"><img src="assets/images/huh.png" alt="Product Image"></div>
-                        <div class="product-card-desc" category="Stickers">
-                            <div class="product-name"><span>Miles Morales Sticker</span></div>
-                            <div class="product-price">P 25.00</div>
-                        </div>
-                    </div>
-
-                    <div class="product-card shadow" itemID='6'>
-                        <div class="card-add-to-cart"><i class="bi bi-plus-circle-fill"></i></div>
-                        <div class="product-icon"><img src="assets/images/ciit-pin.png" alt="Product Image"></div>
-                        <div class="product-card-desc" category="Pins">
-                            <div class="product-name"><span>Interweave Pin</span></div>
-                            <div class="product-price">P 25.00</div>
-                        </div>
-                    </div>
-
-                    <div class="product-card shadow" itemID='7'>
-                        <div class="card-add-to-cart"><i class="bi bi-plus-circle-fill"></i></div>
-                        <div class="product-icon"><img src="assets/images/war-cat.png" alt="Product Image"></div>
-                        <div class="product-card-desc" category="Pins">
-                            <div class="product-name"><span>War Cat Pin</span></div>
-                            <div class="product-price">P 25.00</div>
-                        </div>
-                    </div>
-
-                    <div class="product-card shadow" itemID='8'>
-                        <div class="card-add-to-cart"><i class="bi bi-plus-circle-fill"></i></div>
-                        <div class="product-icon"><img src="assets/images/side-eye-cat.png" alt="Product Image"></div>
-                        <div class="product-card-desc" category="Pins">
-                            <div class="product-name"><span>Side Eye Cat Pin</span></div>
-                            <div class="product-price">P 25.00</div>
-                        </div>
-                    </div>
-                    
-                    <div class="product-card shadow" itemID='1'>
-                        <div class="card-add-to-cart"><i class="bi bi-plus-circle-fill"></i></div>
-                        <div class="product-icon"><img src="assets/images/ciit.png" alt="Product Image"></div>
-                        <div class="product-card-desc" category="Stickers">
-                            <div class="product-name"><span>CIIT sticker with FREE Tuition Fee</span></div>
-                            <div class="product-price">P 25.00</div>
-                        </div>
-                    </div>
-                    
-                    <div class="product-card shadow" itemID='1'>
-                        <div class="card-add-to-cart"><i class="bi bi-plus-circle-fill"></i></div>
-                        <div class="product-icon"><img src="assets/images/ciit.png" alt="Product Image"></div>
-                        <div class="product-card-desc" category="Stickers">
-                            <div class="product-name"><span>CIIT sticker with FREE Tuition Fee</span></div>
-                            <div class="product-price">P 25.00</div>
-                        </div>
-                    </div>
-                    
-                    <div class="product-card shadow" itemID='1'>
-                        <div class="card-add-to-cart"><i class="bi bi-plus-circle-fill"></i></div>
-                        <div class="product-icon"><img src="assets/images/ciit.png" alt="Product Image"></div>
-                        <div class="product-card-desc" category="Stickers">
-                            <div class="product-name"><span>CIIT sticker with FREE Tuition Fee</span></div>
-                            <div class="product-price">P 25.00</div>
-                        </div>
-                    </div>
-                    
-                    <div class="product-card shadow" itemID='1'>
-                        <div class="card-add-to-cart"><i class="bi bi-plus-circle-fill"></i></div>   <div class="product-icon"><img src="assets/images/ciit.png" alt="Product Image"></div>
-                        <div class="product-card-desc" category="Stickers">
-                            <div class="product-name"><span>CIIT sticker with FREE Tuition Fee</span></div>
-                            <div class="product-price">P 25.00</div>
-                        </div>
-                    </div>
-
-                    <div class="product-card shadow" itemID='1'>
-                        <div class="card-add-to-cart"><i class="bi bi-plus-circle-fill"></i></div>
-                        <div class="product-icon"><img src="assets/images/ciit.png" alt="Product Image"></div>
-                        <div class="product-card-desc" category="Stickers">
-                            <div class="product-name"><span>CIIT sticker with FREE Tuition Fee</span></div>
-                            <div class="product-price">P 25.00</div>
-                        </div>
-                    </div>
-
-                    <div class="product-card shadow" itemID='1'>
-                        <div class="card-add-to-cart"><i class="bi bi-plus-circle-fill"></i></div>
-                        <div class="product-icon"><img src="assets/images/ciit.png" alt="Product Image"></div>
-                        <div class="product-card-desc" category="Stickers">
-                            <div class="product-name"><span>CIIT sticker with FREE Tuition Fee</span></div>
-                            <div class="product-price">P 25.00</div>
-                        </div>
-                    </div>
+                                <div class="product-card shadow" itemID='<?php echo htmlspecialchars($item['id']); ?>'>
+                                    <div class="card-add-to-cart"><i class="bi bi-plus-circle-fill" title="Add to Cart"></i></div>
+                                    <div class="product-icon"><img src="assets/images/<?php echo htmlspecialchars($item['image_name']); ?>" alt="<?php echo htmlspecialchars($item['name']); ?>"></div>
+                                    <div class="product-card-desc" category="Stickers">
+                                        <div class="product-name" title="<?php echo htmlspecialchars($item['name'] . "\n" . $item['stock'] . " items left."); ?>"><span><?php echo htmlspecialchars($item['name']); ?></span></div>
+                                        <div class="product-price">P <?php echo htmlspecialchars($item['price']); ?></div>
+                                    </div>
+                                </div>
+                        
+                    <?php } ?>
                     
                     
                     <!-- to avoid stretching-->

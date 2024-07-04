@@ -21,8 +21,32 @@ if ($conn->connect_error) {
   die("Connection failed: " . $conn->connect_error);
 }
 
+function getUserIdFormatted($id, $length) {
+    return str_pad($id, $length, '0', STR_PAD_LEFT);
+}
 
-$sql = "SELECT * FROM logs ORDER BY timestamp DESC";
+
+$sql = "SELECT * FROM users WHERE id = '$_SESSION[user_id]'";
+    
+$result = $conn->query($sql);
+
+if ($row = $result->fetch_assoc()) {
+    $organization_id = $row["organization"];
+    $user_name = $row["name"];
+}
+
+if($organization_id ==  '1'){
+    $sql = "SELECT * FROM logs WHERE userID ='$_SESSION[user_id]' ORDER BY timestamp DESC";
+} else if ($_SESSION['role'] == "master"){
+    $sql = "SELECT * FROM logs ORDER BY timestamp DESC";
+} else{
+    $sql = "SELECT logs.* FROM logs 
+            JOIN users ON logs.userID = users.id 
+            WHERE users.organization = '$organization_id' 
+            ORDER BY logs.timestamp DESC";
+}
+
+
 
 $result = mysqli_query($conn, $sql);
 
@@ -147,9 +171,9 @@ $logs = mysqli_fetch_all($result, MYSQLI_ASSOC);
                                 ?>
 
                                 <tr class="log-row" style="height: 50px;">
-                                    <th class="log-id" style="width:100px ; min-width: 100px; max-width: 100px; word-wrap:break-word;"><?php echo htmlspecialchars($log['id']); ?></th>
+                                    <th class="log-id" style="width:100px ; min-width: 100px; max-width: 100px; word-wrap:break-word;"><?php echo htmlspecialchars(getUserIdFormatted($log['id'],4)); ?></th>
                                     <th class="log-category" style="width: 120px ; min-width: 120px; max-width: 120px;"><?php echo htmlspecialchars($log['type']); ?></th>
-                                    <th class="log-user" style="width: 120px ; min-width: 120px; max-width: 120px;"><?php echo htmlspecialchars($log['userID']); ?></th>
+                                    <th class="log-user" style="width: 120px ; min-width: 120px; max-width: 120px;"><?php echo htmlspecialchars(getUserIdFormatted($log['userID'],3)); ?></th>
                                     <th class="log-details" style="padding-right: 30px;"><?php echo htmlspecialchars($log['details']); ?></th>
                                     <th class="log-datetime" style="width: 200px ; min-width: 200px; max-width: 200px;"><?php echo htmlspecialchars($log['timestamp']); ?></th>
                                 </tr>
