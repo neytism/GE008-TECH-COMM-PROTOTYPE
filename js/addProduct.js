@@ -1,7 +1,7 @@
 //add product
 function checkAddProd(event, phpFile, itemID) {
     event.preventDefault();
-
+    
     let warningText = document.getElementById("warningText");
     
     let item_name = document.getElementById("inputitem_name").value;
@@ -16,7 +16,7 @@ function checkAddProd(event, phpFile, itemID) {
     formData.append('itemPrice', itemPrice);
     formData.append('itemStock', itemStock);
     formData.append('itemCategory', itemCategory);
-
+    
     if (itemID) {
         formData.append('itemID', itemID)
     }

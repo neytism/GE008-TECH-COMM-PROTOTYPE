@@ -51,6 +51,7 @@ function searchInventory(value, category) {
         }
       }
     });
+    
   
     noResultsRow.toggle(!hasResults);
   }
@@ -107,7 +108,7 @@ $(document).ready(function() {
             $(".search-empty").removeClass("hide");
             $(".search-meron").addClass("hide");
         }
-
+    
     });
 });
 

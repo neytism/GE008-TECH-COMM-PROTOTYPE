@@ -27,7 +27,7 @@ function checkLogin(event) {
     xhr.send('uname=' + uname + '&pword=' + pword);
   
   };
-
+  
   function ChangeText(textHolder, textString) {
     
     textHolder.style.display = "block";
