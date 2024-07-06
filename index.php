@@ -211,14 +211,15 @@ $categories = mysqli_fetch_all($result, MYSQLI_ASSOC);
                     foreach ($items as $item) {
                         ?>
 
-                        <div class="product-card shadow" itemID='<?php echo htmlspecialchars($item['id']); ?>'>
+                        <div class="product-card shadow" itemID='<?php echo htmlspecialchars($item['id']); ?>' 
+                        title="<?php echo htmlspecialchars($item['name'] . "\n" . $item['stock'] . " items left."); ?>" 
+                        stock="<?php echo htmlspecialchars($item['stock']); ?>" >
                             <div class="card-add-to-cart"><i class="bi bi-plus-circle-fill" title="Add to Cart"></i></div>
                             <div class="product-icon"><img
                                     src="assets/images/<?php echo htmlspecialchars($item['image_name']); ?>"
                                     alt="<?php echo htmlspecialchars($item['name']); ?>"></div>
                             <div class="product-card-desc" category="Stickers">
-                                <div class="product-name"
-                                    title="<?php echo htmlspecialchars($item['name'] . "\n" . $item['stock'] . " items left."); ?>">
+                                <div class="product-name">
                                     <span><?php echo htmlspecialchars($item['name']); ?></span></div>
                                 <div class="product-price">P <?php echo htmlspecialchars($item['price']); ?></div>
                             </div>
@@ -338,7 +339,7 @@ $categories = mysqli_fetch_all($result, MYSQLI_ASSOC);
                             <div class="confirm-group">
                                 <div class="confirm-button cancel unselectable" style="cursor:pointer;"
                                     onclick="ClearInput()">CANCEL</div>
-                                <div class="confirm-button confirm unselectable" style="cursor:pointer;"
+                                <div id="confirm-button" class="confirm-button confirm unselectable" style="cursor:pointer;"
                                     onclick="ConfirmCheckOut()">CONFIRM</div>
                             </div>
                         </div>

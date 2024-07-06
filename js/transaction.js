@@ -27,12 +27,14 @@ function updateTotalAmount() {
 updateTotalAmount();
 
 function addToCart() {
+    //TODO: Make title change according to stock, but maybe just add it to html
     const productCards = document.querySelectorAll('.product-card:not(.invisible)');
     
     productCards.forEach((card) => {
         const addToCartButton = card.querySelector('.card-add-to-cart');
         addToCartButton.addEventListener('click', () => {
             var itemID = card.getAttribute("itemID");
+            var itemStock = card.getAttribute("stock");
             var itemName = card.querySelector('.product-name').textContent;
             var itemPrice = card.querySelector('.product-price').textContent;
         
@@ -49,6 +51,9 @@ function addToCart() {
                 const cartItemQuantity = cartItem.querySelector('.cart-item-quantity');
                 const currentQuantity = parseInt(cartItemQuantity.textContent.replace('x', ''));
                 cartItemQuantity.textContent = `${currentQuantity + 1}x`;
+                var currentStock = parseInt(itemStock);
+                currentStock--;
+                card.setAttribute("stock", currentStock);
 
             } else {
                 const cartItemBanner = document.createElement('div');
@@ -109,7 +114,10 @@ function addToCart() {
                 
                 cartItems.appendChild(cartItemBanner);
 
-                
+                var currentStock = parseInt(itemStock);
+                currentStock--;
+                card.setAttribute("stock", currentStock);
+
             }
 
             updateTotalAmount();
@@ -246,12 +254,17 @@ function ConfirmCheckOut() {
     formData.append('items', JSON.stringify($items));
     formData.append('total_amount', $value)
     formData.append('payment_method', $method)
+
+    $confirm_button = document.getElementById("confirm-button");
+    $confirm_button.innerHTML = "WAITING...";
     
     var xhr = new XMLHttpRequest();
     xhr.open('POST', 'emailer.php', true);
     xhr.onload = function() {
         $elem = document.getElementById("receipt-parent");
         $elem.innerHTML = this.responseText;
+        $confirm_button = document.getElementById("confirm-button");
+        $confirm_button.innerHTML = "CONFIRM";
     };
     
     xhr.send(formData);

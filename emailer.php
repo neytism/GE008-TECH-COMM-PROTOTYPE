@@ -109,32 +109,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $details =  $details . $item['quantity'] . " x " . $item['item_id'] . " - " . $item['name'] . " = " . $item['price'] . " . ";
     }
     
-    $sql = "INSERT INTO receipts(id, buyer_id, seller_id, organization_id, details, total_amount, payment_method) VALUES ('$itemCode','$buyer_id','$seller_id','$organization_id', '$details', '$total_amount','$payment_method') ";
-    mysqli_query($conn, $sql);
-
-    $receipt_display = '';
-    
-    $receipt_display .= '<div style="position:fixed; background-color: rgba(0,0,0,0.7); height: 100vh; width: 100vw; z-index: 100; cursor: pointer;" id="receipt-holder" onclick="CloseReceipt()">';
-    $receipt_display .= '    <div class="login-panel shadow">';
-    $receipt_display .= '        <div style="margin-bottom: 5px; text-align: center; font-size: 1.8rem; font-family: Loew-ExtraBold !important;">RECEIPT</div>';
-    $receipt_display .= '        <div style="margin-bottom: 5px; margin-top: 5px;text-align: center; font-size: 1rem; font-family: Loew-ExtraBold !important;">'.$formattedItemCode.'</div>';
-    $receipt_display .= '        <hr style="border-top: 2px dotted rgba(0, 0, 0, 1); margin-top: 10px; margin-bottom: 10px;">';
-    $receipt_display .= '        <div style="margin-bottom: 5px; text-align: center; font-size: 0.8rem; font-family: Loew-Medium !important;">'.$formattedTimestamp.'</div>';
-    $receipt_display .= '        <div style="margin-bottom: 5px; text-align: center; font-size: 0.8rem; font-family: Loew-Medium !important;">'.$buyer_name.'</div>';
-    $receipt_display .= '        <hr style="border-top: 2px dotted rgba(0, 0, 0, 1); margin-top: 10px; margin-bottom: 10px;">';
-    $receipt_display .= '        <div style="margin-bottom: 5px; text-align: center; font-size: 0.8rem; font-family: Loew-Medium !important;">'.$organization_name.'</div>';
-    $receipt_display .= '        <div style="margin-bottom: 5px; text-align: center; font-size: 0.8rem; font-family: Loew-Medium !important;">'.$seller_name.'</div>';
-    $receipt_display .= '        <hr style="border-top: 2px dotted rgba(0, 0, 0, 1); margin-top: 10px;">';
-    $receipt_display .= '        <div style="margin-bottom: 10px; margin-top: 10px;text-align: center; font-size: 1rem; font-family: Loew-ExtraBold !important;">Items</div>';
-    foreach ($items as $item){
-    $receipt_display .= '        <div style="margin-bottom: 5px; margin-top: 5px;text-align: center; font-size: 0.8rem; font-family: Loew-Medium !important;">'.$item['quantity'].' - '.$item['name'].' - '.$item['price'].'</div>';
-    }
-    $receipt_display .= '        <hr style="border-top: 2px dotted rgba(0, 0, 0, 1); margin-top: 10px">';
-    $receipt_display .= '        <div style="margin-bottom: 10px; margin-top: 10px;text-align: center; font-size: 1rem; font-family: Loew-ExtraBold !important;">TOTAL AMOUNT: '.$total_amount.'</div>';
-    $receipt_display .= '        <hr style="border-top: 2px dotted rgba(0, 0, 0, 1);">';
-    $receipt_display .= '        <div style="margin-bottom: 5px; margin-top: 5px; text-align: center; font-size: 0.8rem; font-family: Loew-Medium !important;">sent via email. click anywhere to close.</div>';
-    $receipt_display .= '    </div>';
-    $receipt_display .= '</div>';
     
     $subject = "Receipt for " . $formattedItemCode ;
 
@@ -159,9 +133,51 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $message .= '    <div style="text-align: center; font-size: 0.8rem; font-family: Loew-Medium !important; margin-bottom: 10px; margin-top: 10px;">Thank you for your purchase!</div>';
     $message .= '</div>';
     
-    sendMail($buyer_email, $subject, $message);
+    $email_result = sendMail($buyer_email, $subject, $message);
+
+    $receipt_display = '';
     
-    echo $receipt_display;
+    $receipt_display .= '<div style="position:fixed; background-color: rgba(0,0,0,0.7); height: 100vh; width: 100vw; z-index: 100; cursor: pointer;" id="receipt-holder" onclick="CloseReceipt()">';
+    $receipt_display .= '    <div class="login-panel shadow">';
+    $receipt_display .= '        <div style="margin-bottom: 5px; text-align: center; font-size: 1.8rem; font-family: Loew-ExtraBold !important;">RECEIPT</div>';
+    $receipt_display .= '        <div style="margin-bottom: 5px; margin-top: 5px;text-align: center; font-size: 1rem; font-family: Loew-ExtraBold !important;">'.$formattedItemCode.'</div>';
+    $receipt_display .= '        <hr style="border-top: 2px dotted rgba(0, 0, 0, 1); margin-top: 10px; margin-bottom: 10px;">';
+    $receipt_display .= '        <div style="margin-bottom: 5px; text-align: center; font-size: 0.8rem; font-family: Loew-Medium !important;">'.$formattedTimestamp.'</div>';
+    $receipt_display .= '        <div style="margin-bottom: 5px; text-align: center; font-size: 0.8rem; font-family: Loew-Medium !important;">'.$buyer_name.'</div>';
+    $receipt_display .= '        <hr style="border-top: 2px dotted rgba(0, 0, 0, 1); margin-top: 10px; margin-bottom: 10px;">';
+    $receipt_display .= '        <div style="margin-bottom: 5px; text-align: center; font-size: 0.8rem; font-family: Loew-Medium !important;">Organization: '.$organization_name.'</div>';
+    $receipt_display .= '        <div style="margin-bottom: 5px; text-align: center; font-size: 0.8rem; font-family: Loew-Medium !important;">'.$seller_name.'</div>';
+    $receipt_display .= '        <hr style="border-top: 2px dotted rgba(0, 0, 0, 1); margin-top: 10px;">';
+    $receipt_display .= '        <div style="margin-bottom: 10px; margin-top: 10px;text-align: center; font-size: 1rem; font-family: Loew-ExtraBold !important;">Items</div>';
+    foreach ($items as $item){
+    $receipt_display .= '        <div style="margin-bottom: 5px; margin-top: 5px;text-align: center; font-size: 0.8rem; font-family: Loew-Medium !important;">'.$item['quantity'].' - '.$item['name'].' - '.$item['price'].'</div>';
+    }
+    $receipt_display .= '        <hr style="border-top: 2px dotted rgba(0, 0, 0, 1); margin-top: 10px">';
+    $receipt_display .= '        <div style="margin-bottom: 10px; margin-top: 10px;text-align: center; font-size: 1rem; font-family: Loew-ExtraBold !important;">TOTAL AMOUNT: '.$total_amount.'</div>';
+    $receipt_display .= '        <hr style="border-top: 2px dotted rgba(0, 0, 0, 1);">';
+    $receipt_display .= '        <div style="margin-bottom: 5px; margin-top: 5px; text-align: center; font-size: 0.8rem; font-family: Loew-Medium !important;">'.$email_result.'</div>';
+    $receipt_display .= '    </div>';
+    $receipt_display .= '</div>';
+
+    $error_display = '';
+
+    $error_display .= '<div style="position:fixed; background-color: rgba(0,0,0,0.7); height: 100vh; width: 100vw; z-index: 100; cursor: pointer;" id="receipt-holder" onclick="CloseReceipt()">';
+    $error_display .= '    <div class="login-panel shadow">';
+    $error_display .= '        <div style="margin-bottom: 5px; text-align: center; font-size: 1.8rem; font-family: Loew-ExtraBold !important;">ERROR</div>';
+    $error_display .= '        <div style="margin-bottom: 5px; margin-top: 5px; text-align: center; font-size: 0.8rem; font-family: Loew-Medium !important;">'.$email_result.'</div>';
+    $error_display .= '    </div>';
+    $error_display .= '</div>';
+
+    
+    if($email_result == "Email not sent."){
+        echo $error_display;
+    } else{
+        echo $receipt_display;
+        $sql = "INSERT INTO receipts(id, buyer_id, seller_id, organization_id, details, total_amount, payment_method) VALUES ('$itemCode','$buyer_id','$seller_id','$organization_id', '$details', '$total_amount','$payment_method') ";
+        mysqli_query($conn, $sql);
+        $sql = "INSERT INTO logs(id, buyer_id, seller_id, organization_id, details, total_amount, payment_method) VALUES ('$itemCode','$buyer_id','$seller_id','$organization_id', '$details', '$total_amount','$payment_method') ";
+        mysqli_query($conn, $sql);
+    }
     
     // // $sql = "SELECT * FROM users WHERE student_number = '$_POST[user_to_find]'";
     
@@ -226,12 +242,11 @@ function sendMail($email, $subject, $message){
 
     $mail->AltBody = $message;
     
-    // if(!$mail->send()){
+     if(!$mail->send()){
         
-    //     echo "Email not sent.";
-    
-    // }else{
+         return "Email not sent.";
+        }else{
         
-    //     echo "Success";
-    // }
+        return "sent via email. click anywhere to close.";
+     }
 }
