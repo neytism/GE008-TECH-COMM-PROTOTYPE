@@ -175,7 +175,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         echo $receipt_display;
         $sql = "INSERT INTO receipts(id, buyer_id, seller_id, organization_id, details, total_amount, payment_method) VALUES ('$itemCode','$buyer_id','$seller_id','$organization_id', '$details', '$total_amount','$payment_method') ";
         mysqli_query($conn, $sql);
-        $sql = "INSERT INTO logs(id, buyer_id, seller_id, organization_id, details, total_amount, payment_method) VALUES ('$itemCode','$buyer_id','$seller_id','$organization_id', '$details', '$total_amount','$payment_method') ";
+        $sql = "INSERT INTO logs (type, userID, details) VALUES('sales', '$seller_id', 'User $seller_id - $seller_name issued $formattedItemCode receipt to $buyer_id - $buyer_name.')";
         mysqli_query($conn, $sql);
     }
     
