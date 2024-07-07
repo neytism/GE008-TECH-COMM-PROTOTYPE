@@ -69,7 +69,9 @@ function addToCart() {
 
                 const cartCaretRight = document.createElement('i');
                 cartCaretRight.className = 'bi bi-caret-right';
-                cartCaretRight.style.color = 'rgba(0, 0, 0, 0.39)';
+                cartCaretRight.style.color = 'var(--card-text-color)';
+                cartCaretRight.style.cursor = 'pointer';
+                cartCaretRight.onclick = function() { toggleDropDown(itemID, cartCaretRight); };
                 
                 const cartItemQuantity = document.createElement('div');
                 cartItemQuantity.className = 'cart-item-quantity';
@@ -93,7 +95,7 @@ function addToCart() {
 
                 const cartX = document.createElement('i');
                 cartX.className = 'bi bi-x-circle-fill';
-                cartX.style.color = 'rgba(0, 0, 0, 0.39)';
+                cartX.style.color = 'var(--card-text-color)';
                 cartX.onclick = function() { removeItem(itemID); };
                 
                 const cartItemPrice = document.createElement('div');
@@ -110,13 +112,50 @@ function addToCart() {
                 
                 const cartItemDrop = document.createElement('div');
                 cartItemDrop.className = 'cart-item-banner-drop';
+                cartItemDrop.style.marginTop = '15px';
+                cartItemDrop.setAttribute("itemID", itemID);
                 cartItemDrop.classList.add('hide');
-                
-                cartItems.appendChild(cartItemBanner);
+
+                const cartItemLeftDrop = document.createElement('div');
+                cartItemLeftDrop.className = 'cart-item-banner-base-left';
+
+                const discountSelect = document.createElement('select');
+                discountSelect.className = 'transaction-details-banner-base-right';
+                discountSelect.style.color = 'var(--card-text-color)';
+                discountSelect.style.cursor = 'pointer';
+                discountSelect.style.border = 'none';
+                discountSelect.style.fontSize = 'larger';
+                discountSelect.style.backgroundColor = 'rgba(0,0,0,0)';
+                discountSelect.style.margin = '0 25px';
+                discountSelect.title = "Select Discount Method";
+
+                const option1 = document.createElement('option');
+                option1.textContent = "Select Discount";
+                option1.disabled = true;
+                option1.selected = true;
+
+                const option2 = document.createElement('option');
+                option2.textContent = "Buy 4 Get 1 Free";
+
+                const option3 = document.createElement('option');
+                option3.textContent = "10% Discount";
+
+                const option4 = document.createElement('option');
+                option4.textContent = "20% Discount";
+                                
+                cartItems.appendChild(cartItemBanner); //ilalagay mo as anak??
+                cartItemBanner.appendChild(cartItemDrop);
+                cartItemDrop.appendChild(cartItemLeftDrop);
+                cartItemLeftDrop.appendChild(discountSelect);
+                discountSelect.appendChild(option1);
+                discountSelect.appendChild(option2);
+                discountSelect.appendChild(option3);
+                discountSelect.appendChild(option4);
 
                 var currentStock = parseInt(itemStock);
                 currentStock--;
                 card.setAttribute("stock", currentStock);
+                
 
             }
 
@@ -128,6 +167,7 @@ function addToCart() {
 addToCart();
 
 function removeItem(itemID) {
+
     const cartItems = document.querySelector('.cart-items');
     const cartItem = cartItems.querySelector(`.cart-item-banner[itemID="${itemID}"]`);
     
@@ -143,6 +183,19 @@ function removeItem(itemID) {
     }
     
     updateTotalAmount();
+
+   
+}
+
+function toggleDropDown(itemID, element) {
+   
+    const cartItems = document.querySelector('.cart-items');
+    const cartItem = cartItems.querySelector(`.cart-item-banner-drop[itemID="${itemID}"]`);
+
+    element.classList.toggle('bi-caret-right');
+    element.classList.toggle('bi-caret-down');
+      
+    cartItem.classList.toggle('hide');
 }
 
 $(document).ready(function() {

@@ -26,25 +26,28 @@ function getUserIdFormatted($id, $length) {
 }
 
 
-$sql = "SELECT * FROM users WHERE id = '$_SESSION[user_id]'";
-    
+$sql = "SELECT u.username, u.name, u.organization, o.code, o.name AS organization_name FROM users AS u JOIN organizations AS o ON u.organization = o.id WHERE u.id = '$_SESSION[user_id]'";
+
 $result = $conn->query($sql);
 
-if ($row = $result->fetch_assoc()) {
+while ($row = $result->fetch_assoc()) {
+    
+    $name = $row["name"];
+    $organization_name = $row["organization_name"];
     $organization_id = $row["organization"];
-    $user_name = $row["name"];
+    $organization_code = $row["code"];
 }
 
 if($organization_id ==  '1'){
     $sql = "SELECT * FROM logs WHERE userID ='$_SESSION[user_id]' ORDER BY timestamp DESC";
-} else if ($_SESSION['role'] == "master"){
-    $sql = "SELECT * FROM logs ORDER BY timestamp DESC";
 } else{
     $sql = "SELECT logs.* FROM logs 
             JOIN users ON logs.userID = users.id 
             WHERE users.organization = '$organization_id' 
             ORDER BY logs.timestamp DESC";
 }
+
+if ($_SESSION['role'] == "master") $sql = "SELECT * FROM logs ORDER BY timestamp DESC";
 
 
 
@@ -61,13 +64,11 @@ $logs = mysqli_fetch_all($result, MYSQLI_ASSOC);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/x-icon" href="../assets/images/qiqi.png">
-    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" type="text/css" href="../css/style.php">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
     <title>Logs</title>
 </head>
 <body>
-    
-    <button class="test-button"> TEST </button>
 
     <div class="notification" id="notification">
         <p style="padding: 10px 20px; margin:0;">Item Added to Cart</p>
@@ -78,7 +79,22 @@ $logs = mysqli_fetch_all($result, MYSQLI_ASSOC);
     
         <div class="nav-left">
             <div class="menu">
-                <a href="#" class="logo">CIIT ORG</a>
+            <a href="#"
+                    class="logo"><?php if ($organization_name == "Individual") {
+                        if($_SESSION['role'] == "master"){
+                            echo htmlspecialchars("MASTER");
+                        } else{
+                            echo htmlspecialchars(strtoupper($name));
+                        }
+                        
+                    } else {
+                        if($_SESSION['role'] == "admin"){
+                            echo htmlspecialchars("ADMIN: " . strtoupper($organization_code));
+                        } else{
+                            echo htmlspecialchars(strtoupper($organization_name));
+                        }
+                        
+                    } ?></a>
     
                 <form class="search-bar ">
                     <input id="search" type="text" autocomplete="off" placeholder="Search Logs...">
@@ -94,36 +110,64 @@ $logs = mysqli_fetch_all($result, MYSQLI_ASSOC);
     
             <!-- NAVIGATION MENUS -->
             <div class="menu seller">
-                <li><a href="https://www.youtube.com/">SELLER NAME</a></li>
+                <li><a><?php echo htmlspecialchars(strtoupper($name)); ?></a></li>
             </div>
         </div>
     
     </nav>
     
     <div class="mobile-nav shadow">
-        <div class="left-nav-icon button" title="HOME" onclick="homeButton()"><i class="bi bi-house"></i>HOME</div>
-        <div class="left-nav-icon button cart-icon" title="CART" onclick="cartButton()"><i class="bi bi-cart"></i>CART</div>
-        <div class="left-nav-icon button" title="INVENTORY" ><i class="bi bi-boxes"></i>INVENTORY</div>
-        <div class="left-nav-icon button selected" title="LOGS" ><i class="bi bi-journal-text"></i>LOGS</div>
-        <div class="left-nav-icon button" title="REPORTS" ><i class="bi bi-bar-chart-line"></i>REPORTS</div>
-        <div class="left-nav-icon button" title="SETTINGS" ><i class="bi bi-gear"></i>SETTINGS</div>
-        <div class="left-nav-icon button" title="LOGOUT" ><i class="bi bi-box-arrow-left"></i>LOGOUT</div>
+        <div class="left-nav-icon button" title="HOME" onclick="goToPage('../index.php'); homeButton();"><i class="bi bi-house"></i>HOME
+        </div>
+        <div class="left-nav-icon button cart-icon" title="CART" onclick="goToPage('../index.php?cart=1'); cartButton();"><i class="bi bi-cart"></i>CART
+        </div>
+        <div class="left-nav-icon button" title="INVENTORY" onclick="window.location.href='inventory.php'"><i
+                class="bi bi-boxes"></i>INVENTORY</div>
+        <div class="left-nav-icon button selected" title="LOGS" onclick="window.location.href='logs.php'"><i
+                class="bi bi-journal-text"></i>LOGS</div>
+        <div class="left-nav-icon button" title="REPORTS" onclick="window.location.href='reports.php'"><i
+                class="bi bi-bar-chart-line"></i>REPORTS</div>
+        <?php 
+        if($_SESSION['role'] == 'admin' || $_SESSION['role'] == 'master'){
+        ?><div class="left-nav-icon button" title="USERS" onclick="window.location.href='users.php'"><i
+                class="bi bi-person"></i>USERS</div><?php
+        }
+        ?>
+        <div class="left-nav-icon button" title="SETTINGS" onclick="window.location.href='settings.php'"><i
+                class="bi bi-gear"></i>SETTINGS</div>
+            
+        <div class="left-nav-icon button" title="LOGOUT" onclick="window.location.href='../index.php?logout=1'"><i
+                class="bi bi-box-arrow-left"></i>LOGOUT</div>
     </div>
     
     <div class="main-interface with-navbar" >
-        <div class="left-panel" >
-            <div class="left-panel-content shadow unselectable" >
+        <div class="left-panel">
+            <div class="left-panel-content shadow unselectable">
                 <div class="left-nav-upper">
-                    <div class="left-nav-icon button" onclick="homeButton()"><i class="bi bi-house"></i>HOME</div>
-                    <div class="left-nav-icon button cart-icon" onclick="cartButton()"><i class="bi bi-cart"></i>CART</div>
-                    <div class="left-nav-icon button"><i class="bi bi-boxes"></i>INVENTORY</div>
-                    <div class="left-nav-icon button selected"><i class="bi bi-journal-text"></i>LOGS</div>
-                    <div class="left-nav-icon button"><i class="bi bi-bar-chart-line"></i>REPORTS</div>
-                    <div class="left-nav-icon button"><i class="bi bi-gear"></i>SETTINGS</div>
+                    <div class="left-nav-icon button" onclick="window.location.href='../index.php'"><i class="bi bi-house"></i>HOME
+                    </div>
+                    <div class="left-nav-icon button cart-icon" onclick="window.location.href='../index.php'"><i class="bi bi-cart"></i>CART
+                    </div>
+                    <div class="left-nav-icon button" onclick="window.location.href='inventory.php'"><i
+                            class="bi bi-boxes" ></i>INVENTORY</div>
+                    <div class="left-nav-icon button selected" onclick="window.location.href='logs.php'"><i
+                            class="bi bi-journal-text"></i>LOGS</div>
+                    <div class="left-nav-icon button" onclick="window.location.href='reports.php'"><i
+                            class="bi bi-bar-chart-line"></i>REPORTS</div>
+                    <?php 
+                    if($_SESSION['role'] == 'admin' || $_SESSION['role'] == 'master'){
+                    ?><div class="left-nav-icon button" onclick="window.location.href='users.php'"><i
+                            class="bi bi-person"></i>USERS</div><?php
+                    }
+                    ?>
+                    
+                    <div class="left-nav-icon button" onclick="window.location.href='settings.php'"><i
+                            class="bi bi-gear"></i>SETTINGS</div>
                 </div>
-                
+
                 <div class="left-nav-lower">
-                    <div class="left-nav-icon button"><i class="bi bi-box-arrow-left"></i>LOGOUT</div>
+                    <div class="left-nav-icon button" onclick="window.location.href='../index.php?logout=1'"><i
+                            class="bi bi-box-arrow-left"></i>LOGOUT</div>
                 </div>
 
             </div>
@@ -151,7 +195,7 @@ $logs = mysqli_fetch_all($result, MYSQLI_ASSOC);
                         </div>
                     </div>
                     
-                    <table style="background-color: white; border-radius: 10px; width: 100%; text-align: left; padding: 15px; ">
+                    <table style="background-color: var(--card-color); color: var(--card-text-color) ;border-radius: 10px; width: 100%; text-align: left; padding: 15px; ">
 
                         <thead >
                             <tr >
@@ -227,6 +271,9 @@ $logs = mysqli_fetch_all($result, MYSQLI_ASSOC);
     
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
     <script type="text/javascript" src="../js/search.js" id="rendered-js"></script>
+    <script type="text/javascript" src="../js/navigation.js" id="rendered-js"></script>
+
+    <script type="text/javascript" src="../js/settings.js" id="rendered-js"></script>
     
 </body>
 </html>

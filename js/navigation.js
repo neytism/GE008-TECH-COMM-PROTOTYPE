@@ -13,9 +13,9 @@ function cartButton() {
     var right = document.querySelector('.right-panel');
     var searchbar = document.querySelector('.search-bar');
     
-    right.style.display = 'flex';
-    center.style.display = 'none';
-    searchbar.style.display = 'none';
+    if (right != null) right.style.display = 'flex';
+    if (center != null) center.style.display = 'none';
+    if (searchbar != null) searchbar.style.display = 'none';
 }
 
 function homeButton() {
@@ -23,8 +23,11 @@ function homeButton() {
     var right = document.querySelector('.right-panel');
     var searchbar = document.querySelector('.search-bar');
     
-    right.style.display = 'none';
-    center.style.display = 'inline';
-    searchbar.style.display = 'inline';
+    if (right != null) right.style.display = 'none';
+    if (center != null) center.style.display = 'inline';
+    if (searchbar != null) searchbar.style.display = 'inline';
 }
 
+function goToPage(page) {
+    window.location.href=page;
+}

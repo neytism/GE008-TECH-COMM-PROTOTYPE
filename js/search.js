@@ -91,6 +91,44 @@ function searchLogs(value, category) {
     noResultsRow.toggleClass("hide", hasResults);
   }
 
+  function searchUsers(value, category) {
+    var noResultsRow = $(".no-results");
+    var hasResults = false;
+  
+    $(".log-row").each(function() {
+      var card = $(this);
+  
+      if (!card.hasClass("invisible")) {
+        var id = card.find(".id").text().toLowerCase();
+        var student_id = card.find(".student-id").text().toLowerCase();
+        var username = card.find(".username").text().toLowerCase();
+        var name = card.find(".name").text().toLowerCase();
+        var organization = card.find(".organization").text().toLowerCase();
+        var role = card.find(".role").text().toLowerCase();
+        var email = card.find(".email").text().toLowerCase();
+      
+  
+        var productDetails = id + " " + student_id + " " + username + " " + name + " " + organization + " " + role + " " + email;
+  
+        var isSearchMatch;
+  
+        if (category === 'all') {
+          isSearchMatch = productDetails.indexOf(value) > -1;
+        } else {
+          isSearchMatch = productDetails.indexOf(value) > -1 && logCategory === category;
+        }
+  
+        card.toggle(isSearchMatch);
+  
+        if (isSearchMatch) {
+          hasResults = true;
+        }
+      }
+    });
+  
+    noResultsRow.toggleClass("hide", hasResults);
+  }
+
 
 $(document).ready(function() {
     
@@ -100,13 +138,14 @@ $(document).ready(function() {
         searchCards(search, category);
         searchInventory(search, category);
         searchLogs(search, category);
-
+        searchUsers(search, "all");
+        
         if(search){
-            $(".search-empty").addClass("hide");
-            $(".search-meron").removeClass("hide");
+            $(".search-empty").toggle(false);
+            $(".search-meron").toggle(true);
         } else{
-            $(".search-empty").removeClass("hide");
-            $(".search-meron").addClass("hide");
+            $(".search-empty").toggle(true);
+            $(".search-meron").toggle(false);
         }
     
     });
@@ -120,6 +159,7 @@ $(document).ready(function() {
         searchCards(search, category);
         searchInventory(search, category);
         searchLogs(search, category);
+       
        
         $(".category-button").removeClass("selected");
         
@@ -136,9 +176,10 @@ $(document).ready(function() {
         searchCards(search, category);
         searchInventory(search, category);
         searchLogs(search, category);
+        searchUsers(search, category);
         
-        $(".search-empty").removeClass("hide");
-        $(".search-meron").addClass("hide");
+        $(".search-empty").toggle(true);
+        $(".search-meron").toggle(false);
     });
 });
 

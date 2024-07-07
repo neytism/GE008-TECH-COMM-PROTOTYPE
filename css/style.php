@@ -1,3 +1,82 @@
+<?php
+header("Content-type: text/css");
+
+session_start();
+
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "techcommprototype";
+
+// Create connection
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+if (isset($_SESSION['user_id'])) { //if logged in
+        
+    $sql = "SELECT organization, use_template FROM users WHERE id = '$_SESSION[user_id]'";
+
+    $result = $conn->query($sql);
+
+    while ($row = $result->fetch_assoc()) {
+        
+        $organization_id = $row["organization"];
+        $use_template = $row["use_template"];
+    }
+
+    if ($use_template == "true"){
+        $sql = "SELECT val FROM settings WHERE id = '0' AND organization_id = '$organization_id'";
+    }else{
+        $sql = "SELECT val FROM settings WHERE id = '$_SESSION[user_id]'";
+    }
+
+    if ($organization_id == 1){
+        if($use_template == "true") {
+            $sql = "SELECT val FROM settings WHERE id = '-1'";
+        }else{
+            $sql = "SELECT val FROM settings WHERE id = '$_SESSION[user_id]'";
+        }
+    }
+
+
+} else{
+    $sql = "SELECT val FROM settings WHERE id = '-1'"; //if page like login loads
+}
+
+$result = $conn->query($sql);
+    
+if ($result->num_rows > 0) { // if there is no settings, load default
+    
+    $row = $result->fetch_assoc();
+    $values = explode('|', $row['val']);
+    
+    $settings = array();
+    foreach ($values as $pair) {
+        list($key, $value) = explode(':', $pair, 2);
+        $settings[trim($key)] = trim($value);
+    }
+} else{
+    
+    $sql = "SELECT val FROM settings WHERE id = '-1'";
+    $result = $conn->query($sql);
+    $row = $result->fetch_assoc();
+    $values = explode('|', $row['val']);
+    
+    $settings = array();
+    foreach ($values as $pair) {
+        list($key, $value) = explode(':', $pair, 2);
+        $settings[trim($key)] = trim($value);
+    }
+}
+
+
+
+//echo $settings['--navbar-color-1'];
+
+?>
 :root {
     --navbar-hor-padding: 15px;
     --navbar-vert-padding: 10px;
@@ -5,24 +84,23 @@
     --product-card-height: 300px;
     --panel-spacing: 15px;
     
-    --navbar-color-1: #00364D;
-    --navbar-color-2: #43c8f4;
+    --navbar-color-1: <?php echo $settings['--navbar-color-1'];?>;
+    --navbar-color-2: <?php echo $settings['--navbar-color-2'];?>;
+    --navbar-text-color: <?php echo $settings['--navbar-text-color'];?>;
     
-    --background-color-1: rgba(178, 224, 228, 0.9);
-    --background-color-2: rgba(178, 224, 228, 0.9);
+    --background-color-1: <?php echo $settings['--background-color-1'];?>;
+    --background-color-2: <?php echo $settings['--background-color-2'];?>;
     --background-image: url("../assets/images/ciit-wallpaper.jpg");
     --background-angle: 0deg;
     
-    --primary-color: #00364d;
-    --secondary-color: #43c8f4;
+    --primary-color: <?php echo $settings['--primary-color'];?>;
+    --button-accent-color: <?php echo $settings['--button-accent-color'];?>;
     
-    --button-opacity: 10;
+    --card-color: <?php echo $settings['--card-color'];?>;
+    --card-text-color: <?php echo $settings['--card-text-color'];?>;
     
-    --card-color: white;
-    --card-text-color: #000000;
-    
-    --cancel-color: rgb(110, 110, 110);
-    --confirm-color: rgb(38, 185, 38);
+    --cancel-color: <?php echo $settings['--cancel-color'];?>;
+    --confirm-color: <?php echo $settings['--confirm-color'];?>;
     
     --right-panel-display: flex;
     --center-panel-display: inline;
@@ -121,7 +199,7 @@ li {
     height: var(--navbar-height);
     padding: var(--navbar-vert-padding) var(--navbar-hor-padding);
     background: linear-gradient(to right, var(--navbar-color-1) , var(--navbar-color-2));
-    color: #fff;
+    color: var(--navbar-text-color);
     position: fixed ;
     top: 0;
     z-index: 3;
@@ -164,18 +242,19 @@ li {
 
 .search-bar{
     width: 60%;
+    position: relative;
 }
 
 .search-bar input{
     width: 100%;
-    background-color:  rgba(206, 206, 206, 0.2);
+    background-color:  color-mix(in srgb, var(--button-accent-color) 10%, transparent);
     border: none;
     border-radius: 10px;
     height: 35px;
     font-family: Loew-Medium !important;
     letter-spacing: 0.3px;
     padding: 0 40px 0 15px;
-    color: white;
+    color: var(--navbar-text-color);
 }
 
 .search-bar i {
@@ -186,11 +265,11 @@ li {
 }
 
 .search-empty{
-    color: rgba(206, 206, 206, 0.5);
+    color: var(--navbar-text-color);
 }
 
 .search-bar input::placeholder {
-    color: rgba(206, 206, 206, 0.5);
+    color: color-mix(in srgb, var(--navbar-text-color) 50%, transparent);;
 }
 
 .menu {
@@ -199,11 +278,11 @@ li {
     font-size: 18px;
 }
 
-.menu li:hover {
+<!-- .menu li:hover {
     background-color: rgb(0, 0, 0, 0.1);
     border-radius: 5px;
     transition: 0.3s ease;
-}
+} -->
 
 .menu li {
     padding: 5px 14px;
@@ -232,6 +311,7 @@ li {
 }
 
 .left-panel-content{
+    color: var(--card-text-color);
     display: flex;
     flex-direction: column; 
     align-items: center;
@@ -274,7 +354,7 @@ li {
     width: 90px;
     height: 90px;
     border-radius: 10px;
-    background-color: color-mix(in srgb, var(--secondary-color) 10%, transparent);
+    background-color: color-mix(in srgb, var(--button-accent-color) 10%, transparent);
     text-align: center;
     line-height:  2em;
     display: flex;
@@ -339,11 +419,12 @@ li {
     justify-content: flex-start;
     gap: 30px;
     padding-left: 15px;
+    color: var(--card-text-color);
    
 }
 
 .category-button:hover{
-    color: var(--secondary-color);
+    color: var(--button-accent-color);
     transition: 0.3s ease;
 }
 
@@ -361,15 +442,15 @@ li {
 }
 
 .selected{
-    background-color: color-mix(in srgb, var(--secondary-color) 25%, transparent); 
+    background-color: color-mix(in srgb, var(--button-accent-color) 25%, transparent); 
     border-width: 1.5px;
-    border-color: var(--secondary-color);
+    border-color: var(--button-accent-color);
     border-style: solid;
 }
 
 .button:hover{
     border-width: 1.5px;
-    border-color: var(--secondary-color);
+    border-color: var(--button-accent-color);
     border-style: solid;
 }
 
@@ -401,11 +482,11 @@ li {
     flex-direction: column;
     transition: 0.3s ease;
     color: var(--card-text-color);
-    box-shadow: 0 0 0 0 var(--secondary-color) inset;
+    box-shadow: 0 0 0 0 var(--button-accent-color) inset;
 }
 
 .product-card:hover{
-    box-shadow: 0 0 0 2px var(--secondary-color) inset;
+    box-shadow: 0 0 0 2px var(--button-accent-color) inset;
     transition: 0.3s ease;
 }
 
@@ -449,7 +530,7 @@ li {
 
 .card-add-to-cart{
     position: absolute; 
-    color: var(--secondary-color);
+    color: var(--button-accent-color);
     font-size: 1.5em;
     top: 5px; 
     left: 10px; 
@@ -457,7 +538,7 @@ li {
     opacity: 0.5;
 }
 
-.settings-panel{
+.settings-panel-back{
     overflow-x: auto;
     width: 100%;
     background-color: var(--card-color)  ; 
@@ -471,6 +552,23 @@ li {
     gap: 30px;
     padding-left: 15px;
    
+}
+
+.settings-panel{
+    overflow-y: auto;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    gap: calc(var(--panel-spacing)*2);
+    flex-wrap: wrap;
+    flex-direction: row;
+    align-content: flex-start;
+    justify-content: flex-start;
+    padding-bottom: 150px;
+}
+
+.settings-panel::-webkit-scrollbar{
+    display: none;
 }
 
 .right-panel{
@@ -516,7 +614,8 @@ li {
 
 .customer-name-input {
     text-transform: uppercase;
-    background-color:  rgba(0, 0, 0, 0.075);
+    background-color: color-mix(in srgb, var(--button-accent-color) 10%, transparent);
+    color: var(--card-text-color);
     border: none;
     border-radius: 10px;
     height: 45px;
@@ -528,7 +627,7 @@ li {
 
 .customer-name-input::placeholder {
     text-transform: uppercase;
-    color: rgba(31, 31, 31, 0.5);
+    color: color-mix(in srgb, var(--card-text-color) 50%, transparent);
 }
 
 .scan-id{
@@ -546,6 +645,7 @@ li {
 }
 
 .cart-items{
+    color: var(--card-text-color);
     width: 100%;
     flex-direction: column; 
     justify-content: flex-start;
@@ -554,13 +654,14 @@ li {
 }
 
 .cart-item-banner{
-    background-color:  rgba(0, 0, 0, 0.025);
+    background-color: color-mix(in srgb, var(--button-accent-color) 10%, transparent);
     border-radius: 10px;
     padding: 10px;
     margin-bottom: 15px;
 }
 
 .cart-item-banner:first-child{
+    color: var(--card-text-color);
     margin-top: 20px;
 }
 
@@ -603,6 +704,7 @@ li {
 
 
 .details-panel{
+    color: var(--card-text-color);
     background-color: var(--card-color)  ; 
     margin-top: 15px;
     height: 30%;
@@ -745,6 +847,45 @@ li {
     animation-timing-function: ease-in-out;
 }
 
+.color-picker-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+#picker {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+.pickr button{
+    outline-style:solid;
+    outline-color: var(--button-accent-color);
+    outline-width: thin;
+}
+
+.text-outline{
+    <!-- filter: drop-shadow(white 0 0 5px); -->
+}
+
+.add-new-product{
+    margin: 25px; 
+    border-radius: 35px; 
+    text-align: center; 
+    position: fixed; 
+    bottom: 0; 
+    right: 0; 
+    font-size: 2rem; 
+    color: white; 
+    background-color: var(--confirm-color); 
+    height: 70px; 
+    width: 70px; 
+    cursor: pointer;
+}
+  
+
+
 @keyframes notification {
     0%{
         opacity: 0;
@@ -829,9 +970,7 @@ li {
     .details-panel-upper{
         gap: 0px;
     }
-    
-    
-    
+        
     .search-bar{
         width: 100%;
     }
@@ -869,7 +1008,7 @@ li {
     .cart-icon{
         display: flex;
     }
-
+    
     .cart-item-banner, .details-panel{
         font-size: smaller;
     }
@@ -878,6 +1017,14 @@ li {
         max-width: 90%;
        
     }
+
+    .add-new-product{
+    margin: 130px 25px;
+    }
+
+    
+
+  
     
 }
 

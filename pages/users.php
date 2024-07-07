@@ -5,13 +5,16 @@ if (!isset($_SESSION['user_id'])) {
     header('location: pages/login.php');
 }
 
+if ($_SESSION['role'] == "student") {
+    header('location: pages/login.php');
+    unset($_SESSION['user_id']);
+    unset($_SESSION['role']);
+}
+
 $servername = "localhost";
 $username = "root";
 $password = "";
 $dbname = "techcommprototype";
-
-$name = '';
-$organization = '';
 
 // Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);
@@ -23,7 +26,7 @@ if ($conn->connect_error) {
 
 
 
-$sql = "SELECT u.username, u.name, u.organization, o.code, o.name AS organization_name FROM users AS u JOIN organizations AS o ON u.organization = o.id WHERE u.id = '$_SESSION[user_id]'";
+$sql = "SELECT u.username, u.name, u.organization,o.code, o.name AS organization_name FROM users AS u JOIN organizations AS o ON u.organization = o.id WHERE u.id = '$_SESSION[user_id]'";
 
 $result = $conn->query($sql);
 
@@ -35,20 +38,29 @@ while ($row = $result->fetch_assoc()) {
     $organization_code = $row["code"];
 }
 
-
-if ($organization_id == '1'){
-    $sql = "SELECT items.*, item_category.name AS category_name FROM items JOIN item_category ON items.category_id = item_category.id WHERE organization_id = '$organization_id' AND user_id = '$_SESSION[user_id]'";
-} else{
-    $sql = "SELECT items.*, item_category.name AS category_name FROM items JOIN item_category ON items.category_id = item_category.id WHERE organization_id = '$organization_id'";
+function getUserIdFormatted($id, $length) {
+    return str_pad($id, $length, '0', STR_PAD_LEFT);
 }
+
+function getUserNumberFormatted($number) {
+    $firstPart = substr($number, 0, 4);
+    $secondPart = substr($number, 4);    
+    return $firstPart . "-" . $secondPart;
+}
+
+
+if ($_SESSION['role'] == "admin") $sql = "SELECT u.*, o.code FROM users AS u JOIN organizations AS o ON u.organization = o.id WHERE organization = '$organization_id'";
+if ($_SESSION['role'] == "master") $sql = "SELECT u.*, o.code FROM users AS u JOIN organizations AS o ON u.organization = o.id";
+
+
 
 $result = mysqli_query($conn, $sql);
 
-$items = mysqli_fetch_all($result, MYSQLI_ASSOC);
+$users = mysqli_fetch_all($result, MYSQLI_ASSOC);
+
 
 
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -86,9 +98,9 @@ $items = mysqli_fetch_all($result, MYSQLI_ASSOC);
                         }
                         
                     } ?></a>
-    
+
                 <form class="search-bar ">
-                    <input id="search" type="text" autocomplete="off" placeholder="Search Inventory...">
+                    <input id="search" type="text" autocomplete="off" placeholder="Search Users...">
                     <i class="bi bi-x-lg search-meron hide" style="cursor: pointer;"></i>
                     <i class="bi bi-search search-empty"></i>
                 </form>
@@ -112,7 +124,7 @@ $items = mysqli_fetch_all($result, MYSQLI_ASSOC);
         </div>
         <div class="left-nav-icon button cart-icon" title="CART" onclick="goToPage('../index.php?cart=1'); cartButton();"><i class="bi bi-cart"></i>CART
         </div>
-        <div class="left-nav-icon button selected" title="INVENTORY" onclick="window.location.href='inventory.php'"><i
+        <div class="left-nav-icon button" title="INVENTORY" onclick="window.location.href='inventory.php'"><i
                 class="bi bi-boxes"></i>INVENTORY</div>
         <div class="left-nav-icon button" title="LOGS" onclick="window.location.href='logs.php'"><i
                 class="bi bi-journal-text"></i>LOGS</div>
@@ -120,7 +132,7 @@ $items = mysqli_fetch_all($result, MYSQLI_ASSOC);
                 class="bi bi-bar-chart-line"></i>REPORTS</div>
         <?php 
         if($_SESSION['role'] == 'admin' || $_SESSION['role'] == 'master'){
-        ?><div class="left-nav-icon button" title="USERS" onclick="window.location.href='users.php'"><i
+        ?><div class="left-nav-icon button selected" title="USERS" onclick="window.location.href='users.php'"><i
                 class="bi bi-person"></i>USERS</div><?php
         }
         ?>
@@ -132,15 +144,14 @@ $items = mysqli_fetch_all($result, MYSQLI_ASSOC);
     </div>
     
     <div class="main-interface with-navbar" >
-        <div class="add-new-product shadow" title="Add new product" onclick="window.location.href='addProduct.php'"><i style="height: 100%; display: flex; align-items: center; justify-content: center;" class="bi bi-plus-lg"></i></div>
-        <div class="left-panel">
+    <div class="left-panel">
             <div class="left-panel-content shadow unselectable">
                 <div class="left-nav-upper">
                     <div class="left-nav-icon button" onclick="window.location.href='../index.php'"><i class="bi bi-house"></i>HOME
                     </div>
                     <div class="left-nav-icon button cart-icon" onclick="window.location.href='../index.php'"><i class="bi bi-cart"></i>CART
                     </div>
-                    <div class="left-nav-icon button selected" onclick="window.location.href='inventory.php'"><i
+                    <div class="left-nav-icon button" onclick="window.location.href='inventory.php'"><i
                             class="bi bi-boxes" ></i>INVENTORY</div>
                     <div class="left-nav-icon button" onclick="window.location.href='logs.php'"><i
                             class="bi bi-journal-text"></i>LOGS</div>
@@ -148,7 +159,7 @@ $items = mysqli_fetch_all($result, MYSQLI_ASSOC);
                             class="bi bi-bar-chart-line"></i>REPORTS</div>
                     <?php 
                     if($_SESSION['role'] == 'admin' || $_SESSION['role'] == 'master'){
-                    ?><div class="left-nav-icon button" onclick="window.location.href='users.php'"><i
+                    ?><div class="left-nav-icon button selected" onclick="window.location.href='users.php'"><i
                             class="bi bi-person"></i>USERS</div><?php
                     }
                     ?>
@@ -168,32 +179,28 @@ $items = mysqli_fetch_all($result, MYSQLI_ASSOC);
         <div class="center-panel" style="margin-right: 15px; width: 100%;">
             <div class="center-panel-content" >
                 
-                <div class="category-panel shadow unselectable">
-                    <div class="category-button selected">All</div>
-                    <div class="category-button">Stickers</div>
-                    <div class="category-button">Pins</div>
-                    <div class="category-button">Shirts</div>
-                    <div class="category-button">Food</div>
-                    <div class="category-button">Drinks</div>
-                    <div class="category-button">Lanyard</div>
-                    <div class="category-button">Keycaps</div>
-                    <div class="category-button">Keychain</div>
-                </div>
-                
                 <div class="products-panel unselectable">
-                
                     
-                    <table style="background-color: var(--card-color); color: var(--card-text-color); border-radius: 10px; width: 100%; text-align: left; padding: 15px; ">
+                    <div class="inventory-card shadow hide" itemID='1'>
+                        <div class="inventory-icon"><img src="../assets/images/ciit.png" alt="Product Image"></div>
+                        <div class="inventory-card-desc" category="Stickers">
+                            <div class="inventory-name" title="CIIT sticker with FREE Tuition Fee"><span>CIIT sticker with FREE Tuition Fee</span></div>
+                            <div class="inventory-price">P 25.00</div>
+                        </div>
+                    </div>
+                    
+                    <table style="background-color: var(--card-color); color: var(--card-text-color) ;border-radius: 10px; width: 100%; text-align: left; padding: 15px; ">
 
                         <thead >
                             <tr >
-                                <th scope="col" >ID</th>
-                                <th scope="col">Image</th>
-                                <th scope="col">Item Name</th>
-                                <th scope="col">Category</th>
-                                <th scope="col">Stock</th>
-                                <th scope="col">Price</th>
-                                <th scope="col"></th>
+                                <th scope="col">ID</th>
+                                <th scope="col">Student ID</th>
+                                <th scope="col">Username</th>
+                                <th scope="col">Name</th>
+                                <th scope="col">Organization</th>
+                                <th scope="col">Role</th>
+                                <th scope="col">Email</th>
+                                
                             </tr>
                         </thead>
                         
@@ -201,35 +208,33 @@ $items = mysqli_fetch_all($result, MYSQLI_ASSOC);
                             <tr><td colspan="7"><br><hr style="border-top: 1px solid rgba(0, 0, 0, 0.151);"></td></tr>
                             
                             <?php
-                            foreach ($items as $item) {
+                            foreach ($users as $user) {
                                 ?>
 
-                                 <tr class="inventory-row" style="height: 50px;">
-                                    <th class="inventory-id" style="width:100px ; min-width: 100px; max-width: 100px; word-wrap:break-word;"><?php echo htmlspecialchars($item['id']); ?></th>
-                                    <td style="width:130px; min-width: 130px; max-width: 130px; height: 75px; padding: 0 15px;"><img src="../assets/images/<?php echo htmlspecialchars($item['image_name']); ?>" style="object-fit: contain; height: 100%; width: 100%; vertical-align: middle;" alt="hehe"></td>
-                                    <th class="inventory-name" style="padding-right: 30px; padding-bottom: 10px;"><?php echo htmlspecialchars($item['name']); ?></th>
-                                    <th class="inventory-category" style="width: 120px ; min-width: 120px; max-width: 120px;"><?php echo htmlspecialchars($item['category_name']); ?></th>
-                                    <th style="width: 75px ; min-width: 75px; max-width: 75px;"><?php echo htmlspecialchars($item['stock']); ?></th>
-                                    <th style="width: 100px ; min-width: 100px; max-width: 100px;" >P <?php echo htmlspecialchars($item['price']); ?></th>
-                                    <th style="width: 50px ; min-width: 50px; max-width: 50px; font-size: 1.5rem; text-align: center; cursor: pointer;" onclick="window.location.href='editProduct.php?productID=<?php echo htmlspecialchars($item['id']); ?>'"><i title="Edit Item <?php echo htmlspecialchars($item['id']); ?>" class="bi bi-pencil-square"></i></th>
+                                <tr class="log-row" style="height: 50px;">
+                                    <th class="id" style="width:100px ; min-width: 100px; max-width: 100px; word-wrap:break-word;"><?php echo htmlspecialchars(getUserIdFormatted($user['id'],4)); ?></th>
+                                    <th class="student-id" style="width:100px ; min-width: 100px; max-width: 100px; word-wrap:break-word;"><?php echo htmlspecialchars(getUserNumberFormatted($user['student_number'])); ?></th>                                    
+                                    <th class="username" style="width: 120px ; min-width: 120px; max-width: 120px;"><?php echo htmlspecialchars($user['username']); ?></th>
+                                    <th class="name" style="padding-right: 30px;"><?php echo htmlspecialchars($user['name']); ?></th>
+                                    <th class="organization" style="width: 150px ; min-width: 150px; max-width: 150px;"><?php echo htmlspecialchars($user['code']); ?></th>
+                                    <th class="role" style="width: 150px ; min-width: 150px; max-width: 150px;"><?php echo htmlspecialchars($user['role']); ?></th>
+                                    <th class="email" style="width: 300px ; min-width: 300px; max-width: 300px;"><?php echo htmlspecialchars($user['email']); ?></th>
                                 </tr>
-
+                            
                             <?php } ?>
-
-                            <!-- <tr class="inventory-row" style="height: 50px;">
-                                <th class="inventory-id" style="width:100px ; min-width: 100px; max-width: 100px; word-wrap:break-word;">AXS-003</th>
-                                <td style="width:130px; min-width: 130px; max-width: 130px; height: 75px; padding: 0 15px;"><img src="../assets/images/gato.png" style="object-fit: contain; height: 100%; width: 100%; vertical-align: middle;" alt="hehe"></td>
-                                <th class="inventory-name" style="padding-right: 30px; padding-bottom: 10px;">CIIT sticker with FREE Tuition Fee</th>
-                                <th class="inventory-category" style="width: 120px ; min-width: 120px; max-width: 120px;">Stickers</th>
-                                <th style="width: 75px ; min-width: 75px; max-width: 75px;">69</th>
-                                <th style="width: 100px ; min-width: 100px; max-width: 100px;" >P 69.99</th>
-                                <th style="width: 50px ; min-width: 50px; max-width: 50px; font-size: 1.5rem; text-align: center; cursor: pointer;"><i title="Edit Item AXS-003" class="bi bi-pencil-square"></i></th>
+                            
+                            <!-- <tr class="log-row" style="height: 50px;">
+                                <th class="log-id" style="width:100px ; min-width: 100px; max-width: 100px; word-wrap:break-word;">LOG-001</th>
+                                <th class="log-category" style="width: 120px ; min-width: 120px; max-width: 120px;">User</th>
+                                <th class="log-user" style="width: 120px ; min-width: 120px; max-width: 120px;">12345678</th>
+                                <th class="log-details" style="padding-right: 30px;">Logged In.</th>
+                                <th class="log-datetime" style="width: 200px ; min-width: 200px; max-width: 200px;">2024-07-01 06:15:00</th>
                             </tr> -->
                             
                             <tr class="no-results hide" style="height: 50px;">
-                                <th colspan="9" style="width:100px ; min-width: 100px; max-width: 100px; text-align: center;">No Results.</th>
+                                <th colspan="5" class="log-id" style="width:100px ; min-width: 100px; max-width: 100px; text-align: center;">No Results.</th>
                             </tr>
-                        
+
                         </tbody>
 
                     </table>
@@ -266,7 +271,8 @@ $items = mysqli_fetch_all($result, MYSQLI_ASSOC);
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
     <script type="text/javascript" src="../js/search.js" id="rendered-js"></script>
     <script type="text/javascript" src="../js/navigation.js" id="rendered-js"></script>
+
     <script type="text/javascript" src="../js/settings.js" id="rendered-js"></script>
-    
+
 </body>
 </html>

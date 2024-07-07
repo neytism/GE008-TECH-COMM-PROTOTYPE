@@ -36,15 +36,16 @@ if ($conn->connect_error) {
 
 
 
-$sql = "SELECT u.id, u.username, u.password, u.name, u.role, u.organization, o.name AS organization_name FROM users AS u JOIN organizations AS o ON u.organization = o.id WHERE u.id = '$_SESSION[user_id]'";
+$sql = "SELECT u.username, u.name, u.organization, o.code, o.name AS organization_name FROM users AS u JOIN organizations AS o ON u.organization = o.id WHERE u.id = '$_SESSION[user_id]'";
 
 $result = $conn->query($sql);
 
 while ($row = $result->fetch_assoc()) {
     
     $name = $row["name"];
-    $organization = $row["organization_name"];
+    $organization_name = $row["organization_name"];
     $organization_id = $row["organization"];
+    $organization_code = $row["code"];
 }
 
 if ($organization_id == '1') {
@@ -73,14 +74,12 @@ $categories = mysqli_fetch_all($result, MYSQLI_ASSOC);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/x-icon" href="assets/images/qiqi.png">
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" type="text/css" href="css/style.php">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
     <title>Prototype</title>
 </head>
 
 <body>
-    
-    <button class="test-button"> TEST </button>
     
     <div id="receipt-parent">
         <!-- <div style="position:fixed; background-color: rgba(0,0,0,0.7); height: 100vh; width: 100vw; z-index: 100; cursor: pointer;" id="receipt-holder" class="" onclick="CloseReceipt()">
@@ -118,16 +117,26 @@ $categories = mysqli_fetch_all($result, MYSQLI_ASSOC);
         <div class="nav-left">
             <div class="menu">
                 <a href="#"
-                    class="logo"><?php if ($organization == "Individual") {
-                        echo htmlspecialchars(strtoupper($name));
+                    class="logo"><?php if ($organization_name == "Individual") {
+                        if($_SESSION['role'] == "master"){
+                            echo htmlspecialchars("MASTER");
+                        } else{
+                            echo htmlspecialchars(strtoupper($name));
+                        }
+                        
                     } else {
-                        echo htmlspecialchars(strtoupper($organization));
+                        if($_SESSION['role'] == "admin"){
+                            echo htmlspecialchars("ADMIN: " . strtoupper($organization_code));
+                        } else{
+                            echo htmlspecialchars(strtoupper($organization_name));
+                        }
+                        
                     } ?></a>
-
+                
                 <form class="search-bar ">
-                    <input id="search" type="text" autocomplete="off" placeholder="Search Products...">
-                    <i class="bi bi-x-lg search-meron hide" style="cursor: pointer;"></i>
+                    <input id="search" type="text" autocomplete="off" placeholder="Search products...">
                     <i class="bi bi-search search-empty"></i>
+                    <i class="bi bi-x-lg search-meron" style="cursor: pointer; display: none;"></i>
                 </form>
 
             </div>
@@ -145,9 +154,9 @@ $categories = mysqli_fetch_all($result, MYSQLI_ASSOC);
     </nav>
 
     <div class="mobile-nav shadow">
-        <div class="left-nav-icon button selected" title="HOME" onclick="homeButton()"><i class="bi bi-house"></i>HOME
+        <div class="left-nav-icon button <?php if(!isset($_GET['cart'])) {echo "selected"; }?>" title="HOME" onclick="homeButton()"><i class="bi bi-house"></i>HOME
         </div>
-        <div class="left-nav-icon button cart-icon" title="CART" onclick="cartButton()"><i class="bi bi-cart"></i>CART
+        <div class="left-nav-icon button cart-icon <?php if(isset($_GET['cart'])) {echo "selected"; }?>" title="CART" onclick="cartButton()"><i class="bi bi-cart"></i>CART
         </div>
         <div class="left-nav-icon button" title="INVENTORY" onclick="window.location.href='pages/inventory.php'"><i
                 class="bi bi-boxes"></i>INVENTORY</div>
@@ -155,9 +164,16 @@ $categories = mysqli_fetch_all($result, MYSQLI_ASSOC);
                 class="bi bi-journal-text"></i>LOGS</div>
         <div class="left-nav-icon button" title="REPORTS" onclick="window.location.href='pages/reports.php'"><i
                 class="bi bi-bar-chart-line"></i>REPORTS</div>
+        <?php 
+        if($_SESSION['role'] == 'admin' || $_SESSION['role'] == 'master'){
+        ?><div class="left-nav-icon button" title="USERS" onclick="window.location.href='pages/users.php'"><i
+                class="bi bi-person"></i>USERS</div><?php
+        }
+        ?>
         <div class="left-nav-icon button" title="SETTINGS" onclick="window.location.href='pages/settings.php'"><i
                 class="bi bi-gear"></i>SETTINGS</div>
-        <div class="left-nav-icon button" title="LOGOUT" onclick="window.location.href='pages/inventory.php'"><i
+            
+        <div class="left-nav-icon button" title="LOGOUT" onclick="window.location.href='index.php?logout=1'"><i
                 class="bi bi-box-arrow-left"></i>LOGOUT</div>
     </div>
 
@@ -175,6 +191,13 @@ $categories = mysqli_fetch_all($result, MYSQLI_ASSOC);
                             class="bi bi-journal-text"></i>LOGS</div>
                     <div class="left-nav-icon button" onclick="window.location.href='pages/reports.php'"><i
                             class="bi bi-bar-chart-line"></i>REPORTS</div>
+                    <?php 
+                    if($_SESSION['role'] == 'admin' || $_SESSION['role'] == 'master'){
+                    ?><div class="left-nav-icon button" onclick="window.location.href='pages/users.php'"><i
+                            class="bi bi-person"></i>USERS</div><?php
+                    }
+                    ?>
+                    
                     <div class="left-nav-icon button" onclick="window.location.href='pages/settings.php'"><i
                             class="bi bi-gear"></i>SETTINGS</div>
                 </div>
@@ -205,14 +228,14 @@ $categories = mysqli_fetch_all($result, MYSQLI_ASSOC);
 
                 </div>
 
-                <div class="products-panel unselectable">
+                <div class="products-panel unselectable"> <!--  . "\n" . $item['stock'] . " items left."-->
 
                     <?php
                     foreach ($items as $item) {
                         ?>
 
                         <div class="product-card shadow" itemID='<?php echo htmlspecialchars($item['id']); ?>' 
-                        title="<?php echo htmlspecialchars($item['name'] . "\n" . $item['stock'] . " items left."); ?>" 
+                        title="<?php echo htmlspecialchars($item['name']); ?>"
                         stock="<?php echo htmlspecialchars($item['stock']); ?>" >
                             <div class="card-add-to-cart"><i class="bi bi-plus-circle-fill" title="Add to Cart"></i></div>
                             <div class="product-icon"><img
@@ -227,7 +250,7 @@ $categories = mysqli_fetch_all($result, MYSQLI_ASSOC);
 
                     <?php } ?>
 
-
+                    
                     <!-- to avoid stretching-->
                     <div class="product-card shadow invisible"></div>
                     <div class="product-card shadow invisible"></div>
@@ -280,11 +303,19 @@ $categories = mysqli_fetch_all($result, MYSQLI_ASSOC);
                                 </div>
                                
                             </div>
-
-                            <div class="cart-item-banner-drop hide">
-                            asdasd
-                            </div>
                             
+                            <div class="cart-item-banner-drop" style="margin-top: 15px;">
+                                <div class="cart-item-banner-base-left">
+                                    <select class="transaction-details-banner-base-right"
+                                        style="color: var(--card-text-color); cursor: pointer; border:none; font-size: larger; background-color: rgba(0,0,0,0); margin: 0 25px;"
+                                        name="pMethod" id="pMethod" title="Select Payment Method">
+                                        <option value="" disabled selected>Select Discount</option>
+                                        <option value="">Buy 4 Get 1 Free</option>
+                                        <option value="">10% Discount</option>
+                                        <option value="">20% Discount</option>
+                                    </select>
+                                </div>
+                            </div>
                         </div> -->
 
 
@@ -311,9 +342,9 @@ $categories = mysqli_fetch_all($result, MYSQLI_ASSOC);
                                 <div class="transaction-details-banner-base-left">
                                     PAYMENT METHOD
                                 </div>
-
+                                
                                 <select class="transaction-details-banner-base-right"
-                                    style="cursor: pointer; border:none; font-size: larger; text-align: right;  padding-right: 5px;"
+                                    style="color: var(--card-text-color); cursor: pointer; border:none; font-size: larger; text-align: right;  padding-right: 5px; background-color: rgba(0,0,0,0);"
                                     name="pMethod" id="pMethod" title="Select Payment Method">
                                     <option value="Cash">Cash</option>
                                     <option value="Gcash">Gcash</option>
@@ -348,12 +379,17 @@ $categories = mysqli_fetch_all($result, MYSQLI_ASSOC);
             </div>
 
         </div>
+        
+        
 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
         <script type="text/javascript" src="js/search.js" id="rendered-js"></script>
-        <script type="text/javascript" src="js/customize.js" id="rendered-js"></script>
         <script type="text/javascript" src="js/navigation.js" id="rendered-js"></script>
         <script type="text/javascript" src="js/transaction.js" id="rendered-js"></script>
+
+        <?php if(isset($_GET['cart'])) {echo "<script> cartButton(); </script>"; }?>
+
+        <script type="text/javascript" src="js/settings.js" id="rendered-js"></script>
 
 </body>
 
