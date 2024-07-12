@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 07, 2024 at 11:50 PM
+-- Generation Time: Jul 12, 2024 at 11:04 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -130,7 +130,9 @@ INSERT INTO `logs` (`id`, `type`, `userID`, `details`, `timestamp`) VALUES
 (37, 'user', 1, 'User 1 - Nate Florendo logged in.', '2024-07-07 18:59:48'),
 (38, 'user', 3, 'User 3 - Oliver Chiuco logged in.', '2024-07-07 19:57:28'),
 (39, 'sales', 3, 'User 3 - Oliver Chiuco issued CGC-000-016 receipt to 1 - Nate Florendo.', '2024-07-07 21:38:05'),
-(40, 'user', 1, 'User 1 - Nate Florendo logged in.', '2024-07-07 21:43:25');
+(40, 'user', 1, 'User 1 - Nate Florendo logged in.', '2024-07-07 21:43:25'),
+(41, 'user', 3, 'User 3 - Oliver Chiuco logged in.', '2024-07-11 22:52:30'),
+(42, 'user', 4, 'User 4 - Ziyun Reyes logged in.', '2024-07-12 14:33:50');
 
 -- --------------------------------------------------------
 
@@ -265,7 +267,7 @@ CREATE TABLE `users` (
 INSERT INTO `users` (`id`, `username`, `name`, `role`, `organization`, `password`, `email`, `student_number`, `status`, `use_template`, `use_username`) VALUES
 (1, 'neytism', 'Nate Florendo', 'master', 1, 'admin000', 'nate.florendo@ciit.edu.ph', '17213541', 'approved', 'true', 'true'),
 (3, 'oli', 'Oliver Chiuco', 'admin', 4, 'admin000', 'oliver.chiuco@ciit.edu.ph', '17223818', 'approved', 'false', 'true'),
-(4, 'ziyun', 'Ziyun Reyes', 'seller', 4, 'admin000', 'pepito.reyes@ciit.edu.ph', '17223712', 'approved', 'false', 'true');
+(4, 'ziyun', 'Ziyun Reyes', 'seller', 12, 'admin000', 'pepito.reyes@ciit.edu.ph', '17223712', 'approved', 'true', 'true');
 
 --
 -- Indexes for dumped tables
@@ -324,7 +326,7 @@ ALTER TABLE `item_category`
 -- AUTO_INCREMENT for table `logs`
 --
 ALTER TABLE `logs`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
 
 --
 -- AUTO_INCREMENT for table `organizations`
