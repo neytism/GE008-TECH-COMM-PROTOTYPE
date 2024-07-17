@@ -1,29 +1,17 @@
 <?php
 header("Content-type: text/css");
 
-session_start();
+require '../config.php';
 
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "techcommprototype";
-
-// Create connection
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-// Check connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
 if (isset($_SESSION['user_id'])) { //if logged in
         
-    $sql = "SELECT organization, use_template FROM users WHERE id = '$_SESSION[user_id]'";
+    $sql = "SELECT active_organization, use_template FROM users WHERE id = '$_SESSION[user_id]'";
 
     $result = $conn->query($sql);
 
     while ($row = $result->fetch_assoc()) {
         
-        $organization_id = $row["organization"];
+        $organization_id = $row["active_organization"];
         $use_template = $row["use_template"];
     }
 
@@ -98,6 +86,7 @@ if ($result->num_rows > 0) { // if there is no settings, load default
     
     --card-color: <?php echo $settings['--card-color'];?>;
     --card-text-color: <?php echo $settings['--card-text-color'];?>;
+    --card-color-darker: color-mix(in srgb, var(--card-color) 95%, var(--background-color-1) 5% );
     
     --cancel-color: <?php echo $settings['--cancel-color'];?>;
     --confirm-color: <?php echo $settings['--confirm-color'];?>;
@@ -825,6 +814,10 @@ li {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+}
+
+.login-panel input, .login-panel select, .settings select{
+    color: var(--card-text-color)
 }
 
 

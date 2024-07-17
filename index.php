@@ -1,57 +1,32 @@
 <?php
-session_start();
+
+require 'config.php';
 
 if (!isset($_SESSION['user_id'])) {
-    header('location: pages/login.php');
+    header('location: login.php');
 }
 
 if ($_SESSION['role'] == "student") {
-    header('location: pages/login.php');
+    header('location: login.php');
     unset($_SESSION['user_id']);
     unset($_SESSION['role']);
+    unset($_SESSION['org_role']);
 }
 
 if (isset($_GET['logout'])) {
     session_destroy();
     unset($_SESSION['user_id']);
     unset($_SESSION['role']);
-    header("location: pages/login.php");
+    unset($_SESSION['org_role']);
+    header("location: login.php");
 }
 
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "techcommprototype";
-
-$name = '';
-$organization = '';
-
-// Create connection
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-// Check connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
-
-
-
-$sql = "SELECT u.username, u.name, u.organization, o.code, o.name AS organization_name FROM users AS u JOIN organizations AS o ON u.organization = o.id WHERE u.id = '$_SESSION[user_id]'";
-
-$result = $conn->query($sql);
-
-while ($row = $result->fetch_assoc()) {
-    
-    $name = $row["name"];
-    $organization_name = $row["organization_name"];
-    $organization_id = $row["organization"];
-    $organization_code = $row["code"];
-}
+require 'getUserDetails.php';
 
 if ($organization_id == '1') {
-    $sql = "SELECT items.*, item_category.name AS category_name FROM items JOIN item_category ON items.category_id = item_category.id WHERE organization_id = '$organization_id' AND user_id = '$_SESSION[user_id]'";
+    $sql = "SELECT items.*, item_category.name AS category_name FROM items JOIN item_category ON items.category_id = item_category.id WHERE organization_id = '$organization_id' AND user_id = '$_SESSION[user_id]' ORDER BY stock DESC";
 } else {
-    $sql = "SELECT items.*, item_category.name AS category_name FROM items JOIN item_category ON items.category_id = item_category.id WHERE organization_id = '$organization_id'";
+    $sql = "SELECT items.*, item_category.name AS category_name FROM items JOIN item_category ON items.category_id = item_category.id WHERE organization_id = '$organization_id' OR organization_id = '0' ORDER BY stock DESC";
 }
 
 $result = mysqli_query($conn, $sql);
@@ -73,7 +48,7 @@ $categories = mysqli_fetch_all($result, MYSQLI_ASSOC);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" type="image/x-icon" href="assets/images/qiqi.png">
+    <link rel="icon" type="image/x-icon" href="assets/images/ciit.png">
     <link rel="stylesheet" type="text/css" href="css/style.php">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
     <title>Prototype</title>
@@ -117,21 +92,17 @@ $categories = mysqli_fetch_all($result, MYSQLI_ASSOC);
         <div class="nav-left">
             <div class="menu">
                 <a href="#"
-                    class="logo"><?php if ($organization_name == "Individual") {
-                        if($_SESSION['role'] == "master"){
-                            echo htmlspecialchars("MASTER");
-                        } else{
-                            echo htmlspecialchars(strtoupper($name));
-                        }
-                        
+                    class="logo"><?php 
+                    if($_SESSION['role'] == "master"){
+                        echo htmlspecialchars("MASTER");
                     } else {
-                        if($_SESSION['role'] == "admin"){
-                            echo htmlspecialchars("ADMIN: " . strtoupper($organization_code));
+                        if ($organization_name == "Individual") {
+                            echo htmlspecialchars(strtoupper($name));
                         } else{
                             echo htmlspecialchars(strtoupper($organization_name));
                         }
-                        
-                    } ?></a>
+                    }
+                     ?></a>
                 
                 <form class="search-bar ">
                     <input id="search" type="text" autocomplete="off" placeholder="Search products...">
@@ -158,19 +129,19 @@ $categories = mysqli_fetch_all($result, MYSQLI_ASSOC);
         </div>
         <div class="left-nav-icon button cart-icon <?php if(isset($_GET['cart'])) {echo "selected"; }?>" title="CART" onclick="cartButton()"><i class="bi bi-cart"></i>CART
         </div>
-        <div class="left-nav-icon button" title="INVENTORY" onclick="window.location.href='pages/inventory.php'"><i
+        <div class="left-nav-icon button" title="INVENTORY" onclick="window.location.href='inventory.php'"><i
                 class="bi bi-boxes"></i>INVENTORY</div>
-        <div class="left-nav-icon button" title="LOGS" onclick="window.location.href='pages/logs.php'"><i
+        <div class="left-nav-icon button" title="LOGS" onclick="window.location.href='logs.php'"><i
                 class="bi bi-journal-text"></i>LOGS</div>
-        <div class="left-nav-icon button" title="REPORTS" onclick="window.location.href='pages/reports.php'"><i
+        <div class="left-nav-icon button" title="REPORTS" onclick="window.location.href='reports.php'"><i
                 class="bi bi-bar-chart-line"></i>REPORTS</div>
         <?php 
-        if($_SESSION['role'] == 'admin' || $_SESSION['role'] == 'master'){
-        ?><div class="left-nav-icon button" title="USERS" onclick="window.location.href='pages/users.php'"><i
+        if($_SESSION['org_role'] == 'admin' || $_SESSION['role'] == 'master'){
+        ?><div class="left-nav-icon button" title="USERS" onclick="window.location.href='users.php'"><i
                 class="bi bi-person"></i>USERS</div><?php
         }
         ?>
-        <div class="left-nav-icon button" title="SETTINGS" onclick="window.location.href='pages/settings.php'"><i
+        <div class="left-nav-icon button" title="SETTINGS" onclick="window.location.href='settings.php'"><i
                 class="bi bi-gear"></i>SETTINGS</div>
             
         <div class="left-nav-icon button" title="LOGOUT" onclick="window.location.href='index.php?logout=1'"><i
@@ -185,28 +156,28 @@ $categories = mysqli_fetch_all($result, MYSQLI_ASSOC);
                     </div>
                     <div class="left-nav-icon button cart-icon" onclick="cartButton()"><i class="bi bi-cart"></i>CART
                     </div>
-                    <div class="left-nav-icon button" onclick="window.location.href='pages/inventory.php'"><i
-                            class="bi bi-boxes" href="../pages/inventory.php"></i>INVENTORY</div>
-                    <div class="left-nav-icon button" onclick="window.location.href='pages/logs.php'"><i
+                    <div class="left-nav-icon button" onclick="window.location.href='inventory.php'"><i
+                            class="bi bi-boxes"></i>INVENTORY</div>
+                    <div class="left-nav-icon button" onclick="window.location.href='logs.php'"><i
                             class="bi bi-journal-text"></i>LOGS</div>
-                    <div class="left-nav-icon button" onclick="window.location.href='pages/reports.php'"><i
+                    <div class="left-nav-icon button" onclick="window.location.href='reports.php'"><i
                             class="bi bi-bar-chart-line"></i>REPORTS</div>
                     <?php 
-                    if($_SESSION['role'] == 'admin' || $_SESSION['role'] == 'master'){
-                    ?><div class="left-nav-icon button" onclick="window.location.href='pages/users.php'"><i
+                    if($_SESSION['org_role'] == 'admin' || $_SESSION['role'] == 'master'){
+                    ?><div class="left-nav-icon button" onclick="window.location.href='users.php'"><i
                             class="bi bi-person"></i>USERS</div><?php
                     }
                     ?>
                     
-                    <div class="left-nav-icon button" onclick="window.location.href='pages/settings.php'"><i
+                    <div class="left-nav-icon button" onclick="window.location.href='settings.php'"><i
                             class="bi bi-gear"></i>SETTINGS</div>
                 </div>
-
+                
                 <div class="left-nav-lower">
                     <div class="left-nav-icon button" onclick="window.location.href='index.php?logout=1'"><i
                             class="bi bi-box-arrow-left"></i>LOGOUT</div>
                 </div>
-
+            
             </div>
         </div>
 
@@ -232,6 +203,9 @@ $categories = mysqli_fetch_all($result, MYSQLI_ASSOC);
 
                     <?php
                     foreach ($items as $item) {
+                        if((int)$item['stock'] <= 0){
+                            continue;
+                        }
                         ?>
 
                         <div class="product-card shadow" itemID='<?php echo htmlspecialchars($item['id']); ?>' 
@@ -241,7 +215,7 @@ $categories = mysqli_fetch_all($result, MYSQLI_ASSOC);
                             <div class="product-icon"><img
                                     src="assets/images/<?php echo htmlspecialchars($item['image_name']); ?>"
                                     alt="<?php echo htmlspecialchars($item['name']); ?>"></div>
-                            <div class="product-card-desc" category="Stickers">
+                            <div class="product-card-desc" category="<?php echo htmlspecialchars($item['category_name']); ?>">
                                 <div class="product-name">
                                     <span><?php echo htmlspecialchars($item['name']); ?></span></div>
                                 <div class="product-price">P <?php echo htmlspecialchars($item['price']); ?></div>
@@ -279,7 +253,7 @@ $categories = mysqli_fetch_all($result, MYSQLI_ASSOC);
                 <div class="cart-panel shadow">
                     <div class="cart-header">
                         <input class="customer-name-input" id="search-user" type="text" autocomplete="off"
-                            placeholder="Customer ID...">
+                            placeholder="Customer Info...">
                         <div class="scan-id confirm unselectable" id="scan-id" style="cursor: pointer;">SCAN ID</div>
                         <div class="scan-id confirm unselectable" style="display: none;" id="search-id"
                             style="cursor: pointer;">SEARCH</div>
@@ -346,9 +320,9 @@ $categories = mysqli_fetch_all($result, MYSQLI_ASSOC);
                                 <select class="transaction-details-banner-base-right"
                                     style="color: var(--card-text-color); cursor: pointer; border:none; font-size: larger; text-align: right;  padding-right: 5px; background-color: rgba(0,0,0,0);"
                                     name="pMethod" id="pMethod" title="Select Payment Method">
-                                    <option value="Cash">Cash</option>
-                                    <option value="Gcash">Gcash</option>
-                                    <option value="Other">Other</option>
+                                    <option style="background-color: rgb(125, 125, 125);" value="Cash">Cash</option>
+                                    <option style="background-color: rgb(125, 125, 125);" value="Gcash">Gcash</option>
+                                    <option style="background-color: rgb(125, 125, 125);" value="Other">Other</option>
                                 </select>
 
                             </div>
@@ -388,8 +362,7 @@ $categories = mysqli_fetch_all($result, MYSQLI_ASSOC);
         <script type="text/javascript" src="js/transaction.js" id="rendered-js"></script>
 
         <?php if(isset($_GET['cart'])) {echo "<script> cartButton(); </script>"; }?>
-
-        <script type="text/javascript" src="js/settings.js" id="rendered-js"></script>
+    
 
 </body>
 

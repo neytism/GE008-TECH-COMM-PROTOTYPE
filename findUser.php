@@ -1,36 +1,13 @@
 <?php
-session_start();
-
-if (!isset($_SESSION['user_id'])) {
-    header('location: pages/login.php');
-}
-
-if ($_SESSION['role'] == "student") {
-    header('location: pages/login.php');
-    unset($_SESSION['user_id']);
-    unset($_SESSION['role']);
-}
-
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
-    //echo $_POST['user_to_find'];
-    $servername = "localhost";
-    $username = "root";
-    $password = "";
-    $dbname = "techcommprototype";
-    // Create connection
-    $conn = new mysqli($servername, $username, $password, $dbname);
-    
-    // Check connection
-    if ($conn->connect_error) {
-        die("Connection failed: " . $conn->connect_error);
-    }
+    require 'config.php';
 
-    $user_to_find = str_replace('-','', $_POST['user_to_find']);
-
+    $user_to_find = str_replace('-','', $_POST['user_to_find']); // this will cause error if email has '-'
     
-    $sql = "SELECT * FROM users WHERE student_number = '$user_to_find'";
+    
+    $sql = "SELECT * FROM users WHERE student_number = '$user_to_find' OR email = '$user_to_find'";
     
     $result = $conn->query($sql);
     
@@ -38,7 +15,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $user = $result->fetch_assoc();
         echo $user['email'];
     } else {
-        echo "User does not exist.";
+        if(!filter_var( $user_to_find, FILTER_VALIDATE_EMAIL)){
+            echo "Invalid Input.";
+        } else{
+            echo "Customer not in Database.";
+        }
+        
     }
     
     $conn->close();

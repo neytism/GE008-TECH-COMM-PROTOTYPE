@@ -16,7 +16,7 @@ function checkLogin(event) {
 
             ChangeText(warningText, "Redirecting you to home page...", "rgba(37, 255, 37, 0.13)");
             setTimeout(function(){
-                document.location.href = '../index.php';
+                document.location.href = 'index.php';
            }, 1000); 
         
         } else{

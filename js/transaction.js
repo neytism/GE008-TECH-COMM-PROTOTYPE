@@ -224,23 +224,34 @@ const searchButton = document.querySelector('#search-id');
 
 searchButton.addEventListener('click', function() {
     
-    let student_id = document.getElementById("search-user").value;
+    let customer_info = document.getElementById("search-user").value;
     let email_holder = document.getElementById("email-holder");
 
     let formData = new FormData();
 
-    if (student_id) {
-        formData.append('user_to_find', student_id)
+    if (customer_info) {
+        formData.append('user_to_find', customer_info);
     }
     
     var xhr = new XMLHttpRequest();
     xhr.open('POST', 'findUser.php', true);
     xhr.onload = function() {
-        if(this.responseText.trim() == "User does not exist."){
+        if(this.responseText.trim() == "Customer not in Database."){
             
-            alert(this.responseText);
-            ChangeText(email_holder, this.responseText);
+            let customer_info = document.getElementById("search-user").value;
             
+            if (confirm("Customer is not a CIIT Student. \nProceed?") == true) {
+                
+                ChangeText(email_holder, customer_info);
+              } else {
+                document.getElementById("search-user").value = "";
+              }
+           
+            
+        } else if(this.responseText.trim() == "Invalid Input."){
+    
+            alert('Invalid Input.');
+
         } else{
             ChangeText(email_holder, this.responseText);
         }
@@ -296,14 +307,14 @@ function ConfirmCheckOut() {
       });
     });
     
-    $student_id = document.getElementById("search-user").value;
+    $customer_information = document.getElementById("search-user").value;
   
     
   
     let formData = new FormData();
     
     formData.append('email', $email)
-    formData.append('student_id', $student_id)
+    formData.append('customer_information', $customer_information)
     formData.append('items', JSON.stringify($items));
     formData.append('total_amount', $value)
     formData.append('payment_method', $method)

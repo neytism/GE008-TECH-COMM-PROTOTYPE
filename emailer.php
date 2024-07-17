@@ -27,36 +27,12 @@ define('REPLY_TO', "cfrrs.system@gmail.com");
 define('REPLY_TO_NAME', "Admin");
 
 
-session_start();
-
-if (!isset($_SESSION['user_id'])) {
-    header('location: pages/login.php');
-}
-
-if ($_SESSION['role'] == "student") {
-    header('location: pages/login.php');
-    unset($_SESSION['user_id']);
-    unset($_SESSION['role']);
-}
-
-
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     
-    //echo $_POST['user_to_find'];
-    $servername = "localhost";
-    $username = "root";
-    $password = "";
-    $dbname = "techcommprototype";
-    // Create connection
-    $conn = new mysqli($servername, $username, $password, $dbname);
-    
-    // Check connection
-    if ($conn->connect_error) {
-        die("Connection failed: " . $conn->connect_error);
-    }
+    require 'config.php';
     
     $buyer_email = $_POST['email'];//
-    $buyer_student_id = $_POST['student_id'];//
+    $customer_information = $_POST['customer_information'];//
     $total_amount = $_POST['total_amount'];//
     $payment_method = $_POST['payment_method'];//
     $items = json_decode($_POST['items'], true);//
@@ -65,33 +41,39 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $timestamp = time(); 
     $formattedTimestamp = date("m/d/Y H:i:s", $timestamp);//
     
-    $sql = "SELECT * FROM users WHERE student_number = '$buyer_student_id'";
+    $sql = "SELECT * FROM users WHERE student_number = '$customer_information' OR email = '$customer_information'";
     
     $result = $conn->query($sql);
     
-    while ($row = $result->fetch_assoc()) {
-    
-    $buyer_name = $row["name"]; //
-    $buyer_id = $row["id"];
+    if ($result->num_rows > 0) {
+        while ($row = $result->fetch_assoc()) {
+            $buyer_name = $row["name"];
+            $buyer_id = $row["id"];
+        }
+    } else {
+
+        $buyer_name = $customer_information;
+        $buyer_id = 'Non-student';
+        
     }
     
-
-    $sql = "SELECT u.id, u.username, u.password, u.name, u.role, u.organization, o.code, o.name AS organization_name FROM users AS u JOIN organizations AS o ON u.organization = o.id WHERE u.id = '$_SESSION[user_id]'";
-
+    
+    $sql = "SELECT u.id, u.username, u.password, u.name, u.role, u.active_organization, o.code, o.organization_name FROM users AS u JOIN organizations AS o ON u.active_organization = o.id WHERE u.id = '$_SESSION[user_id]'";
+    
     $result = $conn->query($sql);
 
     while ($row = $result->fetch_assoc()) {
         
         $seller_id = $row["id"];
         $seller_name = $row["name"];
-        $organization_id = $row["organization"];
+        $organization_id = $row["active_organization"];
         $organization_name = $row["organization_name"];
         $organization_code = $row["code"];
     }
-
+    
     $sql = "SELECT id FROM receipts WHERE id LIKE '$organization_code%' ORDER BY id DESC LIMIT 1";
     $result = mysqli_query($conn, $sql);
-
+    
     if ($result->num_rows > 0) {
         $row = $result->fetch_assoc();
         $last_id = $row['id'];
@@ -103,10 +85,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $formattedItemCode = formatString($itemCode);
 
-    $details = "";
+    $details = 'TO: '.$buyer_name .' ';
 
     foreach ($items as $item){
-        $details =  $details . $item['quantity'] . " x " . $item['item_id'] . " - " . $item['name'] . " = " . $item['price'] . " . ";
+        $details =  $details . $item['quantity'] . " " . $item['item_id'] . " - " . $item['name'] . " = " . $item['price'] . " . ";
     }
     
     
@@ -137,8 +119,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $receipt_display = '';
     
-    $receipt_display .= '<div style="position:fixed; background-color: rgba(0,0,0,0.7); height: 100vh; width: 100vw; z-index: 100; cursor: pointer;" id="receipt-holder" onclick="CloseReceipt()">';
-    $receipt_display .= '    <div class="login-panel shadow">';
+    $receipt_display .= '<div style="position:fixed; background-color: rgba(0, 0, 0, 0.5); height: 100vh; width: 100vw; z-index: 100; cursor: pointer;" id="receipt-holder" onclick="CloseReceipt()">';
+    $receipt_display .= '    <div class="login-panel shadow" style="background-color: #f2f2f2;">';
     $receipt_display .= '        <div style="margin-bottom: 5px; text-align: center; font-size: 1.8rem; font-family: Loew-ExtraBold !important;">RECEIPT</div>';
     $receipt_display .= '        <div style="margin-bottom: 5px; margin-top: 5px;text-align: center; font-size: 1rem; font-family: Loew-ExtraBold !important;">'.$formattedItemCode.'</div>';
     $receipt_display .= '        <hr style="border-top: 2px dotted rgba(0, 0, 0, 1); margin-top: 10px; margin-bottom: 10px;">';
@@ -158,9 +140,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $receipt_display .= '        <div style="margin-bottom: 5px; margin-top: 5px; text-align: center; font-size: 0.8rem; font-family: Loew-Medium !important;">'.$email_result.'</div>';
     $receipt_display .= '    </div>';
     $receipt_display .= '</div>';
-
+    
     $error_display = '';
-
+    
     $error_display .= '<div style="position:fixed; background-color: rgba(0,0,0,0.7); height: 100vh; width: 100vw; z-index: 100; cursor: pointer;" id="receipt-holder" onclick="CloseReceipt()">';
     $error_display .= '    <div class="login-panel shadow">';
     $error_display .= '        <div style="margin-bottom: 5px; text-align: center; font-size: 1.8rem; font-family: Loew-ExtraBold !important;">ERROR</div>';

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 12, 2024 at 11:04 PM
+-- Generation Time: Jul 17, 2024 at 06:51 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -43,7 +43,27 @@ CREATE TABLE `items` (
 --
 
 INSERT INTO `items` (`id`, `user_id`, `organization_id`, `image_name`, `name`, `category_id`, `stock`, `price`) VALUES
-('CGC001', 3, 4, 'CGC001.png', 'Qiqi Sticker', 2, 30, 25.00),
+('ALL001', 1, 0, 'ALL001.png', 'CIIT Banner Sticker', 2, 15, 25.00),
+('ALL002', 1, 0, 'ALL002.png', 'A Ghibli Sticker', NULL, 15, 25.00),
+('ALL003', 1, 0, 'ALL003.png', 'Kazuha', 2, 1, 25.00),
+('ALL004', 1, 0, 'ALL004.png', 'Ei', 2, 1, 25.00),
+('ALL005', 1, 0, 'ALL005.png', 'ganyu', 2, 1, 25.00),
+('ALL006', 1, 0, 'ALL006.png', 'It\'s ok', 2, 1, 25.00),
+('ALL007', 1, 0, 'ALL007.png', 'WOAH', 2, 1, 25.00),
+('ALL008', 1, 0, 'ALL008.png', 'Brother what?', 2, 1, 25.00),
+('ALL009', 1, 0, 'ALL009.png', 'T-pose', 2, 1, 25.00),
+('ALL010', 1, 0, 'ALL010.png', 'Neuron Activation', 2, 1, 25.00),
+('ALL011', 1, 0, 'ALL011.png', 'Childe', 3, 1, 30.00),
+('ALL012', 1, 0, 'ALL012.png', 'Minus tech tips', 3, 1, 30.00),
+('ALL013', 1, 0, 'ALL013.png', 'Hmmmm???', 3, 1, 30.00),
+('ALL014', 1, 0, 'ALL014.png', 'Hmmm...', 3, 1, 30.00),
+('ALL015', 1, 0, 'ALL015.png', 'Cat', 3, 1, 30.00),
+('ALL016', 1, 0, 'ALL016.png', 'Just the white shirt', 4, 1, 176.00),
+('ALL017', 1, 0, 'ALL017.png', 'Strawberry Shake', 6, 1, 50.00),
+('ALL018', 1, 0, 'ALL018.png', 'Chocolate Shake', 6, 1, 50.00),
+('ALL019', 1, 0, 'ALL019.png', 'Borgir', 5, 1, 55.00),
+('ALL020', 1, 0, 'ALL020.png', 'Paw Keycap', 8, 1, 100.00),
+('CGC001', 3, 4, 'CGC001.png', 'Qiqi Sticker Edit', 2, 5, 25.00),
 ('CGC002', 3, 4, 'CGC002.png', 'CIIT Pin', 3, 12, 50.00),
 ('IND001', 1, 1, 'IND001.png', 'Qiqi na malungkot', 2, 5, 25.00);
 
@@ -132,7 +152,114 @@ INSERT INTO `logs` (`id`, `type`, `userID`, `details`, `timestamp`) VALUES
 (39, 'sales', 3, 'User 3 - Oliver Chiuco issued CGC-000-016 receipt to 1 - Nate Florendo.', '2024-07-07 21:38:05'),
 (40, 'user', 1, 'User 1 - Nate Florendo logged in.', '2024-07-07 21:43:25'),
 (41, 'user', 3, 'User 3 - Oliver Chiuco logged in.', '2024-07-11 22:52:30'),
-(42, 'user', 4, 'User 4 - Ziyun Reyes logged in.', '2024-07-12 14:33:50');
+(42, 'user', 4, 'User 4 - Ziyun Reyes logged in.', '2024-07-12 14:33:50'),
+(43, 'user', 1, 'User 1 - Nate Florendo logged in.', '2024-07-14 12:25:29'),
+(44, 'user', 3, 'User 3 - Oliver Chiuco logged in.', '2024-07-14 14:45:23'),
+(45, 'user', 1, 'User 1 - Nate Florendo logged in.', '2024-07-14 17:34:31'),
+(46, 'user', 3, 'User 3 - Oliver Chiuco logged in.', '2024-07-14 17:34:43'),
+(47, 'user', 3, 'User 3 - Oliver Chiuco logged in.', '2024-07-14 17:34:54'),
+(48, 'user', 1, 'User 1 -  logged in.', '2024-07-14 18:02:46'),
+(49, 'user', 1, 'User 1 - Nate Florendo logged in.', '2024-07-14 18:03:02'),
+(50, 'user', 1, 'User 1 - Nate Florendo logged in.', '2024-07-14 18:11:44'),
+(51, 'user', 1, 'User 1 - Nate Florendo logged in.', '2024-07-14 18:12:47'),
+(52, 'user', 1, 'User 1 - Nate Florendo logged in.', '2024-07-14 18:13:13'),
+(53, 'user', 1, 'User 1 - Nate Florendo logged in.', '2024-07-14 18:14:55'),
+(54, 'user', 1, 'User 1 - Nate Florendo logged in.', '2024-07-14 18:16:35'),
+(59, 'user', 1, 'User 1 - Nate Florendo logged in.', '2024-07-14 18:40:16'),
+(60, 'user', 1, 'User 1 - Nate Florendo logged in.', '2024-07-14 18:41:12'),
+(61, 'user', 1, 'User 1 - Nate Florendo logged in.', '2024-07-14 18:41:13'),
+(62, 'user', 1, 'User 1 - Nate Florendo logged in.', '2024-07-14 18:41:13'),
+(63, 'user', 1, 'User 1 - Nate Florendo logged in.', '2024-07-14 18:41:25'),
+(64, 'user', 1, 'User 1 - Nate Florendo logged in.', '2024-07-14 18:43:30'),
+(65, 'user', 1, 'User 1 - Nate Florendo logged in.', '2024-07-14 18:43:30'),
+(66, 'user', 1, 'User 1 - Nate Florendo logged in.', '2024-07-14 18:43:31'),
+(67, 'user', 1, 'User 1 - Nate Florendo logged in.', '2024-07-14 18:43:31'),
+(68, 'user', 1, 'User 1 - Nate Florendo logged in.', '2024-07-14 18:43:31'),
+(69, 'user', 1, 'User 1 - Nate Florendo logged in.', '2024-07-14 18:43:31'),
+(70, 'user', 1, 'User 1 - Nate Florendo logged in.', '2024-07-14 18:47:59'),
+(71, 'user', 1, 'User 1 - Nate Florendo logged in.', '2024-07-14 18:48:00'),
+(72, 'user', 1, 'User 1 - Nate Florendo logged in.', '2024-07-14 18:48:00'),
+(73, 'user', 1, 'User 1 - Nate Florendo logged in.', '2024-07-14 18:48:00'),
+(74, 'user', 1, 'User 1 - Nate Florendo logged in.', '2024-07-14 18:48:00'),
+(75, 'user', 1, 'User 1 - Nate Florendo logged in.', '2024-07-14 18:48:00'),
+(76, 'user', 1, 'User 1 - Nate Florendo logged in.', '2024-07-14 18:48:01'),
+(77, 'user', 1, 'User 1 - Nate Florendo logged in.', '2024-07-14 18:48:01'),
+(78, 'user', 1, 'User 1 - Nate Florendo logged in.', '2024-07-14 18:48:01'),
+(79, 'user', 1, 'User 1 - Nate Florendo logged in.', '2024-07-14 18:48:02'),
+(80, 'user', 1, 'User 1 - Nate Florendo logged in.', '2024-07-14 18:48:02'),
+(81, 'user', 1, 'User 1 - Nate Florendo logged in.', '2024-07-14 18:48:02'),
+(82, 'user', 1, 'User 1 - Nate Florendo logged in.', '2024-07-14 18:54:06'),
+(83, 'user', 1, 'User 1 - Nate Florendo logged in.', '2024-07-14 18:54:34'),
+(84, 'user', 1, 'User 1 - Nate Florendo logged in.', '2024-07-14 18:57:49'),
+(85, 'user', 1, 'User 1 - Nate Florendo logged in.', '2024-07-14 18:59:17'),
+(86, 'user', 1, 'User 1 - Nate Florendo logged in.', '2024-07-14 19:01:08'),
+(87, 'user', 1, 'User 1 - Nate Florendo logged in.', '2024-07-14 19:03:02'),
+(88, 'user', 1, 'User 1 - Nate Florendo logged in.', '2024-07-14 19:05:14'),
+(89, 'user', 3, 'User 3 - Oliver Chiuco logged in.', '2024-07-14 19:33:04'),
+(90, 'user', 4, 'User 4 - Ziyun Reyes logged in.', '2024-07-14 19:48:01'),
+(91, 'user', 4, 'User 4 - Ziyun Reyes logged in.', '2024-07-14 19:52:09'),
+(92, 'user', 3, 'User 3 - Oliver Chiuco logged in.', '2024-07-14 19:53:04'),
+(93, 'user', 1, 'User 1 - Nate Florendo logged in.', '2024-07-14 20:22:21'),
+(94, 'user', 3, 'User 3 - Oliver Chiuco logged in.', '2024-07-14 22:44:21'),
+(95, 'user', 1, 'User 1 - Nate Florendo logged in.', '2024-07-14 22:44:43'),
+(96, 'user', 3, 'User 3 - Oliver Chiuco logged in.', '2024-07-14 22:45:12'),
+(97, 'user', 1, 'User 1 - Nate Florendo logged in.', '2024-07-14 22:46:20'),
+(98, 'user', 3, 'User 3 - Oliver Chiuco logged in.', '2024-07-14 22:48:26'),
+(99, 'user', 1, 'User 1 - Nate Florendo logged in.', '2024-07-14 22:59:37'),
+(100, 'user', 4, 'User 4 - Ziyun Reyes logged in.', '2024-07-14 23:01:02'),
+(101, 'user', 1, 'User 1 - Nate Florendo logged in.', '2024-07-14 23:10:54'),
+(102, 'user', 4, 'User 4 - Ziyun Reyes logged in.', '2024-07-15 07:35:27'),
+(103, 'user', 1, 'User 1 - Nate Florendo logged in.', '2024-07-15 08:58:41'),
+(104, 'sales', 1, 'User 1 - Nate Florendo issued CGC-000-017 receipt to Non-student - NATEODNEROLF@GMAIL.COM.', '2024-07-15 10:14:24'),
+(105, 'sales', 1, 'User 1 - Nate Florendo issued CGC-000-018 receipt to Non-student - NATEODNEROLF@GMAIL.COM.', '2024-07-15 11:03:25'),
+(106, 'sales', 1, 'User 1 - Nate Florendo issued CGC-000-019 receipt to Non-student - NATEODNEROLF@GMAIL.COM.', '2024-07-15 11:08:16'),
+(107, 'sales', 1, 'User 1 - Nate Florendo issued CGC-000-020 receipt to Non-student - NATEODNEROLF@GMAIL.COM.', '2024-07-15 11:10:50'),
+(108, 'user', 1, 'User 1 - Nate Florendo logged in.', '2024-07-16 08:28:45'),
+(109, 'user', 1, 'User 1 - Nate Florendo logged in.', '2024-07-16 09:02:50'),
+(110, 'user', 3, 'User 3 - Oliver Chiuco logged in.', '2024-07-16 09:12:24'),
+(111, 'sales', 3, 'User 3 - Oliver Chiuco issued CGC-000-021 receipt to 1 - Nate Florendo.', '2024-07-16 09:15:33'),
+(112, 'inventory', 3, 'User 3 - Oliver Chiuco updated item: CGC002 - Item name from CIIT Pin to CIIT Pin Edit. ', '2024-07-16 09:17:05'),
+(113, 'inventory', 3, 'User 3 - Oliver Chiuco updated item: CGC002 - Item name from CIIT Pin Edit to CIIT Pin. ', '2024-07-16 09:21:57'),
+(114, 'inventory', 3, 'User 3 - Oliver Chiuco updated item: CGC001 - Stock from 30 to 0. ', '2024-07-16 09:26:19'),
+(115, 'inventory', 3, 'User 3 - Oliver Chiuco updated item: CGC001 - Stock from 0 to . ', '2024-07-16 09:26:27'),
+(116, 'inventory', 3, 'User 3 - Oliver Chiuco updated item: CGC001 - Stock from 0 to 5. ', '2024-07-16 09:26:47'),
+(117, 'user', 3, 'User 3 - Oliver Chiuco logged in.', '2024-07-16 09:28:03'),
+(118, 'sales', 3, 'User 3 - Oliver Chiuco issued CGC-000-022 receipt to 1 - Nate Florendo.', '2024-07-16 09:32:13'),
+(119, 'inventory', 3, 'User 3 - Oliver Chiuco updated item: CGC001 - Item name from Qiqi Sticker to Qiqi Sticker Edit. ', '2024-07-16 09:33:29'),
+(120, 'inventory', 3, 'User 3 - Oliver Chiuco updated item: CGC002 - Stock from 12 to 0. ', '2024-07-16 09:33:40'),
+(121, 'inventory', 3, 'User 3 - Oliver Chiuco updated item: CGC002 - Stock from 0 to 12. ', '2024-07-16 09:33:52'),
+(122, 'user', 4, 'User 4 - Ziyun Reyes logged in.', '2024-07-16 09:36:34'),
+(123, 'user', 1, 'User 1 - Nate Florendo logged in.', '2024-07-16 09:37:40'),
+(124, 'user', 1, 'User 1 - Nate Florendo logged in.', '2024-07-16 15:29:51'),
+(125, 'user', 1, 'User 1 - Nate Florendo logged in.', '2024-07-16 15:51:59'),
+(126, 'user', 3, 'User 3 - Oliver Chiuco logged in.', '2024-07-16 17:26:57'),
+(127, 'user', 1, 'User 1 - Nate Florendo logged in.', '2024-07-16 19:20:34'),
+(128, 'user', 1, 'User 1 - Changed name from Nate Florendo into Nate Florendo New Name', '2024-07-16 20:06:52'),
+(129, 'user', 1, 'User 1 - Changed name from Nate Florendo New Name into Nate Florendo', '2024-07-16 20:07:46'),
+(130, 'user', 3, 'User 3 - Oliver Chiuco logged in.', '2024-07-16 20:09:28'),
+(131, 'user', 1, 'User 1 - Nate Florendo logged in.', '2024-07-16 22:59:32'),
+(132, 'user', 4, 'User 4 - Ziyun Reyes logged in.', '2024-07-16 23:19:24'),
+(133, 'user', 1, 'User 1 - Nate Florendo logged in.', '2024-07-17 08:21:49'),
+(134, 'user', 4, 'User 4 - Ziyun Reyes logged in.', '2024-07-17 10:34:18'),
+(135, 'user', 1, 'User 1 - Nate Florendo logged in.', '2024-07-17 11:40:27'),
+(136, 'user', 3, 'User 3 - Oliver Chiuco logged in.', '2024-07-17 12:23:17'),
+(137, 'user', 1, 'User 1 - Nate Florendo logged in.', '2024-07-17 12:32:06'),
+(138, 'user', 3, 'User 3 - Oliver Chiuco logged in.', '2024-07-17 12:32:27'),
+(139, 'user', 4, 'User 4 - Ziyun Reyes logged in.', '2024-07-17 12:41:28'),
+(140, 'user', 3, 'User 3 - Oliver Chiuco logged in.', '2024-07-17 12:41:48'),
+(141, 'user', 3, 'User 3 - Oliver Chiuco logged in.', '2024-07-17 12:51:34'),
+(142, 'user', 4, 'User 4 - Ziyun Reyes logged in.', '2024-07-17 12:51:48'),
+(143, 'user', 3, 'User 3 - Oliver Chiuco logged in.', '2024-07-17 12:52:05'),
+(144, 'user', 4, 'User 4 - Ziyun Reyes logged in.', '2024-07-17 12:52:23'),
+(145, 'user', 1, 'User 1 - Nate Florendo logged in.', '2024-07-17 13:25:28'),
+(146, 'user', 10, 'User 10 - Peter Santiago logged in.', '2024-07-17 14:06:18'),
+(147, 'user', 10, 'User 10 - Peter Santiago logged in.', '2024-07-17 14:07:11'),
+(148, 'user', 1, 'User 1 - Nate Florendo logged in.', '2024-07-17 14:16:08'),
+(149, 'user', 10, 'User 10 - Peter Santiago logged in.', '2024-07-17 14:20:41'),
+(150, 'user', 3, 'User 3 - Oliver Chiuco logged in.', '2024-07-17 14:24:32'),
+(151, 'user', 1, 'User 1 - Nate Florendo logged in.', '2024-07-17 14:52:48'),
+(152, 'user', 1, 'User 1 - Nate Florendo logged in.', '2024-07-17 14:52:59'),
+(153, 'user', 3, 'User 3 - Oliver Chiuco logged in.', '2024-07-17 14:55:28');
 
 -- --------------------------------------------------------
 
@@ -143,7 +270,7 @@ INSERT INTO `logs` (`id`, `type`, `userID`, `details`, `timestamp`) VALUES
 CREATE TABLE `organizations` (
   `id` int(11) NOT NULL,
   `code` varchar(3) NOT NULL,
-  `name` varchar(255) NOT NULL,
+  `organization_name` varchar(255) NOT NULL,
   `active` tinyint(1) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -151,7 +278,7 @@ CREATE TABLE `organizations` (
 -- Dumping data for table `organizations`
 --
 
-INSERT INTO `organizations` (`id`, `code`, `name`, `active`) VALUES
+INSERT INTO `organizations` (`id`, `code`, `organization_name`, `active`) VALUES
 (1, 'IND', 'Individual', 1),
 (2, 'SCO', 'Student Council', 1),
 (3, 'OBE', 'Obelisk', 1),
@@ -206,7 +333,13 @@ INSERT INTO `receipts` (`id`, `buyer_id`, `seller_id`, `organization_id`, `detai
 ('CGC000013', '1', '3', 4, '1x x CGC001 - QIQI STICKER = P 25.00 . 2x x CGC002 - CIIT PIN = P 50.00 . ', 'P 125', 'Cash', '2024-07-05 22:29:02'),
 ('CGC000014', '1', '3', 4, '2x x CGC001 - QIQI STICKER = P 25.00 . 1x x CGC002 - CIIT PIN = P 50.00 . ', 'P 100', 'Cash', '2024-07-05 22:34:47'),
 ('CGC000015', '1', '3', 4, '4x x CGC001 - QIQI STICKER = P 25.00 . 4x x CGC002 - CIIT PIN = P 50.00 . ', 'P 300', 'Gcash', '2024-07-05 22:35:56'),
-('CGC000016', '1', '3', 4, '2x x CGC002 - CIIT PIN = P 50.00 . 1x x CGC001 - QIQI STICKER = P 25.00 . ', 'P 125', 'Cash', '2024-07-07 21:38:05');
+('CGC000016', '1', '3', 4, '2x x CGC002 - CIIT PIN = P 50.00 . 1x x CGC001 - QIQI STICKER = P 25.00 . ', 'P 125', 'Cash', '2024-07-07 21:38:05'),
+('CGC000017', 'Non-student', '1', 0, '1x x CGC002 - CIIT PIN = P 50.00 . ', 'P 50', 'Cash', '2024-07-15 10:14:24'),
+('CGC000018', 'Non-student', '1', 0, 'TO: NATEODNEROLF@GMAIL.COM 1x x CGC001 - QIQI STICKER = P 25.00 . ', 'P 25', 'Cash', '2024-07-15 11:03:25'),
+('CGC000019', 'Non-student', '1', 4, 'TO: NATEODNEROLF@GMAIL.COM 1x x CGC002 - CIIT PIN = P 50.00 . 2x x CGC001 - QIQI STICKER = P 25.00 . ', 'P 100', 'Cash', '2024-07-15 11:08:16'),
+('CGC000020', 'Non-student', '1', 4, 'TO: NATEODNEROLF@GMAIL.COM 1x x CGC001 - QIQI STICKER = P 25.00 . ', 'P 25', 'Cash', '2024-07-15 11:10:50'),
+('CGC000021', '1', '3', 4, 'TO: Nate Florendo 3x CGC001 - QIQI STICKER = P 25.00 . 4x CGC002 - CIIT PIN = P 50.00 . ', 'P 275', 'Cash', '2024-07-16 09:15:33'),
+('CGC000022', '1', '3', 4, 'TO: Nate Florendo 4x CGC002 - CIIT PIN = P 50.00 . 4x CGC001 - QIQI STICKER = P 25.00 . ', 'P 300', 'Cash', '2024-07-16 09:32:13');
 
 -- --------------------------------------------------------
 
@@ -227,18 +360,24 @@ CREATE TABLE `settings` (
 
 INSERT INTO `settings` (`id`, `type`, `organization_id`, `val`) VALUES
 (-1, 'individual', 1, '--navbar-hor-padding: 15px;|--navbar-vert-padding: 10px;|--navbar-height: 53px;|--product-card-height: 300px;|--panel-spacing: 15px;|--navbar-color-1: #00364d;|--navbar-color-2: #43c8f4;|--navbar-text-color: #ffffff;|--background-color-1: #b2f4ff;|--background-color-2: #b2f4ff;|--primary-color: #00364d;|--button-accent-color: #43c8f4;|--card-color: #ffffff;|--card-text-color: #000000;|--cancel-color: #969696;|--confirm-color: #26b926;'),
-(0, 'organization', 12, '--navbar-color-1: #CA5A00; | --navbar-color-2: #D99800; | --navbar-text-color: #FFFFFF; | --background-color-1: #FFBA00; | --background-color-2: #FFBA00; | --primary-color: rgb(0, 54, 77); | --button-accent-color: #FF590F; | --card-color: #FFDE86; | --card-text-color: #000000; | --cancel-color: #B4A32F; | --confirm-color: #FF8400;'),
-(1, 'individual', 1, '--navbar-color-1: #000000; | --navbar-color-2: #000000; | --navbar-text-color: #FFFFFF; | --background-color-1: #151515; | --background-color-2: #151515; | --primary-color: #858585; | --button-accent-color: #000000; | --card-color: #FFFFFF; | --card-text-color: #000000; | --cancel-color: #727272; | --confirm-color: #000000;'),
-(4, 'individual', 1, '--navbar-color-1: rgb(0, 54, 77); | --navbar-color-2: rgb(67, 200, 244); | --navbar-text-color: #ffffff; | --background-color-1: rgba(178, 224, 228, 0.9); | --background-color-2: rgba(178, 224, 228, 0.9); | --primary-color: rgb(0, 54, 77); | --button-accent-color: rgb(67, 200, 244); | --card-color: white; | --card-text-color: rgb(0, 0, 0); | --cancel-color: rgb(110, 110, 110); | --confirm-color: rgb(38, 185, 38);'),
-(0, 'organization', 8, '--navbar-color-1: #6C6C6C; | --navbar-color-2: #6C6C6C; | --navbar-text-color: #ffffff; | --background-color-1: #4E4E4E; | --background-color-2: #242424; | --primary-color: #4E4E4E; | --button-accent-color: #CA7B2D; | --card-color: #444444; | --card-text-color: #FFFFFF; | --cancel-color: rgb(110, 110, 110); | --confirm-color: rgb(38, 185, 38);'),
-(0, 'organization', 7, '--navbar-color-1: #000000; | --navbar-color-2: #000000; | --navbar-text-color: #FFFFFF; | --background-color-1: #7A2B2B; | --background-color-2: #0A0A0A; | --primary-color: rgb(0, 54, 77); | --button-accent-color: #FF0000; | --card-color: #FFFFFF; | --card-text-color: #711D1D; | --cancel-color: rgb(110, 110, 110); | --confirm-color: #B93B26;'),
-(0, 'organization', 4, '--navbar-color-1: #000000; | --navbar-color-2: #6A1515; | --navbar-text-color: #ffffff; | --background-color-1: #000000; | --background-color-2: #181818; | --primary-color: rgb(0, 54, 77); | --button-accent-color: #825656; | --card-color: #282828; | --card-text-color: #D5434E; | --cancel-color: rgb(110, 110, 110); | --confirm-color: #842A2A;'),
-(0, 'organization', 9, '--navbar-color-1: #3B0A75; | --navbar-color-2: #3B0A75; | --navbar-text-color: #55BC8F; | --background-color-1: #6649D5; | --background-color-2: #6649D5; | --primary-color: rgb(0, 54, 77); | --button-accent-color: #55BC8F; | --card-color: #EEFFB8; | --card-text-color: #3B0A75; | --cancel-color: rgb(110, 110, 110); | --confirm-color: #6649D5;'),
-(0, 'organization', 3, '--navbar-color-1: #A636A4; | --navbar-color-2: #A636A4; | --navbar-text-color: #FFFFFF; | --background-color-1: #A636A4; | --background-color-2: #502C8E; | --primary-color: #517F93; | --button-accent-color: #A636A4; | --card-color: white; | --card-text-color: rgb(0, 0, 0); | --cancel-color: rgb(110, 110, 110); | --confirm-color: #A636A4;'),
-(0, 'organization', 15, '--navbar-color-1: #F58138; | --navbar-color-2: #F58138; | --navbar-text-color: #ffffff; | --background-color-1: #F58138; | --background-color-2: #FFC070; | --primary-color: rgb(0, 54, 77); | --button-accent-color: #FF7C24; | --card-color: white; | --card-text-color: rgb(0, 0, 0); | --cancel-color: rgb(110, 110, 110); | --confirm-color: #FFA417;'),
-(0, 'organization', 6, '--navbar-color-1: #FF76A4; | --navbar-color-2: #FF76A4; | --navbar-text-color: #ffffff; | --background-color-1: #FFF1B4; | --background-color-2: #FFC0E2; | --primary-color: rgb(0, 54, 77); | --button-accent-color: #FF76A4; | --card-color: #FFE5EE; | --card-text-color: #353535; | --cancel-color: rgb(110, 110, 110); | --confirm-color: #FF76A4;'),
-(0, 'organization', 2, '--navbar-color-1: #00364D; | --navbar-color-2: #00364D; | --navbar-text-color: #FFFFFF; | --background-color-1: #D0D0D0; | --background-color-2: #F4F4F4; | --primary-color: #00364D; | --button-accent-color: #8E8E8E; | --card-color: #FFFFFF; | --card-text-color: rgb(0, 0, 0); | --cancel-color: rgb(110, 110, 110); | --confirm-color: #005B81;'),
-(3, 'individual', 1, '--navbar-color-1: #00364d; | --navbar-color-2: #43c8f4; | --navbar-text-color: #ffffff; | --background-color-1: #b2f4ff; | --background-color-2: #b2f4ff; | --primary-color: #00364d; | --button-accent-color: #43c8f4; | --card-color: #ffffff; | --card-text-color: #000000; | --cancel-color: #969696; | --confirm-color: #26b926;');
+(0, 'organization', 12, '--navbar-color-1: #CA5A00; | --navbar-color-2: #D99800; | --navbar-text-color: #FFFFFF; | --background-color-2: #FFBA00; | --background-color-1: #FFBA00; | --button-accent-color: #FF590F; | --card-color: #FFDE86; | --card-text-color: #000000; | --cancel-color: #B4A32F; | --confirm-color: #FF8400;'),
+(1, 'individual', 1, '--navbar-color-1: #000000; | --navbar-color-2: #000000; | --navbar-text-color: #ffffff; | --background-color-2: #353535; | --background-color-1: #353535; | --button-accent-color: #000000; | --card-color: #CCCCCC; | --card-text-color: #353535; | --cancel-color: rgb(110, 110, 110); | --confirm-color: #2A9457;'),
+(4, 'individual', 1, '--navbar-color-1: rgb(0, 54, 77); | --navbar-color-2: rgb(67, 200, 244); | --navbar-text-color: #ffffff; | --background-color-2: rgba(178, 224, 228, 0.9); | --background-color-1: rgba(178, 224, 228, 0.9); | --button-accent-color: rgb(67, 200, 244); | --card-color: white; | --card-text-color: rgb(0, 0, 0); | --cancel-color: rgb(110, 110, 110); | --confirm-color: rgb(38, 185, 38);'),
+(0, 'organization', 8, '--navbar-color-1: #6C6C6C; | --navbar-color-2: #6C6C6C; | --navbar-text-color: #ffffff; | --background-color-2: #242424; | --background-color-1: #4E4E4E; | --button-accent-color: #CA7B2D; | --card-color: #444444; | --card-text-color: #FFFFFF; | --cancel-color: rgb(110, 110, 110); | --confirm-color: rgb(38, 185, 38);'),
+(0, 'organization', 7, '--navbar-color-1: #000000; | --navbar-color-2: #000000; | --navbar-text-color: #FFFFFF; | --background-color-2: #0A0A0A; | --background-color-1: #7A2B2B; | --button-accent-color: #FF0000; | --card-color: #FFFFFF; | --card-text-color: #711D1D; | --cancel-color: rgb(110, 110, 110); | --confirm-color: #B93B26;'),
+(0, 'organization', 4, '--navbar-color-1: #000000; | --navbar-color-2: #6A1515; | --navbar-text-color: #ffffff; | --background-color-2: #181818; | --background-color-1: #000000; | --button-accent-color: #825656; | --card-color: #282828; | --card-text-color: #D5434E; | --cancel-color: rgb(110, 110, 110); | --confirm-color: #842A2A;'),
+(0, 'organization', 9, '--navbar-color-1: #3B0A75; | --navbar-color-2: #3B0A75; | --navbar-text-color: #55BC8F; | --background-color-2: #6649D5; | --background-color-1: #6649D5; | --button-accent-color: #55BC8F; | --card-color: #EEFFB8; | --card-text-color: #3B0A75; | --cancel-color: rgb(110, 110, 110); | --confirm-color: #6649D5;'),
+(0, 'organization', 3, '--navbar-color-1: #A636A4; | --navbar-color-2: #A636A4; | --navbar-text-color: #FFFFFF; | --background-color-2: #502C8E; | --background-color-1: #A636A4; | --button-accent-color: #A636A4; | --card-color: white; | --card-text-color: rgb(0, 0, 0); | --cancel-color: rgb(110, 110, 110); | --confirm-color: #A636A4;'),
+(0, 'organization', 15, '--navbar-color-1: #F58138; | --navbar-color-2: #F58138; | --navbar-text-color: #ffffff; | --background-color-2: #FFC070; | --background-color-1: #F58138; | --button-accent-color: #FF7C24; | --card-color: white; | --card-text-color: rgb(0, 0, 0); | --cancel-color: rgb(110, 110, 110); | --confirm-color: #FFA417;'),
+(0, 'organization', 6, '--navbar-color-1: #FF76A4; | --navbar-color-2: #FF76A4; | --navbar-text-color: #ffffff; | --background-color-2: #FFC0E2; | --background-color-1: #FFF1B4; | --button-accent-color: #FF76A4; | --card-color: #FFE5EE; | --card-text-color: #353535; | --cancel-color: rgb(110, 110, 110); | --confirm-color: #FF76A4;'),
+(0, 'organization', 2, '--navbar-color-1: #00364D; | --navbar-color-2: #00364D; | --navbar-text-color: #FFFFFF; | --background-color-2: #F4F4F4; | --background-color-1: #D0D0D0; | --button-accent-color: #8E8E8E; | --card-color: #FFFFFF; | --card-text-color: rgb(0, 0, 0); | --cancel-color: rgb(110, 110, 110); | --confirm-color: #005B81;'),
+(3, 'individual', 1, '--navbar-color-1: #00364d; | --navbar-color-2: #43c8f4; | --navbar-text-color: #ffffff; | --background-color-1: #b2f4ff; | --background-color-2: #b2f4ff; | --primary-color: #00364d; | --button-accent-color: #43c8f4; | --card-color: #ffffff; | --card-text-color: #000000; | --cancel-color: #969696; | --confirm-color: #26b926;'),
+(0, 'organization', 10, '--navbar-color-1: #AB06E8; | --navbar-color-2: #009AA2; | --navbar-text-color: #FFFFFF; | --background-color-2: #FF8E21; | --background-color-1: #FF8E21; | --button-accent-color: #AB06E8; | --card-color: #FFA51D; | --card-text-color: #000000; | --cancel-color: #727272; | --confirm-color: #009AA2;'),
+(0, 'organization', 5, '--navbar-color-1: #3B316E; | --navbar-color-2: #3B316E; | --navbar-text-color: #FFFFFF; | --background-color-2: #8A79BE; | --background-color-1: #8A79BE; | --button-accent-color: #3B316E; | --card-color: #FFFFFF; | --card-text-color: #000000; | --cancel-color: #727272; | --confirm-color: #3B316E;'),
+(0, 'organization', 11, '--navbar-color-1: #EE7EB0; | --navbar-color-2: #76993B; | --navbar-text-color: #FFFFFF; | --background-color-2: #EAD6CF; | --background-color-1: #EAD6CF; | --button-accent-color: #76993D; | --card-color: #F5EBE1; | --card-text-color: #000000; | --cancel-color: #727272; | --confirm-color: #76993D;'),
+(0, 'organization', 13, '--navbar-color-1: #760B03; | --navbar-color-2: #540D08; | --navbar-text-color: #FFFFFF; | --background-color-2: #9B0D04; | --background-color-1: #9B0D04; | --button-accent-color: #640202; | --card-color: #D5372F; | --card-text-color: #FFFFFF; | --cancel-color: #727272; | --confirm-color: #760B03;'),
+(0, 'organization', 14, '--navbar-color-1: #7550ED; | --navbar-color-2: #4890FE; | --navbar-text-color: #FFFFFF; | --background-color-2: #2C3232; | --background-color-1: #2C3232; | --button-accent-color: #FC9E04; | --card-color: #F9F5F2; | --card-text-color: #000000; | --cancel-color: #727272; | --confirm-color: #FF4B7A;'),
+(0, 'organization', 16, '--navbar-color-1: #00202F; | --navbar-color-2: #01354D; | --navbar-text-color: #43C8F5; | --background-color-2: #012130; | --background-color-1: #012E43; | --button-accent-color: #FFFFFF; | --card-color: #04415E; | --card-text-color: #FFFFFF; | --cancel-color: #727272; | --confirm-color: #43C8F5;');
 
 -- --------------------------------------------------------
 
@@ -250,12 +389,11 @@ CREATE TABLE `users` (
   `id` int(11) NOT NULL,
   `username` varchar(11) NOT NULL,
   `name` varchar(255) NOT NULL,
-  `role` enum('master','admin','seller','student') NOT NULL,
-  `organization` int(11) DEFAULT NULL,
+  `role` enum('master','seller','student') NOT NULL DEFAULT 'student',
+  `active_organization` int(11) DEFAULT NULL,
   `password` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
   `student_number` varchar(50) DEFAULT NULL,
-  `status` enum('student','pending','approved','disabled') NOT NULL,
   `use_template` enum('true','false') NOT NULL,
   `use_username` enum('true','false') NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -264,10 +402,37 @@ CREATE TABLE `users` (
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `username`, `name`, `role`, `organization`, `password`, `email`, `student_number`, `status`, `use_template`, `use_username`) VALUES
-(1, 'neytism', 'Nate Florendo', 'master', 1, 'admin000', 'nate.florendo@ciit.edu.ph', '17213541', 'approved', 'true', 'true'),
-(3, 'oli', 'Oliver Chiuco', 'admin', 4, 'admin000', 'oliver.chiuco@ciit.edu.ph', '17223818', 'approved', 'false', 'true'),
-(4, 'ziyun', 'Ziyun Reyes', 'seller', 12, 'admin000', 'pepito.reyes@ciit.edu.ph', '17223712', 'approved', 'true', 'true');
+INSERT INTO `users` (`id`, `username`, `name`, `role`, `active_organization`, `password`, `email`, `student_number`, `use_template`, `use_username`) VALUES
+(1, 'neytism', 'Nate Florendo', 'master', 4, '$2y$10$PsD1MDxYYyZ5XU8sudYHIe1SLLkWbvnd8P5wpHuzsCsPGazAowuLe::76c01dbee3401488cf7ffe7ec48285e6', 'nate.florendo@ciit.edu.ph', '17213541', 'true', 'true'),
+(3, 'oli', 'Oliver Chiuco', 'seller', 4, '$2y$10$O8w0jrvzu9Zp5CqIx57hBOL.JMM5TAoY2I8RjsrtA0gqHbrK4ij5W::12facea7f4b4058dc661aeaf21cd8e7d', 'oliver.chiuco@ciit.edu.ph', '17223818', 'true', 'true'),
+(4, 'ziyun', 'Ziyun Reyes', 'student', 4, '$2y$10$pQCE2BIweC/VcEaDFtWaKer8rI9KS6PfRcqAOM4nO87PWz0ID4MmC::9fa33c45209b5d94cf62be3e8794f9cc', 'pepito.reyes@ciit.edu.ph', '17223712', 'true', 'true'),
+(9, '12223917', 'Mike Reyes', 'student', 1, '$2y$10$QMtz9W1dbvK/hiYU8PR.KeERzhdXZ2xyrQcnnFxNMu6/zR4948Rq2::604c5dab7a058a8dea820c74c0bec1b5', 'michelle.reyes@ciit.edu.ph', '12223917', 'false', 'false'),
+(10, '17223998', 'Peter Santiago', 'student', 1, '$2y$10$oD2s85S5egS9FUf.61xY8OkqvTza0tOcoTWAOB2XgMM1lu5dGNsCO::02ae5f62031f5c861377e7e7f7d02bfc', 'peter.santiago@ciit.edu.ph', '17223998', 'false', 'false');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `user_organizations`
+--
+
+CREATE TABLE `user_organizations` (
+  `user_id` int(11) NOT NULL,
+  `organization_id` int(11) NOT NULL,
+  `status` enum('pending','approved') NOT NULL DEFAULT 'pending',
+  `role` enum('admin','seller','student') NOT NULL DEFAULT 'student'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `user_organizations`
+--
+
+INSERT INTO `user_organizations` (`user_id`, `organization_id`, `status`, `role`) VALUES
+(1, 1, 'pending', 'seller'),
+(3, 1, 'pending', 'student'),
+(3, 4, 'pending', 'student'),
+(4, 1, 'pending', 'student'),
+(9, 1, 'pending', 'student'),
+(10, 1, 'pending', 'student');
 
 --
 -- Indexes for dumped tables
@@ -306,11 +471,24 @@ ALTER TABLE `receipts`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `settings`
+--
+ALTER TABLE `settings`
+  ADD KEY `fk_settings_organization` (`organization_id`);
+
+--
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `organization` (`organization`);
+  ADD KEY `organization` (`active_organization`);
+
+--
+-- Indexes for table `user_organizations`
+--
+ALTER TABLE `user_organizations`
+  ADD PRIMARY KEY (`user_id`,`organization_id`),
+  ADD KEY `organization_id` (`organization_id`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -326,7 +504,7 @@ ALTER TABLE `item_category`
 -- AUTO_INCREMENT for table `logs`
 --
 ALTER TABLE `logs`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=154;
 
 --
 -- AUTO_INCREMENT for table `organizations`
@@ -338,7 +516,7 @@ ALTER TABLE `organizations`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- Constraints for dumped tables
@@ -357,10 +535,23 @@ ALTER TABLE `logs`
   ADD CONSTRAINT `logs_ibfk_1` FOREIGN KEY (`userID`) REFERENCES `users` (`id`);
 
 --
+-- Constraints for table `settings`
+--
+ALTER TABLE `settings`
+  ADD CONSTRAINT `fk_settings_organization` FOREIGN KEY (`organization_id`) REFERENCES `organizations` (`id`);
+
+--
 -- Constraints for table `users`
 --
 ALTER TABLE `users`
-  ADD CONSTRAINT `users_ibfk_1` FOREIGN KEY (`organization`) REFERENCES `organizations` (`id`);
+  ADD CONSTRAINT `users_ibfk_1` FOREIGN KEY (`active_organization`) REFERENCES `organizations` (`id`);
+
+--
+-- Constraints for table `user_organizations`
+--
+ALTER TABLE `user_organizations`
+  ADD CONSTRAINT `user_organizations_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
+  ADD CONSTRAINT `user_organizations_ibfk_2` FOREIGN KEY (`organization_id`) REFERENCES `organizations` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
