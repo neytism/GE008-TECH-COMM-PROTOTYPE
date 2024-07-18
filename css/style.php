@@ -521,7 +521,7 @@ li {
 
 .card-add-to-cart{
     position: absolute; 
-    color: var(--button-accent-color);
+    color: var(--card-text-color);
     font-size: 1.5em;
     top: 5px; 
     left: 10px; 
