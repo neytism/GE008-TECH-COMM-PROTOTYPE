@@ -36,6 +36,59 @@ $categories = mysqli_fetch_all($result, MYSQLI_ASSOC);
     <link rel="stylesheet" type="text/css" href="css/style.php">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
     <title>Inventory</title>
+    <style>
+        @media (max-width: 824px) {
+            
+            /* Force table to not be like tables anymore */
+	table, thead, tbody, th, td, tr { 
+		display: block; 
+	}
+	
+	/* Hide table headers (but not display: none;, for accessibility) */
+	thead tr { 
+		position: absolute;
+		top: -9999px;
+		left: -9999px;
+	}
+	
+	
+	td { 
+		/* Behave  like a "row" */
+		border: none;
+		position: relative;
+       
+	}
+
+    .inventory-row{
+        height: 250px;
+        min-height: 250px;
+        border-bottom: 1px solid var(--card-text-color);
+        white-space: nowrap;
+    }
+	
+    #inv-1{
+    }
+
+    #inv-1::before{
+        content: "ID: ";
+    }
+
+    #inv-3::before{
+        content: "Name: ";
+    }
+
+    #inv-4::before{
+        content: "Category: ";
+    }
+
+    #inv-5::before{
+        content: "Stock: ";
+    }
+
+    #inv-6::before{
+        content: "Price: ";
+    }
+    </style>
 </head>
 <body>
 
@@ -187,13 +240,13 @@ $categories = mysqli_fetch_all($result, MYSQLI_ASSOC);
                                 ?>
 
                                  <tr class="inventory-row" style="height: 50px;">
-                                    <th class="inventory-id" style="width:100px ; min-width: 100px; max-width: 100px; word-wrap:break-word;"><?php echo htmlspecialchars($item['id']); ?></th>
-                                    <td style="width:130px; min-width: 130px; max-width: 130px; height: 75px; padding: 0 15px;"><img src="assets/images/<?php echo htmlspecialchars($item['image_name']); ?>" style="object-fit: contain; height: 100%; width: 100%; vertical-align: middle;" alt="hehe"></td>
-                                    <th class="inventory-name" style="padding-right: 30px; padding-bottom: 10px;"><?php echo htmlspecialchars($item['name']); ?></th>
-                                    <th class="inventory-category" style="width: 120px ; min-width: 120px; max-width: 120px;"><?php echo htmlspecialchars($item['category_name']); ?></th>
-                                    <th style="width: 75px ; min-width: 75px; max-width: 75px;"><?php echo htmlspecialchars($item['stock']); ?></th>
-                                    <th style="width: 100px ; min-width: 100px; max-width: 100px;" >P <?php echo htmlspecialchars($item['price']); ?></th>
-                                    <th style="width: 50px ; min-width: 50px; max-width: 50px; font-size: 1.5rem; text-align: center; cursor: pointer;" onclick="window.location.href='editProduct.php?productID=<?php echo htmlspecialchars($item['id']); ?>'"><i title="Edit Item <?php echo htmlspecialchars($item['id']); ?>" class="bi bi-pencil-square"></i></th>
+                                    <th id="inv-1" class="inventory-id" style="width:100px ; min-width: 100px; max-width: 100px; word-wrap:break-word;"><?php echo htmlspecialchars($item['id']); ?></th>
+                                    <td id="inv-2" style="width:130px; min-width: 130px; max-width: 130px; height: 75px; padding: 0 15px;"><img src="assets/images/<?php echo htmlspecialchars($item['image_name']); ?>" style="object-fit: contain; height: 100%; width: 100%; vertical-align: middle;" alt="hehe"></td>
+                                    <th id="inv-3" class="inventory-name" style="padding-right: 30px; padding-bottom: 10px;"><?php echo htmlspecialchars($item['name']); ?></th>
+                                    <th id="inv-4" class="inventory-category" style="width: 120px ; min-width: 120px; max-width: 120px;"><?php echo htmlspecialchars($item['category_name']); ?></th>
+                                    <th id="inv-5" style="width: 75px ; min-width: 75px; max-width: 75px;"><?php echo htmlspecialchars($item['stock']); ?></th>
+                                    <th id="inv-6" style="width: 100px ; min-width: 100px; max-width: 100px;" >P <?php echo htmlspecialchars($item['price']); ?></th>
+                                    <th id="inv-7" style="width: 50px ; min-width: 50px; max-width: 50px; font-size: 1.5rem; text-align: center; cursor: pointer;" onclick="window.location.href='editProduct.php?productID=<?php echo htmlspecialchars($item['id']); ?>'"><i title="Edit Item <?php echo htmlspecialchars($item['id']); ?>" class="bi bi-pencil-square"></i></th>
                                 </tr>
 
                             <?php } ?>

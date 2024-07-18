@@ -286,7 +286,7 @@ li {
 .main-interface{
     display: flex; 
     flex-direction: row; 
-    height: 100vh;
+    height: 100svh;
 }
 
 .with-navbar{
@@ -936,6 +936,8 @@ li {
     }
 
     .details-panel{
+        max-height: 210px;
+        min-height: 210px;
         padding-bottom: 150px;
     }
     
@@ -958,8 +960,7 @@ li {
     }
     
     .cart-panel{
-        height: 70%;
-        max-height: 70%;
+        max-height: 65%
     }
 
     .details-panel-upper{

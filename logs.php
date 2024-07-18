@@ -39,6 +39,64 @@ $logs = mysqli_fetch_all($result, MYSQLI_ASSOC);
     <link rel="stylesheet" type="text/css" href="css/style.php">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
     <title>Logs</title>
+    <style>
+        @media (max-width: 824px) {
+            
+            /* Force table to not be like tables anymore */
+	table, thead, tbody, th, td, tr { 
+		display: block; 
+	}
+
+    table{
+        margin-bottom: 200px;
+    }
+    
+    .center-panel{
+        margin-right: 0 !important;
+    }
+	
+	/* Hide table headers (but not display: none;, for accessibility) */
+	thead tr { 
+		position: absolute;
+		top: -9999px;
+		left: -9999px;
+	}
+	
+	
+	td { 
+		/* Behave  like a "row" */
+		border: none;
+		position: relative;
+       
+	}
+
+    .log-row{
+        height: 250px;
+        min-height: 250px;
+        border-bottom: 1px solid var(--card-text-color);
+    }
+	
+    .log-id::before{
+        content: "ID: ";
+    }
+
+    .log-category::before{
+        content: "category: ";
+    }
+
+    .log-user::before{
+        content: "user: ";
+    }
+
+    .log-details::before{
+        content: "details: ";
+    }
+
+    .log-datetime::before{
+        content: "Timestamp: ";
+    }
+}
+    </style>
 </head>
 <body>
 

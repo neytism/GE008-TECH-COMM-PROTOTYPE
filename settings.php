@@ -237,14 +237,14 @@ $org_array = $all_organizations;
                         <form action="" style="margin: 25px 25px;" class="settings">
                               
                             <label class="text-outline"><br>Display Name</label><br>
-
+                            
                             <input style="margin: 15px 0px; background-color: rgba(0, 0, 0, 0.075); border: none; height: 3rem; border-radius: 1rem; padding: 0 20px;width: 100% ;max-width: 500px; color: var(--card-text-color);" type="text" id="inputName" placeholder="Display Name" value="<?php echo htmlspecialchars($name) ?>" required><br>
                         
                            
                           <label class="text-outline <?php if(count($org_array) <= 1){echo('hide');}?>">ACTIVE ORGANIZATION</label>
                             
                             <div class="color-picker-container text-outline <?php if(count($org_array) <= 1){echo('hide');}?>" style="margin: 25px 0px;">
-                                <select class="category-dropdown" style="margin-right: 15px; background-color: rgba(0, 0, 0, 0.075); border: none; height: 3rem; border-radius: 1rem; padding: 0 20px; cursor: pointer;"
+                                <select class="category-dropdown" style=" background-color: rgba(0, 0, 0, 0.075); border: none; height: 3rem; border-radius: 1rem; padding: 0 20px; cursor: pointer; width: 100% ;max-width: 500px; "
                                 name="Active Organization" id="inputOrganization" title="Select Active Organization">
                                 <?php 
                                
@@ -252,7 +252,8 @@ $org_array = $all_organizations;
                                         <option style="background-color: rgb(125, 125, 125); height: 100px;" value="<?php echo htmlspecialchars($org['id']); ?>" <?php if($org['id'] == $organization_id) echo htmlspecialchars("selected") ?>><?php echo htmlspecialchars($org['organization_name']); ?></option>
                                     <?php } ?>
                                 </select>
-                                 <label for="useTemplate">Select active Organization</label><br><br>
+                                 <!-- <label for="useTemplate">Select active Organization</label><br> -->
+                                 <br>
                             
                             </div>
                             
