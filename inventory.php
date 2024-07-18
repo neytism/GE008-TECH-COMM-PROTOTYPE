@@ -9,7 +9,7 @@ if (!isset($_SESSION['user_id'])) {
 require 'getUserDetails.php';
 
 if ($organization_id == '1'){
-    $sql = "SELECT items.*, item_category.name AS category_name FROM items JOIN item_category ON items.category_id = item_category.id WHERE organization_id = '$organization_id' AND user_id = '$_SESSION[user_id]'";
+    $sql = "SELECT items.*, item_category.name AS category_name FROM items JOIN item_category ON items.category_id = item_category.id WHERE organization_id = '$organization_id' AND user_id = '$_SESSION[user_id]' OR organization_id = '0'";
 } else{
     $sql = "SELECT items.*, item_category.name AS category_name FROM items JOIN item_category ON items.category_id = item_category.id WHERE organization_id = '$organization_id' OR organization_id = '0'";
 }
@@ -88,6 +88,8 @@ $categories = mysqli_fetch_all($result, MYSQLI_ASSOC);
     #inv-6::before{
         content: "Price: ";
     }
+
+}
     </style>
 </head>
 <body>

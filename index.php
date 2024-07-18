@@ -23,8 +23,9 @@ if (isset($_GET['logout'])) {
 
 require 'getUserDetails.php';
 
+
 if ($organization_id == '1') {
-    $sql = "SELECT items.*, item_category.name AS category_name FROM items JOIN item_category ON items.category_id = item_category.id WHERE organization_id = '$organization_id' AND user_id = '$_SESSION[user_id]' ORDER BY stock DESC";
+    $sql = "SELECT items.*, item_category.name AS category_name FROM items JOIN item_category ON items.category_id = item_category.id WHERE organization_id = '$organization_id' OR organization_id = '0' AND user_id = '$_SESSION[user_id]' ORDER BY stock DESC";
 } else {
     $sql = "SELECT items.*, item_category.name AS category_name FROM items JOIN item_category ON items.category_id = item_category.id WHERE organization_id = '$organization_id' OR organization_id = '0' ORDER BY stock DESC";
 }
@@ -99,7 +100,7 @@ function formatMoney($amount){
                 <a href="#"
                     class="logo"><?php 
                     if($_SESSION['role'] == "master"){
-                        echo htmlspecialchars("MASTER");
+                        echo htmlspecialchars(strtoupper($organization_name));
                     } else {
                         if ($organization_name == "Individual") {
                             echo htmlspecialchars(strtoupper($name));
