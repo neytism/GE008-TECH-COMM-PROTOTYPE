@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 17, 2024 at 06:51 PM
+-- Generation Time: Jul 18, 2024 at 10:04 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -63,6 +63,7 @@ INSERT INTO `items` (`id`, `user_id`, `organization_id`, `image_name`, `name`, `
 ('ALL018', 1, 0, 'ALL018.png', 'Chocolate Shake', 6, 1, 50.00),
 ('ALL019', 1, 0, 'ALL019.png', 'Borgir', 5, 1, 55.00),
 ('ALL020', 1, 0, 'ALL020.png', 'Paw Keycap', 8, 1, 100.00),
+('ALL021', 1, 0, 'ALL021.png', 'CIIT Hoodie Jacket', 4, 15, 2200.00),
 ('CGC001', 3, 4, 'CGC001.png', 'Qiqi Sticker Edit', 2, 5, 25.00),
 ('CGC002', 3, 4, 'CGC002.png', 'CIIT Pin', 3, 12, 50.00),
 ('IND001', 1, 1, 'IND001.png', 'Qiqi na malungkot', 2, 5, 25.00);
@@ -86,7 +87,7 @@ INSERT INTO `item_category` (`id`, `name`) VALUES
 (1, 'Others'),
 (2, 'Stickers'),
 (3, 'Pins'),
-(4, 'Shirts'),
+(4, 'Clothes'),
 (5, 'Foods'),
 (6, 'Drinks'),
 (7, 'Lanyards'),
@@ -259,7 +260,13 @@ INSERT INTO `logs` (`id`, `type`, `userID`, `details`, `timestamp`) VALUES
 (150, 'user', 3, 'User 3 - Oliver Chiuco logged in.', '2024-07-17 14:24:32'),
 (151, 'user', 1, 'User 1 - Nate Florendo logged in.', '2024-07-17 14:52:48'),
 (152, 'user', 1, 'User 1 - Nate Florendo logged in.', '2024-07-17 14:52:59'),
-(153, 'user', 3, 'User 3 - Oliver Chiuco logged in.', '2024-07-17 14:55:28');
+(153, 'user', 3, 'User 3 - Oliver Chiuco logged in.', '2024-07-17 14:55:28'),
+(154, 'user', 1, 'User 1 - Nate Florendo logged in.', '2024-07-18 07:19:20'),
+(155, 'user', 4, 'User 4 - Ziyun Reyes logged in.', '2024-07-18 07:51:31'),
+(156, 'user', 1, 'User 1 - Nate Florendo logged in.', '2024-07-18 07:52:42'),
+(157, 'user', 4, 'User 4 - Ziyun Reyes logged in.', '2024-07-18 07:53:01'),
+(158, 'user', 4, 'User 4 - Changed name from Ziyun Reyes into LETSGGOOO', '2024-07-18 08:00:02'),
+(159, 'user', 4, 'User 4 - Changed name from LETSGGOOO into Ziyun', '2024-07-18 08:00:08');
 
 -- --------------------------------------------------------
 
@@ -361,7 +368,7 @@ CREATE TABLE `settings` (
 INSERT INTO `settings` (`id`, `type`, `organization_id`, `val`) VALUES
 (-1, 'individual', 1, '--navbar-hor-padding: 15px;|--navbar-vert-padding: 10px;|--navbar-height: 53px;|--product-card-height: 300px;|--panel-spacing: 15px;|--navbar-color-1: #00364d;|--navbar-color-2: #43c8f4;|--navbar-text-color: #ffffff;|--background-color-1: #b2f4ff;|--background-color-2: #b2f4ff;|--primary-color: #00364d;|--button-accent-color: #43c8f4;|--card-color: #ffffff;|--card-text-color: #000000;|--cancel-color: #969696;|--confirm-color: #26b926;'),
 (0, 'organization', 12, '--navbar-color-1: #CA5A00; | --navbar-color-2: #D99800; | --navbar-text-color: #FFFFFF; | --background-color-2: #FFBA00; | --background-color-1: #FFBA00; | --button-accent-color: #FF590F; | --card-color: #FFDE86; | --card-text-color: #000000; | --cancel-color: #B4A32F; | --confirm-color: #FF8400;'),
-(1, 'individual', 1, '--navbar-color-1: #000000; | --navbar-color-2: #000000; | --navbar-text-color: #ffffff; | --background-color-2: #353535; | --background-color-1: #353535; | --button-accent-color: #000000; | --card-color: #CCCCCC; | --card-text-color: #353535; | --cancel-color: rgb(110, 110, 110); | --confirm-color: #2A9457;'),
+(1, 'individual', 1, '--navbar-color-1: #FF0000; | --navbar-color-2: #FF0000; | --navbar-text-color: #000DFF; | --background-color-2: #FFF600; | --background-color-1: #7F00FF; | --button-accent-color: #00FFC6; | --card-color: #0038FF; | --card-text-color: #FF0000; | --cancel-color: #1B1B1B; | --confirm-color: #00FF6C;'),
 (4, 'individual', 1, '--navbar-color-1: rgb(0, 54, 77); | --navbar-color-2: rgb(67, 200, 244); | --navbar-text-color: #ffffff; | --background-color-2: rgba(178, 224, 228, 0.9); | --background-color-1: rgba(178, 224, 228, 0.9); | --button-accent-color: rgb(67, 200, 244); | --card-color: white; | --card-text-color: rgb(0, 0, 0); | --cancel-color: rgb(110, 110, 110); | --confirm-color: rgb(38, 185, 38);'),
 (0, 'organization', 8, '--navbar-color-1: #6C6C6C; | --navbar-color-2: #6C6C6C; | --navbar-text-color: #ffffff; | --background-color-2: #242424; | --background-color-1: #4E4E4E; | --button-accent-color: #CA7B2D; | --card-color: #444444; | --card-text-color: #FFFFFF; | --cancel-color: rgb(110, 110, 110); | --confirm-color: rgb(38, 185, 38);'),
 (0, 'organization', 7, '--navbar-color-1: #000000; | --navbar-color-2: #000000; | --navbar-text-color: #FFFFFF; | --background-color-2: #0A0A0A; | --background-color-1: #7A2B2B; | --button-accent-color: #FF0000; | --card-color: #FFFFFF; | --card-text-color: #711D1D; | --cancel-color: rgb(110, 110, 110); | --confirm-color: #B93B26;'),
@@ -403,9 +410,9 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `username`, `name`, `role`, `active_organization`, `password`, `email`, `student_number`, `use_template`, `use_username`) VALUES
-(1, 'neytism', 'Nate Florendo', 'master', 4, '$2y$10$PsD1MDxYYyZ5XU8sudYHIe1SLLkWbvnd8P5wpHuzsCsPGazAowuLe::76c01dbee3401488cf7ffe7ec48285e6', 'nate.florendo@ciit.edu.ph', '17213541', 'true', 'true'),
+(1, 'neytism', 'Nate Florendo', 'master', 16, '$2y$10$PsD1MDxYYyZ5XU8sudYHIe1SLLkWbvnd8P5wpHuzsCsPGazAowuLe::76c01dbee3401488cf7ffe7ec48285e6', 'nate.florendo@ciit.edu.ph', '17213541', 'true', 'true'),
 (3, 'oli', 'Oliver Chiuco', 'seller', 4, '$2y$10$O8w0jrvzu9Zp5CqIx57hBOL.JMM5TAoY2I8RjsrtA0gqHbrK4ij5W::12facea7f4b4058dc661aeaf21cd8e7d', 'oliver.chiuco@ciit.edu.ph', '17223818', 'true', 'true'),
-(4, 'ziyun', 'Ziyun Reyes', 'student', 4, '$2y$10$pQCE2BIweC/VcEaDFtWaKer8rI9KS6PfRcqAOM4nO87PWz0ID4MmC::9fa33c45209b5d94cf62be3e8794f9cc', 'pepito.reyes@ciit.edu.ph', '17223712', 'true', 'true'),
+(4, 'ziyun', 'Ziyun', 'seller', 6, '$2y$10$7pHbYX9/GdijPO8YmXJ4OOahJqZN/O2lLJXWeAQeACFmdTkg4aa4i::c22cc2fc7ea5c269aa97d1327d33c6f0', 'pepito.reyes@ciit.edu.ph', '17223712', 'true', 'true'),
 (9, '12223917', 'Mike Reyes', 'student', 1, '$2y$10$QMtz9W1dbvK/hiYU8PR.KeERzhdXZ2xyrQcnnFxNMu6/zR4948Rq2::604c5dab7a058a8dea820c74c0bec1b5', 'michelle.reyes@ciit.edu.ph', '12223917', 'false', 'false'),
 (10, '17223998', 'Peter Santiago', 'student', 1, '$2y$10$oD2s85S5egS9FUf.61xY8OkqvTza0tOcoTWAOB2XgMM1lu5dGNsCO::02ae5f62031f5c861377e7e7f7d02bfc', 'peter.santiago@ciit.edu.ph', '17223998', 'false', 'false');
 
@@ -431,6 +438,7 @@ INSERT INTO `user_organizations` (`user_id`, `organization_id`, `status`, `role`
 (3, 1, 'pending', 'student'),
 (3, 4, 'pending', 'student'),
 (4, 1, 'pending', 'student'),
+(4, 6, 'approved', 'seller'),
 (9, 1, 'pending', 'student'),
 (10, 1, 'pending', 'student');
 
@@ -504,7 +512,7 @@ ALTER TABLE `item_category`
 -- AUTO_INCREMENT for table `logs`
 --
 ALTER TABLE `logs`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=154;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=160;
 
 --
 -- AUTO_INCREMENT for table `organizations`

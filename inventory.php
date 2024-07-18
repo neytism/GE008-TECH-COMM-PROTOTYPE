@@ -18,6 +18,12 @@ $result = mysqli_query($conn, $sql);
 
 $items = mysqli_fetch_all($result, MYSQLI_ASSOC);
 
+$sql = "SELECT * FROM item_category";
+
+$result = mysqli_query($conn, $sql);
+
+$categories = mysqli_fetch_all($result, MYSQLI_ASSOC);
+
 
 ?>
 
@@ -140,17 +146,21 @@ $items = mysqli_fetch_all($result, MYSQLI_ASSOC);
         <div class="center-panel" style="margin-right: 15px; width: 100%;">
             <div class="center-panel-content">
                 
-                <div class="category-panel shadow unselectable">
+            <div class="category-panel shadow unselectable">
                     <div class="category-button selected">All</div>
-                    <div class="category-button">Stickers</div>
-                    <div class="category-button">Pins</div>
-                    <div class="category-button">Shirts</div>
-                    <div class="category-button">Food</div>
-                    <div class="category-button">Drinks</div>
-                    <div class="category-button">Lanyard</div>
-                    <div class="category-button">Keycaps</div>
-                    <div class="category-button">Keychain</div>
+                    <?php
+                    $firstCategory = true;
+                    foreach ($categories as $category) {
+                        if ($firstCategory) {
+                            $firstCategory = false;
+                            continue;
+                        }
+                        ?>
+                        <div class="category-button"><?php echo htmlspecialchars($category['name']); ?></div>
+                    <?php } ?>
+
                 </div>
+                
                 
                 <div class="products-panel unselectable">
                 

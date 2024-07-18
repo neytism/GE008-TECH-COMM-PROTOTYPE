@@ -39,6 +39,11 @@ $result = mysqli_query($conn, $sql);
 
 $categories = mysqli_fetch_all($result, MYSQLI_ASSOC);
 
+function formatMoney($amount){
+ $amount = (double) $amount;
+
+ return number_format($amount, 2, '.', ',');
+}
 
 ?>
 
@@ -218,7 +223,7 @@ $categories = mysqli_fetch_all($result, MYSQLI_ASSOC);
                             <div class="product-card-desc" category="<?php echo htmlspecialchars($item['category_name']); ?>">
                                 <div class="product-name">
                                     <span><?php echo htmlspecialchars($item['name']); ?></span></div>
-                                <div class="product-price">P <?php echo htmlspecialchars($item['price']); ?></div>
+                                <div class="product-price">P <?php echo htmlspecialchars(formatMoney($item['price'])); ?></div>
                             </div>
                         </div>
 
