@@ -757,6 +757,11 @@ li {
     background-color: var(--cancel-color);
 }
 
+.danger{
+    background-color: color-mix(in srgb, var(--cancel-color) 50%, var(--confirm-color) 50%);;
+    
+}
+
 .transaction-details-banner{
     width: 100%;
     padding: 8px 10px;

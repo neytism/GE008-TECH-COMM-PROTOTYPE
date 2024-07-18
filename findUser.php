@@ -1,9 +1,9 @@
 <?php
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-
+    
     require 'config.php';
-
+    
     $user_to_find = str_replace('-','', $_POST['user_to_find']); // this will cause error if email has '-'
     
     

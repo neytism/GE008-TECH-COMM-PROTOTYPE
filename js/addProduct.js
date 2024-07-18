@@ -57,3 +57,22 @@ document.getElementById('inputItemImage').addEventListener('change', function(ev
         reader.readAsDataURL(file);
     }
 });
+
+function deleteProd(event, phpFile, itemID) {
+    event.preventDefault();
+        
+    let item_name = document.getElementById("inputitem_name").value;
+    let formData = new FormData();
+    formData.append('itemID', itemID)
+    formData.append('item_name', item_name);
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', phpFile, true);
+    xhr.onload = function() {
+        console.log(this.responseText);
+        document.location.href = 'inventory.php';
+    };
+    
+    xhr.send(formData);
+    
+    
+}

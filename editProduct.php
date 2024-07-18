@@ -292,8 +292,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     type="number" id="inputItemPrice" placeholder="Price" value="<?php echo htmlspecialchars($currentItem['price']); ?>" required>
 
                 <div style="margin: 15px 25px; display: flex; gap: 15px;">
+                    
                     <div style="width: 50%; cursor: pointer;" class="confirm-button cancel"
                         onclick="window.location.href='inventory.php'">CANCEL</div>
+                    <button type="submit" style="width: 50%; border: none; cursor: pointer;"
+                    class="confirm-button danger" onclick="deleteProd(event, 'deleteProduct.php','<?php echo htmlspecialchars($currentItem['id']); ?>')">DELETE</button>
                     <button type="submit" style="width: 50%; border: none; cursor: pointer;"
                         class="confirm-button confirm" onclick="checkAddProd(event, 'editProduct.php','<?php echo htmlspecialchars($currentItem['id']); ?>')">SAVE</button>
                 </div>
@@ -314,7 +317,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
     <script type="text/javascript" src="js/addProduct.js" id="rendered-js"></script>
-    <script type="text/javascript" src="js/settings.js" id="rendered-js"></script>
 
 </body>
 

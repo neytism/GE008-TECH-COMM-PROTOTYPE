@@ -163,7 +163,7 @@ $categories = mysqli_fetch_all($result, MYSQLI_ASSOC);
     </div>
     
     <div class="main-interface with-navbar" >
-        <div class="add-new-product shadow" title="Add new product"><i style="height: 100%; display: flex; align-items: center; justify-content: center;" class="bi bi-plus-lg"></i></div>
+        <div class="add-new-product shadow" title="Add new product" onclick="window.location.href='addProduct.php'"><i style="height: 100%; display: flex; align-items: center; justify-content: center;" class="bi bi-plus-lg"></i></div>
         <div class="left-panel">
             <div class="left-panel-content shadow unselectable">
                 <div class="left-nav-upper">
