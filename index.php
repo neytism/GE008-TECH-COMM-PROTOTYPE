@@ -356,6 +356,7 @@ function formatMoney($amount){
                     </div>
                 </div>
             </div>
+           
 
         </div>
         

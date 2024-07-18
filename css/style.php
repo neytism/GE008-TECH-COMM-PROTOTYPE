@@ -72,6 +72,7 @@ if ($result->num_rows > 0) { // if there is no settings, load default
     --product-card-height: 300px;
     --panel-spacing: 15px;
     
+    
     --navbar-color-1: <?php echo $settings['--navbar-color-1'];?>;
     --navbar-color-2: <?php echo $settings['--navbar-color-2'];?>;
     --navbar-text-color: <?php echo $settings['--navbar-text-color'];?>;
@@ -236,7 +237,7 @@ li {
 
 .search-bar input{
     width: 100%;
-    background-color:  color-mix(in srgb, var(--button-accent-color) 10%, transparent);
+    background-color:  color-mix(in srgb, white 8%, transparent);
     border: none;
     border-radius: 10px;
     height: 35px;
@@ -358,6 +359,7 @@ li {
 }
 
 .mobile-nav{
+    color: var(--card-text-color);
     position: fixed;
     overflow-x: auto;
     width: 90%;
@@ -682,7 +684,7 @@ li {
 
 .cart-item-banner-base-right{
     font-family: Loew-ExtraBold !important;
-    width: 40%;
+    width: 50%;
     display: flex;
     flex-direction: row;
     align-content: center;
